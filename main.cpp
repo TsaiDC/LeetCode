@@ -33,15 +33,14 @@ int main()
     int m=5, n=3;
     vector<int> list;
     c_recur(0, n, m, list, true);
-#else
-    vector<int> input{2, 7, 11,15};
-    vector<int> output;
-    output = twoSum (input, 22);
-    printf("[DBG] %s(%d) %s : size: %d\n", __FUNCTION__, __LINE__, __TIME__, output.size());
-    for (int i=0; i<output.size(); ++i)
-    {
-        printf("[DBG] %s(%d) %s : idx: %d\n", __FUNCTION__, __LINE__, __TIME__, output[i]);
-    }
+#endif
+
+#if 0
+    Test_addTwoSum();
+#endif
+
+#if 1
+    Test_addTwoNumbers();    
 #endif
     return 0;
 }
