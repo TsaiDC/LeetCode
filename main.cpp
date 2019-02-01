@@ -39,8 +39,13 @@ int main()
     Test_addTwoSum();
 #endif
 
-#if 1
+#if 0
     Test_addTwoNumbers();    
+#endif
+
+#if 1
+//#3
+    Test_lengthOfLongestSubstring();
 #endif
     return 0;
 }
