@@ -38,7 +38,7 @@ Explanation: The answer is "wke", with the length of 3.
 int lengthOfLongestSubstring(string s) 
 {
     printf("[DBG] %s(%d) s: %s\n", __FUNCTION__, __LINE__, s.c_str());
-    
+
     int CIDX = 0;
     int Map[200];    
     int *idx = new int[s.length()];
@@ -47,18 +47,36 @@ int lengthOfLongestSubstring(string s)
 
     for(int i=0; i<s.length(); ++i)
     {
-        printf ("%c -> %d \n", s.at(i), (int)s.at(i));
+        printf ("%c -> %d ", s.at(i), (int)s.at(i));
+        ++CIDX;
         if(i==0) {
-        }
-        else if (Map[i] ==0) {
-            CIDX++;
-        }
-        else {
+            idx[i] = CIDX;
+            Map[(int)s.at(i)] = i+1;
+            printf ("(%d) CIDX: %d, Map[%d] = %d", __LINE__, CIDX, (int)s.at(i), i+1);
+            printf ("\n");
+            continue;
         }
         
-        idx[i] = CIDX
+        if (Map[(int)s.at(i)] ==0) {
+            idx[i] = CIDX;
+            Map[(int)s.at(i)] = i+1;
+            printf ("(%d) CIDX: %d, Map[%d] = %d", __LINE__, CIDX, (int)s.at(i), i+1);
+        }
+        else {
+            i = Map[(int)s.at(i)];
+            CIDX = 0;
+            memset(Map, 0, sizeof(Map[0])*200);
+            printf ("(%d) Move i: %d, Reset CIDX, MAP", __LINE__, i);
+//            printf ("(%d) CIDX: %d, Map[%d] = %d", __LINE__, CIDX, (int)s.at(i), i+1);
+        }
+        printf ("\n");
     }
     
+    for(int i=0; i<s.length(); ++i)
+    {
+        printf("%d ", idx[i]);
+    }
+    printf("\n");
     delete []idx; 
     return 0;
 }
@@ -66,5 +84,5 @@ int lengthOfLongestSubstring(string s)
 void Test_lengthOfLongestSubstring()
 {
     printf("[DBG] %s(%d) %s\n", __FUNCTION__, __LINE__, __TIME__);
-    lengthOfLongestSubstring("abcabcbb");
+    lengthOfLongestSubstring("abcdbb");
 }
