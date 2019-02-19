@@ -43,9 +43,14 @@ int main()
     Test_addTwoNumbers();    
 #endif
 
-#if 1
+#if 0
 //#3
     Test_lengthOfLongestSubstring();
+#endif
+
+#if 1
+//#4
+    Test_findMedianSortedArrays();
 #endif
     return 0;
 }
