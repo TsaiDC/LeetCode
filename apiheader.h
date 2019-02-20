@@ -7,5 +7,5 @@ void Test_addTwoSum();
 void Test_addTwoNumbers();
 void Test_lengthOfLongestSubstring();
 void Test_findMedianSortedArrays();
-
+void Test_longestPalindrome();
 #endif

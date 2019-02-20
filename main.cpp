@@ -48,9 +48,14 @@ int main()
     Test_lengthOfLongestSubstring();
 #endif
 
-#if 1
+#if 0
 //#4
     Test_findMedianSortedArrays();
+#endif
+
+#if 1
+//#5
+    Test_longestPalindrome();
 #endif
     return 0;
 }
