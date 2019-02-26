@@ -26,6 +26,7 @@ Output: "bb"
 
 string longestPalindrome(string s)
 {
+#if 0
     int j1=0, j2 = 0, k=0, m=1;
     for(int i=0; i<s.length(); ++i)
     {
@@ -36,7 +37,7 @@ string longestPalindrome(string s)
         {
             if(s.at(i) != s.at(i+1)){
                 //aba, b!=a
-                if(s.at(j) == s.at(j2)) {
+                if(s.at(j1) == s.at(j2)) {
                     ++m;
                 }
             }
@@ -46,7 +47,7 @@ string longestPalindrome(string s)
         }
         cout<<"---"<<s.at(i)<<endl;
     }
-
+#endif
     return "TBD";
 }
 

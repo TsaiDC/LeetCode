@@ -29,8 +29,12 @@ vector<int> twoSum(vector<int>& nums, int target) {
 
 void Test_addTwoSum()
 {
-    vector<int> input{2, 7, 11,15};
+    vector<int> input;
     vector<int> output;
+	input.push_back(2);
+	input.push_back(7);
+	input.push_back(11);
+	input.push_back(15);
     output = twoSum (input, 22);
     printf("[DBG] %s(%d) %s : size: %d\n", __FUNCTION__, __LINE__, __TIME__, output.size());
     for (int i=0; i<output.size(); ++i)

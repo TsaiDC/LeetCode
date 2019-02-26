@@ -87,8 +87,13 @@ double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2)
 void Test_findMedianSortedArrays()
 {
     printf("[DBG] %s(%d) %s\n", __FUNCTION__, __LINE__, __TIME__);
-    vector<int> nums1{1, 3};
-    vector<int> nums2{2};
+    vector<int> nums1;	
+    vector<int> nums2;
+	
+	nums1.push_back(1);
+	nums1.push_back(3);
+	nums2.push_back(2);
+	
     printf("[DBG] %s(%d) %s, Middle: %f\n", __FUNCTION__, __LINE__, __TIME__, findMedianSortedArrays(nums1, nums2));
     
 }
