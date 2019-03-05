@@ -26,25 +26,16 @@ Output: "bb"
 
 string longestPalindrome(string s)
 {
-#if 0
-    int j1=0, j2 = 0, k=0, m=1;
+    string strResult;
+    string strBuff;
+#if 1
     for(int i=0; i<s.length(); ++i)
     {
         cout<<"+++"<<s.at(i)<<endl;
-        j1=i-m;
-        j2=i+m;
-        while ( j1>=0 && j2<s.length())
-        {
-            if(s.at(i) != s.at(i+1)){
-                //aba, b!=a
-                if(s.at(j1) == s.at(j2)) {
-                    ++m;
-                }
-            }
-            else {
-                //abba, b==b
-            }
+        if(strBuff.back().equal(s.at(i))) {
+            cout<<"EVEN!"<<endl;
         }
+        strBuff.push_back(s.at(i));
         cout<<"---"<<s.at(i)<<endl;
     }
 #endif
