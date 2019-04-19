@@ -3,7 +3,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
-#include <string>
+#include <string.h>
 
 #include "apiheader.h"
 
@@ -22,29 +22,49 @@ Example 2:
 
 Input: "cbbd"
 Output: "bb"
+
+
+abcba
+abccba
+abcccba
+abbaaabba
+abbcdcbba
+
 */
 
 string longestPalindrome(string s)
 {
-    string strResult;
-    string strBuff;
+    int *flag = new int[s.length()];
+    memset(flag, 0, sizeof(int)*s.length());
 #if 1
     for(int i=0; i<s.length(); ++i)
-    {
-        cout<<"+++"<<s.at(i)<<endl;
-        if(strBuff.back().equal(s.at(i))) {
-            cout<<"EVEN!"<<endl;
+    {        
+        if (i==0) {            
+            flag[i] = 0;
         }
-        strBuff.push_back(s.at(i));
-        cout<<"---"<<s.at(i)<<endl;
+        else {            
+            if (s.at(i) == s.at(i-1)) {
+                flag[i] = flag[i-1] + 1;
+            }
+            else {
+                flag[i] = 0;
+            }
+        }
     }
+    
+    for(int i=0; i<s.length(); ++i)
+    {
+        cout<<flag[i]<<ends;
+    }
+    cout<<endl;
 #endif
+    delete [] flag; 
     return "TBD";
 }
 
 void Test_longestPalindrome()
 {
     printf("[DBG] %s(%d) %s\n", __FUNCTION__, __LINE__, __TIME__);
-    string input = "cabad";
+    string input = "abcccbaac";
     cout<<"Input: "<<input<<" Result: "<<longestPalindrome(input);    
 }
