@@ -8,4 +8,5 @@ void Test_addTwoNumbers();
 void Test_lengthOfLongestSubstring();
 void Test_findMedianSortedArrays();
 void Test_longestPalindrome();
+void Test_intersect();
 #endif

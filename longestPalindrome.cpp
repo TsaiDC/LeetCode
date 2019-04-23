@@ -34,12 +34,27 @@ abbcdcbba
 
 string longestPalindrome(string s)
 {
-    string ret;
-    int *flag = new int[s.length()];
-    memset(flag, 0, sizeof(int)*s.length());
+#define LENGTH 2000
+    cout<<"Input: "<<s<<endl;
+	string ret;
+    if(s.length() <=1) {
+	    return s;
+	}
+/*	
+	else if(s.length() ==2 && s.at(0) != s.at(1)) {
+	    ret.push_back(s.at(0));
+	    return ret;
+	}
+*/
+    
+//    int *flag = new int[s.length()];
+//    memset(flag, 0, sizeof(int)*s.length());
+    int flag[LENGTH];
+    memset(flag, 0, sizeof(int)*LENGTH);
 
+	
     for(int i=0; i<s.length(); ++i)
-    {        
+    {        	
         if (i==0) {            
             flag[i] = 0;
         }
@@ -69,43 +84,51 @@ string longestPalindrome(string s)
     int ptr = 0, idx = 0,mdr = 0;
     for(int i=0; i<s.length(); ++i)
     {
+
         if (flag[i] > ptr) {
             ptr = flag[i];
             idx = i;
         }
-//        cout<<flag[i]<<ends;
+        cout<<flag[i]<<" ";
     }
-//    cout<<endl;
+    cout<<endl;
     
-//    cout<<"idx: " <<idx<<endl;
+    cout<<"idx: " <<idx<<endl;
     mdr = idx - flag[idx]/2;    
-//    cout<<"start: "<<mdr <<" str: "<<s.at(idx)<<endl;
-    memset(flag, 0, sizeof(int)*s.length());
+    cout<<"start: "<<mdr <<" str: "<<s.at(idx)<<endl;
+//    memset(flag, 0, sizeof(int)*s.length());
+	memset(flag, 0, sizeof(int)*LENGTH);
     
-    if (idx%2 == 0) {
-//        cout<<"Odd" <<endl;
+	bool isOdd = false;
+	if( (ptr < 3) &&
+	    ((mdr-1) >=0) && 
+	    ((mdr+1) <= s.length()-1) && 
+		s.at(mdr-1) == s.at(mdr+1)) {
+		isOdd = true;
+    }
+	
+    if (isOdd) {
+        cout<<"Odd" <<endl;
         flag[mdr] = 1;
         for (int i=1; i<s.length(); i++)
         {
-            if((mdr + i) > s.length()) {                
+		    cout<<"Mdr: " <<mdr<<" i: "<<i<<" Leng: "<<s.length()<<endl;
+            if((mdr + i) > (s.length()-1) ||((mdr - i) < 0)) {
                 break;
             }
-            else if((mdr - i) < 0) {                
-                break;
-            }
-            else {
-                if (s.at(mdr + i) == s.at(mdr - i)) {
-                    flag[mdr + i] = 1;
-                    flag[mdr - i] = 1;
-                }
-                else {
-                    break;
-                }
-            }                
+
+			if (s.at(mdr + i) == s.at(mdr - i)) {
+				flag[mdr + i] = 1;
+				flag[mdr - i] = 1;
+			}
+			else {
+				break;
+			}
+
         }
     }
     else {
-//        cout<<"Even" <<endl;      
+        cout<<"Even" <<endl;      
         for (int i=mdr, j=mdr-1; i<s.length() && j>=0; ++i, --j)
         {
             if (s.at(i) == s.at(j)) {
@@ -118,26 +141,39 @@ string longestPalindrome(string s)
         }
     }
     
-//    cout<<"======"<<endl;
+    cout<<"======"<<endl;
     for(int i=0; i<s.length(); ++i)
     {
-//        cout<<flag[i]<<endl;
+        cout<<flag[i]<<endl;
         if (flag[i] ==1) {
             ret.push_back(s.at(i));
         }
     }
-//    cout<<endl;
-//    cout<<"Str: "<<ret<<endl;
+    cout<<endl;
+    cout<<"Str: "<<ret<<endl;
 
-    delete [] flag; 
+    if(ret.length() ==0) {
+	    ret.push_back(s.at(0));
+	    return ret;
+	}
+//    delete [] flag; 
     return ret;
 }
 
 void Test_longestPalindrome()
 {
     printf("[DBG] %s(%d) %s\n", __FUNCTION__, __LINE__, __TIME__);
-    string input = "abcba";
-    
+//    string input = "aba";
+//	string input = "abb";
+//	string input = "aaaa";
+	string input = "abacab";
+ /*   
+	for(int i=0; i<1000; ++i)
+    {
+	    input.push_back('a');
+//        cout<<i<<" "<<input.at(i)<<endl;
+    }
+*/
     for(int i=0; i<input.length(); ++i)
     {
         cout<<i<<" "<<input.at(i)<<endl;

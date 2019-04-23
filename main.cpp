@@ -57,5 +57,10 @@ int main()
 //#5
     Test_longestPalindrome();
 #endif
+
+#if 0
+//#350
+    Test_intersect();
+#endif
     return 0;
 }
