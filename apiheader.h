@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#define LOGD(...) {printf("[D] %s(%d): ", __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
+
 void Test_addTwoSum();
 void Test_addTwoNumbers();
 void Test_lengthOfLongestSubstring();
