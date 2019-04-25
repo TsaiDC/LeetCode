@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
+#include <time.h>
 #include "apiheader.h"
 
 using namespace std;
@@ -29,6 +30,8 @@ void c_recur(int k, int n, int m, vector<int> list, bool isInit)
 }
 int main()
 {
+    double START,END;
+    START = clock();
 #if 0
     int m=5, n=3;
     vector<int> list;
@@ -62,5 +65,7 @@ int main()
 //#350
     Test_intersect();
 #endif
+    END = clock();
+	cout << endl << "Used Time: " << (END - START) / CLOCKS_PER_SEC << " S" << endl;
     return 0;
 }

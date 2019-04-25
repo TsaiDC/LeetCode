@@ -47,32 +47,48 @@ string longestPalindrome(string s)
     vector<int>EvenPeak;
     vector<string>retStr;
 	string ret ="";
-    int flag[LENGTH][2];
+    int flag[LENGTH][3];
 
-    memset(flag, 0, sizeof(int)*LENGTH*2);
+    memset(flag, 0, sizeof(int)*LENGTH*3);
 
-    //Check Odd Case, e.g. aba
-    for(int i=1; i<s.length()-1; ++i)
+    
+    for(int i=1; i<s.length(); ++i)
     {
-        if (s.at(i-1) == s.at(i+1)) {
+	    //Check Odd Case, e.g. aba
+        if ((i < s.length()-1) &&
+		    (s.at(i-1) == s.at(i+1))) {
             flag[i][0] = 1;
         }
         else {
             flag[i][0] = 0;
-        }        
-    }
-
-    //Check Even Case, e.g. aaaa
-    for(int i=1; i<s.length(); ++i)
-    {
+        }
+		if (s.at(i-1) == s.at(i)) {
+		    flag[i][2] = flag[i-1][2] + 1;
+		}
+		
+		//Check Even Case, e.g. aaaa
         if (s.at(i-1) == s.at(i)) {
             flag[i][1] = flag[i-1][1] + 1;
         }
         else {
             flag[i][1] = 0;
-        }        
+        }
     }
-    
+
+    //Refine Odd flag
+    for(int i=s.length()-1; i>=0; --i)
+    {
+	    if(flag[i][2] > 1) {
+		    int ptr = flag[i][2];
+		    for(int j=i, k=flag[i][2]; j>0 && k>0; --j, --k)
+			{
+			    flag[j][0] = 0;
+                flag[j][2] = 0;
+			}
+			flag[ptr/2][0] = 1;
+		}
+	}
+	
     for(int i=1; i<s.length(); ++i)
     {
        //Find Odd Peak
@@ -90,7 +106,7 @@ string longestPalindrome(string s)
 #if 0
     for(int i=0; i<s.length(); ++i)
     {
-        LOGD("%d %c %d %d\n", i, s.at(i), flag[i][0], flag[i][1]);
+        LOGD("%d %c %d %d %d\n", i, s.at(i), flag[i][0], flag[i][2], flag[i][1]);
     }
     
     for(int i=0; i<OddPeak.size(); ++i)
@@ -194,11 +210,14 @@ void Test_longestPalindrome()
 //  string input = "ac";
 //  string input = "aba";
 //	string input = "abb";
+//	string input = "aaaaaa";
 //	string input = "aacbbbb";
 //	string input = "abacab";
 //	string input = "abcda";
 //	string input = "bananas";
-    string input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+//  string input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    string input = "azwdzwmwcqzgcobeeiphemqbjtxzwkhiqpbrprocbppbxrnsxnwgikiaqutwpftbiinlnpyqstkiqzbggcsdzzjbrkfmhgtnbujzszxsycmvipjtktpebaafycngqasbbhxaeawwmkjcziybxowkaibqnndcjbsoehtamhspnidjylyisiaewmypfyiqtwlmejkpzlieolfdjnxntonnzfgcqlcfpoxcwqctalwrgwhvqvtrpwemxhirpgizjffqgntsmvzldpjfijdncexbwtxnmbnoykxshkqbounzrewkpqjxocvaufnhunsmsazgibxedtopnccriwcfzeomsrrangufkjfzipkmwfbmkarnyyrgdsooosgqlkzvorrrsaveuoxjeajvbdpgxlcrtqomliphnlehgrzgwujogxteyulphhuhwyoyvcxqatfkboahfqhjgujcaapoyqtsdqfwnijlkknuralezqmcryvkankszmzpgqutojoyzsnyfwsyeqqzrlhzbc";
+	//"sooos"
     cout<<"Input: "<<input<<" : "<<longestPalindrome(input)<<endl;
 #endif
 }
