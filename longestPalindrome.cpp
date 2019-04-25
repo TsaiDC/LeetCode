@@ -10,6 +10,9 @@
 
 using namespace std;
 
+//#define LOGD(...) {printf("[D] %s(%d): ", __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
+#define LOGD(...)
+
 /*
 https://leetcode.com/problems/longest-palindromic-substring/
 Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
@@ -37,154 +40,122 @@ string longestPalindrome(string s)
 {
 #define LENGTH 1000
     cout<<"Input: "<<s<<endl;
+    if(s.length()<2){
+        return s;
+    }
+    vector<int>OddPeak;
+    vector<int>EvenPeak;
+    vector<string>retStr;
 	string ret ="";
-    if(s.length() <=1) {
-	    return s;
-	}
-    else if(s.length() ==2) {
-        if (s.at(0) != s.at(1)) {
-            ret.push_back(s.at(0));
-            return ret;
+    int flag[LENGTH][2];
+
+    memset(flag, 0, sizeof(int)*LENGTH*2);
+
+    //Check Odd Case, e.g. aba
+    for(int i=1; i<s.length()-1; ++i)
+    {
+        if (s.at(i-1) == s.at(i+1)) {
+            flag[i][0] = 1;
         }
         else {
-            return s;
-        }
+            flag[i][0] = 0;
+        }        
     }
 
-    int flag[LENGTH];
-    memset(flag, 0, sizeof(int)*LENGTH);
-	
-    for(int i=0; i<s.length(); ++i)
-    {        	
-        if (i==0) {            
-            flag[i] = 0;
-        }
-        else {
-            if(i!= s.length()-1) {
-                if (s.at(i-1) == s.at(i+1)) {
-                    flag[i] = flag[i-1] + 1;
-                }
-                else if (s.at(i-1) == s.at(i)) {
-                    flag[i] = flag[i-1] + 1;
-                }
-                else {
-                    flag[i] = 0;
-                }
-            }
-            else {
-                if (s.at(i-1) == s.at(i)) {
-                    flag[i] = flag[i-1] + 1;
-                }
-                else {
-                    flag[i] = 0;
-                }
-            }
-        }
-    }
-    
-    int ptr = 0, idx = 0,mdr = 0;
-    
-    for(int i=0; i<s.length(); ++i)
-    {
-        cout<<flag[i]<<" ";
-    }
-    cout<<endl;
-    
-    vector<int>peakPos;
-    vector<string>retStr;
+    //Check Even Case, e.g. aaaa
     for(int i=1; i<s.length(); ++i)
     {
-        if (flag[i] == 0 && flag[i-1] > 0) {
-            cout<<"Peak: " <<i-1<<endl;
-            peakPos.push_back(i-1);
-        }
-        else if (i == s.length()-1 && flag[i] != 0){
-            cout<<"Peak: " <<i<<endl;
-            peakPos.push_back(i);
-        }
-    }
-    
-    for (int i=0; i<peakPos.size(); ++i)
-    {
-        cout<<"Pos: "<< peakPos[i]<<endl;
-    
-        ret = "";
-        ptr = flag[peakPos[i]];
-        idx = peakPos[i];
-        
-        cout<<"idx: " <<idx<<endl;
-        mdr = idx - flag[idx]/2;    
-        cout<<"start: "<<mdr <<" str: "<<s.at(mdr)<<endl;
-        memset(flag, 0, sizeof(int)*LENGTH);
-        
-        bool isOdd = false;
-        if( (ptr < 3) &&
-            ((mdr-1) >=0) && 
-            ((mdr+1) <= s.length()-1) && 
-            s.at(mdr-1) == s.at(mdr+1)) {
-            isOdd = true;
-        }
-        
-        if (isOdd) {
-            cout<<"Odd" <<endl;
-            flag[mdr] = 1;
-            for (int i=1; i<s.length(); i++)
-            {
-                cout<<"Mdr: " <<mdr<<" i: "<<i<<" Leng: "<<s.length()<<endl;
-                if((mdr + i) > (s.length()-1) ||((mdr - i) < 0)) {
-                    break;
-                }
-
-                if (s.at(mdr + i) == s.at(mdr - i)) {
-                    flag[mdr + i] = 1;
-                    flag[mdr - i] = 1;
-                }
-                else {
-                    break;
-                }
-
-            }
+        if (s.at(i-1) == s.at(i)) {
+            flag[i][1] = flag[i-1][1] + 1;
         }
         else {
-            cout<<"Even" <<endl;      
-            for (int i=mdr, j=mdr-1; i<s.length() && j>=0; ++i, --j)
-            {
-                if (s.at(i) == s.at(j)) {
-                    flag[i] = 1;
-                    flag[j] = 1;                
-                }
-                else {
-                    break;
-                }
-            }
-        }
-        
-        cout<<"======"<<endl;
-        for(int i=0; i<s.length(); ++i)
-        {
-            cout<<flag[i]<<endl;
-            if (flag[i] ==1) {
-                ret.push_back(s.at(i));
-            }
-        }
-        cout<<endl;
-        cout<<"Str: "<<ret<<endl;
+            flag[i][1] = 0;
+        }        
+    }
+    
+    for(int i=1; i<s.length(); ++i)
+    {
+       //Find Odd Peak
+       if(flag[i][0] == 1) {
+           OddPeak.push_back(i);
+       }
+       //Find Even Peak
+       if(flag[i][1] ==0 && flag[i-1][1] != 0) {
+           EvenPeak.push_back(i-1);
+       }
+       else if(flag[i][1] !=0 && i == s.length()-1) {
+           EvenPeak.push_back(i);
+       }
+    }
+#if 0
+    for(int i=0; i<s.length(); ++i)
+    {
+        LOGD("%d %c %d %d\n", i, s.at(i), flag[i][0], flag[i][1]);
+    }
+    
+    for(int i=0; i<OddPeak.size(); ++i)
+    {
+        LOGD("Odd Peak %d\n", OddPeak[i]);
+    }
 
-        if(ret.length() ==0) {
-            ret.push_back(s.at(0));
+    for(int i=0; i<EvenPeak.size(); ++i)
+    {
+        LOGD("Even Peak %d\n", EvenPeak[i]);
+    }
+#endif
+#if 1
+    //Get Odd Peak STR
+    for(int i=0; i<OddPeak.size(); ++i)
+    {
+//        cout<<"----------- "<<OddPeak[i]<<endl;
+        int j = OddPeak[i];
+        int k=1;
+        ret = "";
+        ret.push_back(s.at(j));
+        
+        while((j-k>=0) && (j+k<s.length()) && (s.at(j-k) == s.at(j+k)))
+        {
+            ret = s.at(j-k) + ret + s.at(j+k);
+//            cout<<"Pos: "<<j<<" : "<<s.at(j-k)<<" " << ret<<" "<< s.at(j+k)<<endl;
+            ++k;
         }
+
+        retStr.push_back(ret);
+    }
+#endif
+
+    //Get Even Peak Str
+    for(int i=0; i<EvenPeak.size(); ++i)
+    {
+        int k, j;
+        k = EvenPeak[i] - flag[EvenPeak[i]][1]/2;
+        j = k-1;
+        LOGD("P: %d, val: %d, j: %d K: %d\n", EvenPeak[i], flag[EvenPeak[i]][1], j, k);
+        ret = "";
+        while(j>=0 && k<s.length())
+        {
+            if (s.at(j) == s.at(k)) {
+                ret = s.at(j) + ret + s.at(k);
+            }
+            else {
+                break;
+            }
+            --j;
+            ++k;
+        }
+        LOGD("Even: Result: %s\n", ret.c_str());
         retStr.push_back(ret);
     }
 
     ret ="";
     for(int i=0; i<retStr.size(); ++i)
     {
-        cout<<"Ans: "<<retStr[i]<<endl;
+//        LOGD("Ans: %s\n", retStr[i].c_str());
         if(retStr[i].size() > ret.size()) {
             ret = retStr[i];
         }
     }
-    
+
     if(ret.size() == 0) {
         ret.push_back(s.at(0));        
     }
@@ -195,6 +166,7 @@ string longestPalindrome(string s)
 void Test_longestPalindrome()
 {
     LOGD("%s\n", __TIME__);
+#if 0
 #define ITEM_NUM 7    
     string input[ITEM_NUM][2] = 
     {
@@ -206,26 +178,7 @@ void Test_longestPalindrome()
         {"abcda", "a"},
         {"bananas", "anana"},
     };
-    
-//  string input = "ac";
-//  string input = "aba";
-//	string input = "abb";
-//	string input = "aaaa";
-//	string input = "abacab";
-//	string input = "abcda";
-//	string input = "bananas";    
- /*   
-	for(int i=0; i<1000; ++i)
-    {
-	    input.push_back('a');
-//        cout<<i<<" "<<input.at(i)<<endl;
-    }
 
-    for(int i=0; i<input.length(); ++i)
-    {
-        cout<<i<<" "<<input.at(i)<<endl;
-    }
-*/
     for (int i=0; i< ITEM_NUM; ++i)
     {
         if (input[i][1] == longestPalindrome(input[i][0])) {
@@ -234,5 +187,18 @@ void Test_longestPalindrome()
         else {
             cout<<"Input: "<<input[i][0] << " Fail"<<endl;
         }
-    }    
+    }
+#endif
+
+#if 1
+//  string input = "ac";
+//  string input = "aba";
+//	string input = "abb";
+//	string input = "aacbbbb";
+//	string input = "abacab";
+//	string input = "abcda";
+//	string input = "bananas";
+    string input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    cout<<"Input: "<<input<<" : "<<longestPalindrome(input)<<endl;
+#endif
 }
