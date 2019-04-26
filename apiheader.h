@@ -9,4 +9,5 @@ void Test_lengthOfLongestSubstring();
 void Test_findMedianSortedArrays();
 void Test_longestPalindrome();
 void Test_intersect();
+void Test_convert();
 #endif

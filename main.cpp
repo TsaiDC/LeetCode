@@ -56,9 +56,14 @@ int main()
     Test_findMedianSortedArrays();
 #endif
 
-#if 1
+#if 0
 //#5
     Test_longestPalindrome();
+#endif
+
+#if 1
+//#6
+    Test_convert();
 #endif
 
 #if 0
