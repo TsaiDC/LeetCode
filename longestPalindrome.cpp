@@ -10,8 +10,12 @@
 
 using namespace std;
 
-//#define LOGD(...) {printf("[D] %s(%d): ", __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
+#define DEBUG 1
+#if DEBUG
 #define LOGD(...)
+#else
+#define LOGD(...) {printf("[D] %s(%d): ", __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
+#endif
 
 /*
 https://leetcode.com/problems/longest-palindromic-substring/
@@ -27,7 +31,6 @@ Example 2:
 Input: "cbbd"
 Output: "bb"
 
-
 abcba
 abccba
 abcccba
@@ -38,8 +41,7 @@ abbcdcbba
 
 string longestPalindrome(string s)
 {
-#define LENGTH 1000
-    cout<<"Input: "<<s<<endl;
+#define LENGTH 1000    
     if(s.length()<2){
         return s;
     }
@@ -74,36 +76,8 @@ string longestPalindrome(string s)
             flag[i][1] = 0;
         }
     }
-
-    //Refine Odd flag
-    for(int i=s.length()-1; i>=0; --i)
-    {
-	    if(flag[i][2] > 1) {
-		    int ptr = flag[i][2];
-		    for(int j=i, k=flag[i][2]; j>0 && k>0; --j, --k)
-			{
-			    flag[j][0] = 0;
-                flag[j][2] = 0;
-			}
-			flag[ptr/2][0] = 1;
-		}
-	}
-	
-    for(int i=1; i<s.length(); ++i)
-    {
-       //Find Odd Peak
-       if(flag[i][0] == 1) {
-           OddPeak.push_back(i);
-       }
-       //Find Even Peak
-       if(flag[i][1] ==0 && flag[i-1][1] != 0) {
-           EvenPeak.push_back(i-1);
-       }
-       else if(flag[i][1] !=0 && i == s.length()-1) {
-           EvenPeak.push_back(i);
-       }
-    }
-#if 0
+    
+#if DEBUG
     for(int i=0; i<s.length(); ++i)
     {
         LOGD("%d %c %d %d %d\n", i, s.at(i), flag[i][0], flag[i][2], flag[i][1]);
@@ -119,11 +93,57 @@ string longestPalindrome(string s)
         LOGD("Even Peak %d\n", EvenPeak[i]);
     }
 #endif
-#if 1
+
+    //Refine Odd flag
+    for(int i=s.length()-1; i>=0; --i)
+    {
+	    if(flag[i][2] > 1) {
+            LOGD("Refine: %d\n", i);
+            int ptr = flag[i][2];
+            for(int j=i, k=flag[i][2]; j>0 && k>0; --j, --k)
+            {
+                flag[j][0] = 0;
+                flag[j][2] = 0;
+            }
+            flag[i-(ptr/2)][0] = 1;
+		}
+	}
+
+    for(int i=1; i<s.length(); ++i)
+    {
+       //Find Odd Peak
+       if(flag[i][0] == 1) {
+           OddPeak.push_back(i);
+       }
+       //Find Even Peak
+       if(flag[i][1] ==0 && flag[i-1][1] != 0) {
+           EvenPeak.push_back(i-1);
+       }
+       else if(flag[i][1] !=0 && i == s.length()-1) {
+           EvenPeak.push_back(i);
+       }
+    }
+#if DEBUG
+    for(int i=0; i<s.length(); ++i)
+    {
+        LOGD("%d %c %d %d %d\n", i, s.at(i), flag[i][0], flag[i][2], flag[i][1]);
+    }
+    
+    for(int i=0; i<OddPeak.size(); ++i)
+    {
+        LOGD("Odd Peak %d\n", OddPeak[i]);
+    }
+
+    for(int i=0; i<EvenPeak.size(); ++i)
+    {
+        LOGD("Even Peak %d\n", EvenPeak[i]);
+    }
+#endif
+
     //Get Odd Peak STR
     for(int i=0; i<OddPeak.size(); ++i)
     {
-//        cout<<"----------- "<<OddPeak[i]<<endl;
+        LOGD("----------- \n", OddPeak[i]);
         int j = OddPeak[i];
         int k=1;
         ret = "";
@@ -138,7 +158,6 @@ string longestPalindrome(string s)
 
         retStr.push_back(ret);
     }
-#endif
 
     //Get Even Peak Str
     for(int i=0; i<EvenPeak.size(); ++i)
@@ -166,7 +185,7 @@ string longestPalindrome(string s)
     ret ="";
     for(int i=0; i<retStr.size(); ++i)
     {
-//        LOGD("Ans: %s\n", retStr[i].c_str());
+        LOGD("Ans: %s\n", retStr[i].c_str());
         if(retStr[i].size() > ret.size()) {
             ret = retStr[i];
         }
@@ -182,8 +201,8 @@ string longestPalindrome(string s)
 void Test_longestPalindrome()
 {
     LOGD("%s\n", __TIME__);
-#if 0
-#define ITEM_NUM 7    
+#if 1
+#define ITEM_NUM 8
     string input[ITEM_NUM][2] = 
     {
         {"ac",  "a"},
@@ -193,6 +212,7 @@ void Test_longestPalindrome()
         {"abacab", "bacab"},
         {"abcda", "a"},
         {"bananas", "anana"},
+        {"abppbcsooosw", "sooos"},
     };
 
     for (int i=0; i< ITEM_NUM; ++i)
@@ -206,7 +226,7 @@ void Test_longestPalindrome()
     }
 #endif
 
-#if 1
+#if 0
 //  string input = "ac";
 //  string input = "aba";
 //	string input = "abb";
@@ -216,7 +236,8 @@ void Test_longestPalindrome()
 //	string input = "abcda";
 //	string input = "bananas";
 //  string input = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    string input = "azwdzwmwcqzgcobeeiphemqbjtxzwkhiqpbrprocbppbxrnsxnwgikiaqutwpftbiinlnpyqstkiqzbggcsdzzjbrkfmhgtnbujzszxsycmvipjtktpebaafycngqasbbhxaeawwmkjcziybxowkaibqnndcjbsoehtamhspnidjylyisiaewmypfyiqtwlmejkpzlieolfdjnxntonnzfgcqlcfpoxcwqctalwrgwhvqvtrpwemxhirpgizjffqgntsmvzldpjfijdncexbwtxnmbnoykxshkqbounzrewkpqjxocvaufnhunsmsazgibxedtopnccriwcfzeomsrrangufkjfzipkmwfbmkarnyyrgdsooosgqlkzvorrrsaveuoxjeajvbdpgxlcrtqomliphnlehgrzgwujogxteyulphhuhwyoyvcxqatfkboahfqhjgujcaapoyqtsdqfwnijlkknuralezqmcryvkankszmzpgqutojoyzsnyfwsyeqqzrlhzbc";
+//    string input = "azwdzwmwcqzgcobeeiphemqbjtxzwkhiqpbrprocbppbxrnsxnwgikiaqutwpftbiinlnpyqstkiqzbggcsdzzjbrkfmhgtnbujzszxsycmvipjtktpebaafycngqasbbhxaeawwmkjcziybxowkaibqnndcjbsoehtamhspnidjylyisiaewmypfyiqtwlmejkpzlieolfdjnxntonnzfgcqlcfpoxcwqctalwrgwhvqvtrpwemxhirpgizjffqgntsmvzldpjfijdncexbwtxnmbnoykxshkqbounzrewkpqjxocvaufnhunsmsazgibxedtopnccriwcfzeomsrrangufkjfzipkmwfbmkarnyyrgdsooosgqlkzvorrrsaveuoxjeajvbdpgxlcrtqomliphnlehgrzgwujogxteyulphhuhwyoyvcxqatfkboahfqhjgujcaapoyqtsdqfwnijlkknuralezqmcryvkankszmzpgqutojoyzsnyfwsyeqqzrlhzbc";
+    string input = "abppbcsooosw";
 	//"sooos"
     cout<<"Input: "<<input<<" : "<<longestPalindrome(input)<<endl;
 #endif
