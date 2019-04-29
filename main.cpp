@@ -61,9 +61,14 @@ int main()
     Test_longestPalindrome();
 #endif
 
-#if 1
+#if 0
 //#6
     Test_convert();
+#endif
+
+#if 1
+//#7
+    Test_reverse();
 #endif
 
 #if 0
