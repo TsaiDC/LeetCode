@@ -4,6 +4,7 @@
 #include <string.h>
 #include <vector>
 #include <sstream>
+#include <cmath>
 
 #include "apiheader.h"
 
@@ -45,24 +46,37 @@ int reverse(int x)
     int input = x;
     string ret ="", tmpStr;
     int retInt = 0;
-    if(input < 0) {
-        ret += "-";
-        input *= -1;
-    }
+	double retDouble = 0;
+	double min = -(pow(2,31));
+	double max = (pow(2,31))-1;
+
     std::stringstream ss;
     ss<<input;
     tmpStr = ss.str();
     cout<<"Str: "<<tmpStr <<endl;
   
-    for (std::string::reverse_iterator rit=tmpStr.rbegin(); rit!=tmpStr.rend(); ++rit)
-    {
-      std::cout << *rit;
-      ret +=*rit;
-    }
-  
-    std::istringstream is(ret);
-    is >> retInt;
-    
+    LOGD("Length: %d\n", tmpStr.length());
+	int j = x < 0 ? 1 : 0;
+	
+    for(int i = (tmpStr.length()-1);i >= j; --i)
+	{
+	    cout<<tmpStr.at(i);
+	    ret.push_back(tmpStr.at(i));
+	}
+    cout<<endl;
+	
+	if(x<0) {
+	    ret = "-"+ret;
+	}
+	istringstream(ret.c_str()) >> retDouble;
+	cout<<"Double: "<<retDouble<<endl;
+	cout<<"Max: "<<max <<" min: "<<min<<endl;
+	if(retDouble > max || retDouble < min) {
+	    retInt = 0;
+	}
+	else {
+	    retInt = (int)retDouble;
+	}
     LOGD("Result Str: %s, retInt: %d\n", ret.c_str(), retInt);
     
     return retInt;
@@ -71,5 +85,8 @@ int reverse(int x)
 void Test_reverse()
 {
     LOGD("%s\n", __TIME__);
-    reverse(-2147483648);
+//    reverse(-2147483648);
+//	reverse(-1234);
+//    reverse(123);
+	reverse(1534236469);	
 }
