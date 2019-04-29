@@ -45,11 +45,39 @@ P     I
 
 string convert(string s, int numRows) 
 {
-    string ret = "TBD";
+    cout<<"Input: "<<s<<" Row: "<<numRows<<endl;
+
+    if(numRows <= 1) {
+        return s;
+    }
+    string ret = "";
+    int strLen = s.length();
+    int blockSize = numRows + (numRows-2);
+    int blocks = (strLen+blockSize)/blockSize;
+
+    LOGD("Strleng: %d, Block Size: %d, Block: %d\n", strLen, blockSize, blocks);
+    int x=blocks*(numRows-1), row=numRows;
+    int tmp = 0;
+
+    for(int j=0; j<row ; ++j)
+    {
+        for(int i=0; i<x; ++i)
+        {
+            if((i%(row-1) == 0) || ((i+j)%(row-1) == 0)) {
+                tmp = 2*i+j;
+//                printf("%d ", tmp);
+                if(tmp<strLen) {
+                    ret.push_back(s.at(tmp));
+                }
+            }
+        }
+    }
+//    printf("\n");
+    LOGD("Result: %s\n", ret.c_str());
     return ret;
 }
 void Test_convert()
 {
     LOGD("%s\n", __TIME__);
-    convert("AAA", 3);
+    convert("", 5);
 }
