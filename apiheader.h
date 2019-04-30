@@ -12,4 +12,5 @@ void Test_intersect();
 void Test_convert();
 void Test_reverse();
 void Test_myAtoi();
+void Test_isPalindrome();
 #endif

@@ -71,9 +71,14 @@ int main()
     Test_reverse();
 #endif
 
-#if 1
+#if 0
 //#8
     Test_myAtoi();
+#endif
+
+#if 1
+//#9
+    Test_isPalindrome();
 #endif
 
 #if 0
