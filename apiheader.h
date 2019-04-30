@@ -11,4 +11,5 @@ void Test_longestPalindrome();
 void Test_intersect();
 void Test_convert();
 void Test_reverse();
+void Test_myAtoi();
 #endif

@@ -66,9 +66,14 @@ int main()
     Test_convert();
 #endif
 
-#if 1
+#if 0
 //#7
     Test_reverse();
+#endif
+
+#if 1
+//#8
+    Test_myAtoi();
 #endif
 
 #if 0
