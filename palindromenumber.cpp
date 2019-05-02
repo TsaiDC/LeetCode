@@ -44,6 +44,9 @@ Coud you solve it without converting the integer to a string?
 bool isPalindrome(int x)
 {
     cout<<"Input: "<<x<<endl;
+	if(x<0) {
+	    return false;
+	}
     return true;
 }
 
