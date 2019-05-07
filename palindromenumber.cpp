@@ -5,17 +5,21 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
+#include <cmath>
 
 #include "apiheader.h"
 
 using namespace std;
 
+#if 0
 #define DEBUG 1
 #if DEBUG
-#define LOGD(...)
-#else
 #define LOGD(...) {printf("[D] %s(%d): ", __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
+#else
+#define LOGD(...)
 #endif
+#endif
+#define LOGD(...) {printf("[D] %s(%d): ", __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
 
 /*
 https://leetcode.com/problems/palindrome-number/
@@ -47,11 +51,39 @@ bool isPalindrome(int x)
 	if(x<0) {
 	    return false;
 	}
+
+	int input = x;
+	int digits = 8;
+	int n = digits - 1;
+    int j, f;
+	int quotient, remainder;	
+
+	while (n>0)
+	{
+        f = 1;
+        j = 0;
+        while(j<n)
+        {
+            f*=10;
+            ++j;
+        }
+        
+		quotient = input/f;
+		remainder = input%10;
+		input = input- f*quotient;
+		input /= 10;
+		LOGD("N: %d, f: %d, quotient: %d, remainder: %d, new input: %d \n", n, f, quotient, remainder, input);
+        --n;
+	}
+    LOGD("Done \n");
     return true;
 }
 
 void Test_isPalindrome()
 {
     LOGD("%s\n", __TIME__);
-	isPalindrome(1534236469);	
+    isPalindrome(12344321);
+
+    int xx = pow(10,7);
+    LOGD ("Test Ans: %d\n", xx);	
 }
