@@ -11,15 +11,19 @@
 
 using namespace std;
 
-#if 0
+#define NONE "\033[m"
+#define RED  "\033[0;32;31m"
+#define CYAN "\033[0;36m"
+
 #define DEBUG 1
 #if DEBUG
-#define LOGD(...) {printf("[D] %s(%d): ", __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
+#define LOGD(...) {printf(CYAN "[D] %s(%d): " NONE, __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
+#define LOGE(...) {printf(RED "[E] %s(%d): " NONE, __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
 #else
 #define LOGD(...)
+#define LOGE(...)
 #endif
-#endif
-#define LOGD(...) {printf("[D] %s(%d): ", __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
+
 
 /*
 https://leetcode.com/problems/palindrome-number/
@@ -46,17 +50,24 @@ Coud you solve it without converting the integer to a string?
 */
 
 bool isPalindrome(int x)
-{
+{ 
     cout<<"Input: "<<x<<endl;
 	if(x<0) {
 	    return false;
 	}
 
 	int input = x;
-	int digits = 8;
-	int n = digits - 1;
+	int n = 0;	
     int j, f;
 	int quotient, remainder;	
+    
+    while( input/10 !=0)
+    {
+        input /=10;
+        ++n;
+    }
+    input = x;    
+    LOGD("Input: %d, Digit: %d\n", input, n);
 
 	while (n>0)
 	{
@@ -70,10 +81,14 @@ bool isPalindrome(int x)
         
 		quotient = input/f;
 		remainder = input%10;
+        if(quotient != remainder) {
+            LOGE("FAIL N: %d, f: %d, quotient: %d, remainder: %d, new input: %d \n", n, f, quotient, remainder, input);
+            return false;
+        }
 		input = input- f*quotient;
 		input /= 10;
 		LOGD("N: %d, f: %d, quotient: %d, remainder: %d, new input: %d \n", n, f, quotient, remainder, input);
-        --n;
+        n-=2;
 	}
     LOGD("Done \n");
     return true;
@@ -82,8 +97,33 @@ bool isPalindrome(int x)
 void Test_isPalindrome()
 {
     LOGD("%s\n", __TIME__);
-    isPalindrome(12344321);
-
-    int xx = pow(10,7);
-    LOGD ("Test Ans: %d\n", xx);	
+#define ITEM_NUM 5
+    int input[ITEM_NUM] = 
+    {
+        1,
+        121,
+        -121,
+        10,
+        1001001,
+    };
+    
+    bool output[ITEM_NUM] = 
+    {
+        true,
+        true,
+        false,
+        false,
+        true,
+    };
+#if 1
+    for(int i=0; i<ITEM_NUM; ++i)
+    {    
+        if (isPalindrome(input[i]) != output[i]) {
+            LOGE("Fail i: %d Input: %d\n", i, input[i]);
+        }
+    }
+#else
+    isPalindrome(123);
+#endif
+    LOGD("Done \n");
 }
