@@ -76,9 +76,14 @@ int main()
     Test_myAtoi();
 #endif
 
-#if 1
+#if 0
 //#9
     Test_isPalindrome();
+#endif
+
+#if 1
+//#10
+    Test_isMatch();
 #endif
 
 #if 0
