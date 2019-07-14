@@ -14,4 +14,6 @@ void Test_reverse();
 void Test_myAtoi();
 void Test_isPalindrome();
 void Test_isMatch();
+//For Special Test
+void Test_sorting();
 #endif

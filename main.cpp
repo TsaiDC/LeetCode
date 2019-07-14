@@ -81,9 +81,13 @@ int main()
     Test_isPalindrome();
 #endif
 
-#if 1
+#if 0
 //#10
     Test_isMatch();
+#endif
+
+#if 1
+    Test_sorting();
 #endif
 
 #if 0
