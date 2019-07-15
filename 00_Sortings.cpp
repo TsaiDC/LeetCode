@@ -83,14 +83,35 @@ void doSelectionSort(int* pData, int leng)
 void doBubbleSort(int* pData, int leng)
 {
     LOGD("\n");
+	int i, j, tmp;
+	bool isSwap = true;
+	for(i=0; i<leng-1 && isSwap == true; i++)
+	{
+	    isSwap = false;
+	    for(j=0; j<leng-1; ++j)
+		{
+		    if(pData[j+1]<pData[j]) {
+//			    LOGD("Swap pData[%d]=%d, pData[%d]=%d\n", j+1, pData[j+1], j, pData[j]);
+			    tmp = pData[j+1];
+				pData[j+1] = pData[j];
+				pData[j] = tmp;
+				isSwap = true;
+			}
+		}
+	}
+}
+
+void doQuickSort(int* pData, int i, int j, int p)
+{
+    LOGD("\n");
 }
 
 void Test_sorting()
 {
     LOGD("%s\n", __TIME__);
 
-//	int iData [] = {72,63,42,27,79,3,32,71,88,73};
-    int iData [] = {75,98,97,12,82,78,91,21,72,70};
+	int iData [] = {72,63,42,27,79,3,32,71,88,73};
+//    int iData [] = {75,98,97,12,82,78,91,21,72,70};
 	int Num = sizeof(iData)/sizeof(iData[0]);	
 	LOGD("Input Data Num: %d\n", Num);
 	
