@@ -178,33 +178,70 @@ void doQuickSort(int* pData, int i, int j)
     doQuickSort(pData, x+1, j);
 }
 
-void doMergeSort(int* pData, int i, int j)
+void doMergeSort(int* pData, int i, int j, int* oData)
 {
     LOGD("Range: %d -> %d, (%d <-> %d), (%d <->%d)\n", i, j, i, i+(j-i)/2, i+(j-i)/2 + 1, j);
 
     int tmp = 0;
     if(j-i == 0 || j-i == 1) {
-        LOGD("Single Item i: %d, j: %d\n", i, j);
+//        LOGD("Single Item i: %d, j: %d\n", i, j);
         if(pData[i] > pData[j]) {
             tmp = pData[i];
             pData[i] = pData[j];
             pData[j] = tmp;            
         }
-        showList(pData, 10);
+//        showList(pData, 10);
         return;
     }
 
-    doMergeSort(pData, i, i+(j-i)/2);
-    doMergeSort(pData, i+(j-i)/2 + 1, j);
-    LOGD("Start Merge i: %d, j: %d\n", i, j);
+    doMergeSort(pData, i, i+(j-i)/2, oData);
+    doMergeSort(pData, i+(j-i)/2 + 1, j, oData);
+	int i1 = i, j1 = i+(j-i)/2;
+	int i2 = i+(j-i)/2 + 1, j2 = j;
+//    LOGE("Start Merge i: %d, j: %d, (%d->%d), (%d->%d)\n", i, j, i1, j1, i2, j2);
+	
+	int io = i;
+	while (i1<=j1 && i2<=j2)
+	{
+	    if(pData[i1]<pData[i2]) {
+		    oData[io] = pData[i1];
+			++i1;
+		}
+		else {
+			oData[io] = pData[i2];
+			++i2;
+		}
+		++io;
+	}
+	while(i1<=j1)
+	{
+	    oData[io] = pData[i1];
+		++i1;
+		++io;
+	}
+	while(i2<=j2)
+	{
+		oData[io] = pData[i2];
+		++i2;
+		++io;
+	}
+	//Copy back
+	while(i<=j)
+	{
+	    pData[i] = oData[i];
+		++i;
+	}
+//    showList(oData, 10);
+//    showList(pData, 10);
 }
 
 void Test_sorting()
 {
     LOGI("%s\n", __TIME__);
 
-//	int iData [] = {72,63,42,27,79,3,32,71,88,73};
-    int iData [] = {75,98,97,12,82,78,91,21,72,70};
+	int iData [] = {72,63,42,27,79,3,32,71,88,73};
+//    int iData [] = {75,98,97,12,82,78,91,21,72,70};
+	int oData [10] = { 0 };
 	int Num = sizeof(iData)/sizeof(iData[0]);	
 	LOGI("Input Data Num: %d\n", Num);
 	showList(iData, Num);
@@ -213,14 +250,10 @@ void Test_sorting()
 //    doSelectionSort(iData, Num);
 //    doBubbleSort(iData, Num);
 //    doQuickSort(iData, 0, Num-1);
-    doMergeSort(iData, 0, Num-1);
-    
+    doMergeSort(iData, 0, Num-1, oData);
+	
     LOGI("+++Result\n");
-    for(int i=0; i<Num; ++i)
-    {
-        printf("%d ", iData[i]);
-    }
-    printf("\n");
+	showList(iData, Num);
     LOGI("---Result\n");
     LOGI("Done \n");
 }
