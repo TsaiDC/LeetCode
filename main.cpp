@@ -86,8 +86,12 @@ int main()
     Test_isMatch();
 #endif
 
-#if 1
+#if 0
     Test_sorting();
+#endif
+
+#if 1
+    Test_sortingList();
 #endif
 
 #if 0

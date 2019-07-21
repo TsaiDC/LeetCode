@@ -32,142 +32,7 @@ Sortings:
 http://notepad.yehyeh.net/Content/Algorithm/Sort/Sort.php
 */
 
-//
-// Create Linked List
-//
-typedef struct Node_s {
-    struct Node_s *pNext;
-    int mVal;
-}Node_t;
-
-Node_t* getList(int start, int end, bool isReverse)
-{
-    LOGD("\n");
-    Node_t *pHead, *pTmp, *pTail;
-
-    for(int i = start; i<=end && !isReverse; ++i)
-    {
-        pTmp = (Node_t*)malloc(sizeof(Node_t));
-        pTmp->mVal = i;
-        pTmp->pNext=NULL;
-        if(i==start) {
-            pHead = pTmp;
-            pTail = pTmp;
-        }
-        else {
-            pTail->pNext = pTmp;
-            pTail = pTmp;
-        }
-    }
-
-    for(int i = end; i>=start && isReverse; --i)
-    {
-        pTmp = (Node_t*)malloc(sizeof(Node_t));
-        pTmp->mVal = i;
-        pTmp->pNext=NULL;
-        if(i==end) {
-            pHead = pTmp;
-            pTail = pTmp;
-        }
-        else {
-            pTail->pNext = pTmp;
-            pTail = pTmp;
-        }
-    }
-    
-    return pHead;
-}
-
-Node_t* mergeList(Node_t* pList1, int list1_num, Node_t* pList2, int list2_num)
-{
-    LOGE("\n");
-    int num1 = list1_num;
-    int num2 = list2_num;
-    Node_t *p1, *p2, *pRet, *pTmp;
-    p1 = pList1;
-    p2 = pList2;
-    pRet = NULL;
-    
-    if (p1->mVal > p2->mVal) {        
-        pRet = p2;
-        p2 = p2->pNext;
-        --num2;
-    }
-    else {
-        pRet = p1;
-        p1 = p1->pNext;
-        --num1;
-    }
-    pTmp = pRet;
-
-    while( (num1>0) || (num2 > 0))
-    {
-        if(p1==NULL && num1>0) {
-            LOGE("Error list1\n");
-            break;
-        }
-        if(p2==NULL && num2>0) {
-            LOGE("Error list2\n");
-            break;
-        }
-        
-        LOGE("Num1: %d, Num2: %d\n", num1, num2);
-        if((num1>0) || (num2 > 0)) {
-            if(p1->mVal < p2->mVal) {
-                pTmp->pNext = p1;                
-                p1 = p1->pNext;
-                --num1;
-            }
-            else {
-                pTmp->pNext = p2;
-                p2 = p2->pNext;
-                --num2;
-            }
-        }
-        else if(num1>0 && num2 <=0) {
-            pTmp->pNext = p1;
-            p1 = p1->pNext;
-        }
-        else if(num1<=0 && num2 > 0) {
-            pTmp->pNext = p2;
-            p2 = p2->pNext;            
-        }
-        else {
-            break;
-        }
-        pTmp = pTmp->pNext;
-    }
-    
-    return pRet;
-}
-
-void showList(Node_t* pHead)
-{
-    Node_t* pTmp = pHead;
-    printf("Show <-- ");
-    while(pTmp!=NULL)
-    {
-        printf("%d ", pTmp->mVal);
-        pTmp = pTmp->pNext;
-    }
-    printf(" -->\n");    
-}
-
-void freeList(Node_t *pHead)
-{
-    Node_t* pTmp = NULL;
-    printf("Free <-- ");
-    while(pHead!=NULL)
-    {
-        pTmp = pHead;
-        pHead=pHead->pNext;
-        printf("%d ", pTmp->mVal);
-        free(pTmp);
-    }
-    printf(" -->\n");
-}
-
-void showList(int* pData, int leng)
+static void showList(int* pData, int leng)
 {
     printf("<-- ");
     for(int i=0; i<leng; ++i)
@@ -184,10 +49,10 @@ void doInsertionSort(int* pData, int leng)
     int i, j;
     bool isSwap = false;
     for(i=1; i<leng; ++i)
-	{    
+    {    
         tmp = pData[i];
         LOGE("PTR: %d, data: %d\n", i, tmp);
-	    for(j=i; j>0 && tmp < pData[j-1]; --j)
+        for(j=i; j>0 && tmp < pData[j-1]; --j)
         {                        
             LOGE("SHIFT   pData[%d]=%d <-> pData[%d]=%d\n", j, pData[j], j-1, pData[j-1]);
             pData[j] = pData[j-1];
@@ -195,7 +60,7 @@ void doInsertionSort(int* pData, int leng)
 
         LOGE("SWAP    i: %d j: %d, pData: %d\n", i, j, pData[j]);
         pData[j] = tmp;               
-	}
+    }
 }
 
 void doSelectionSort(int* pData, int leng)
@@ -231,22 +96,22 @@ void doSelectionSort(int* pData, int leng)
 void doBubbleSort(int* pData, int leng)
 {
     LOGD("\n");
-	int i, j, tmp;
-	bool isSwap = true;
-	for(i=0; i<leng-1 && isSwap == true; i++)
-	{
-	    isSwap = false;
-	    for(j=0; j<leng-1; ++j)
-		{
-		    if(pData[j+1]<pData[j]) {
-//			    LOGD("Swap pData[%d]=%d, pData[%d]=%d\n", j+1, pData[j+1], j, pData[j]);
-			    tmp = pData[j+1];
-				pData[j+1] = pData[j];
-				pData[j] = tmp;
-				isSwap = true;
-			}
-		}
-	}
+    int i, j, tmp;
+    bool isSwap = true;
+    for(i=0; i<leng-1 && isSwap == true; i++)
+    {
+        isSwap = false;
+        for(j=0; j<leng-1; ++j)
+        {
+            if(pData[j+1]<pData[j]) {
+//              LOGD("Swap pData[%d]=%d, pData[%d]=%d\n", j+1, pData[j+1], j, pData[j]);
+                tmp = pData[j+1];
+                pData[j+1] = pData[j];
+                pData[j] = tmp;
+                isSwap = true;
+            }
+        }
+    }
 }
 
 void doQuickSort(int* pData, int i, int j)
@@ -331,41 +196,41 @@ void doMergeSort(int* pData, int i, int j, int* oData)
 
     doMergeSort(pData, i, i+(j-i)/2, oData);
     doMergeSort(pData, i+(j-i)/2 + 1, j, oData);
-	int i1 = i, j1 = i+(j-i)/2;
-	int i2 = i+(j-i)/2 + 1, j2 = j;
+    int i1 = i, j1 = i+(j-i)/2;
+    int i2 = i+(j-i)/2 + 1, j2 = j;
 //    LOGE("Start Merge i: %d, j: %d, (%d->%d), (%d->%d)\n", i, j, i1, j1, i2, j2);
-	
-	int io = i;
-	while (i1<=j1 && i2<=j2)
-	{
-	    if(pData[i1]<pData[i2]) {
-		    oData[io] = pData[i1];
-			++i1;
-		}
-		else {
-			oData[io] = pData[i2];
-			++i2;
-		}
-		++io;
-	}
-	while(i1<=j1)
-	{
-	    oData[io] = pData[i1];
-		++i1;
-		++io;
-	}
-	while(i2<=j2)
-	{
-		oData[io] = pData[i2];
-		++i2;
-		++io;
-	}
-	//Copy back
-	while(i<=j)
-	{
-	    pData[i] = oData[i];
-		++i;
-	}
+    
+    int io = i;
+    while (i1<=j1 && i2<=j2)
+    {
+        if(pData[i1]<pData[i2]) {
+            oData[io] = pData[i1];
+            ++i1;
+        }
+        else {
+            oData[io] = pData[i2];
+            ++i2;
+        }
+        ++io;
+    }
+    while(i1<=j1)
+    {
+        oData[io] = pData[i1];
+        ++i1;
+        ++io;
+    }
+    while(i2<=j2)
+    {
+        oData[io] = pData[i2];
+        ++i2;
+        ++io;
+    }
+    //Copy back
+    while(i<=j)
+    {
+        pData[i] = oData[i];
+        ++i;
+    }
 //    showList(oData, 10);
 //    showList(pData, 10);
 }
@@ -384,36 +249,24 @@ void Test_sorting()
 {
     LOGI("%s\n", __TIME__);
 
-    Node_t *pList1, *pList2, *pList3;
-#if 0
-	int iData [] = {72,63,42,27,79,3,32,71,88,73};
+#if 1
+    int iData [] = {72,63,42,27,79,3,32,71,88,73};
 //    int iData [] = {75,98,97,12,82,78,91,21,72,70};
-	int oData [10] = { 0 };
-	int Num = sizeof(iData)/sizeof(iData[0]);	
-	LOGI("Input Data Num: %d\n", Num);
-	showList(iData, Num);
+    int oData [10] = { 0 };
+    int Num = sizeof(iData)/sizeof(iData[0]);   
+    LOGI("Input Data Num: %d\n", Num);
+    showList(iData, Num);
 
 //    doInsertionSort(iData, Num);
 //    doSelectionSort(iData, Num);
 //    doBubbleSort(iData, Num);
 //    doQuickSort(iData, 0, Num-1);
-//    doMergeSort(iData, 0, Num-1, oData);
+    doMergeSort(iData, 0, Num-1, oData);
 //    doHanoi(4, 'A', 'B', 'C');
-	
+    
     LOGI("+++Result\n");
-	showList(iData, Num);
+    showList(iData, Num);
     LOGI("---Result\n");
     LOGI("Done \n");
-#endif
-#if 1
-    pList1 = getList(0,9, false);
-    pList2 = getList(10,19, false);
-    showList(pList1);
-    showList(pList2);
-    freeList(pList1);
-    freeList(pList2);
-    pList3 = mergeList(pList1, 5, pList2, 5);
-//    showList(pList3);
-//    freeList(pList3);
 #endif
 }
