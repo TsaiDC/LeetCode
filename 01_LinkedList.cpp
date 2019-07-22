@@ -34,6 +34,27 @@ Sortings:
 http://notepad.yehyeh.net/Content/Algorithm/Sort/Sort.php
 */
 
+#if 0
+https://www.itread01.com/content/1550181095.html
+public static int[] bigNumberMultiply2(int[] num1, int[] num2){
+    int[] result = new int[num1.length + num2.length];
+
+    for (int i = 0; i < num1.length; i++){
+        for (int j = 0; j < num2.length; j++){
+            result[i + j + 1] += num1[i] * num2[j];
+        }
+    }
+
+    for(int k = result.length-1; k > 0; k--){
+        if(result[k] > 10){
+            result[k - 1] += result[k] / 10;
+            result[k] %= 10;
+        }
+    }
+    return result;
+}
+#endif
+
 //
 // Create Linked List
 //
