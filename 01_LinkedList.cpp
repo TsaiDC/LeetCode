@@ -99,7 +99,7 @@ static Node_t* removeNode(Node_t *pData)
     return pData;
 }
 
-static void insertToNodeRight(Node_t *pHead, Node_t *pData)
+static Node_t* insertToNodeRight(Node_t *pHead, Node_t *pData)
 {    
     Node_t *pHR = pHead->pNext;
     
@@ -109,10 +109,11 @@ static void insertToNodeRight(Node_t *pHead, Node_t *pData)
 
     if (pHR != NULL) {
         pHR->pPre = pData;
-    }   
-}
+    }
+    return pHead;
+}   
 
-static void insertToNodeLeft(Node_t *pHead, Node_t *pData)
+static Node_t* insertToNodeLeft(Node_t *pHead, Node_t *pData)
 {
     Node_t *pHL = pHead->pPre;
 
@@ -121,6 +122,10 @@ static void insertToNodeLeft(Node_t *pHead, Node_t *pData)
     pData->pPre = pHL;        
     if(pHL!= NULL) {
         pHL->pNext=pData;
+        return pHead;
+    } 
+    else {
+        return pData;
     }
 }
 
@@ -204,6 +209,7 @@ Node_t* mergeList(Node_t* pList1, int list1_num, Node_t* pList2, int list2_num)
         LOGE("Num1: %d Val: %d, Num2: %d, Val: %d\n", num1, p1->mVal, num2, p2->mVal);
 
         if(p1->mVal > p2->mVal) {
+            LOGD("Remove %d, Insert\n", p2->mVal);
             //Remove p2
             pNode = p2;
             p2 = p2->pNext;
@@ -213,16 +219,22 @@ Node_t* mergeList(Node_t* pList1, int list1_num, Node_t* pList2, int list2_num)
             insertToNodeLeft(p1, pNode);
             if (pList == NULL) {
                 pList = pNode;
-            }
+            }            
         }
         else {
+            LOGD("Move to Next %d\n", p1->mVal);
             if (pList == NULL) {
                 pList = p1;
-            }        
+            } 
+            if(--num1 == 0) {
+                break;
+            }
             p1 = p1->pNext;
-            --num1;
         }
+        showList("## ", pList1);
     }
+    
+    LOGD("=============== NUM1: %d, NUM2: %d\n", num1, num2);
 
     pList->pPre = pS;
     if(pS != NULL) {
@@ -280,10 +292,19 @@ void Test_sortingList()
     LOGI("%s\n", __TIME__);
 
     Node_t *pList1, *pList2, *pList3, *pNode;
+
+#if 1
+    pList2 = getList(1,3, false);
+    pList1 = getList(2,4, false);
+#else
+    addNode(&pList1, &pNode, 1);
+    addNode(&pList1, &pNode, 3);
+    addNode(&pList1, &pNode, 5);
     
-    pList1 = getList(1,3, false);
-    pList2 = getList(2,4, false);
-    
+    addNode(&pList2, &pNode, 2);
+    addNode(&pList2, &pNode, 4);
+    addNode(&pList2, &pNode, 6);
+#endif
     //Combine 2 lists
     Node_t* pTail = pList1;
     while(pTail->pNext != NULL) {
@@ -294,7 +315,22 @@ void Test_sortingList()
 
     showList("L1", pList1);
     showList("L2", pList2);
-    mergeList(pList1, 3, pList2, 3);
+/*    
+    pNode = pList2;
+    pList2 = pList2->pNext;
+    removeNode(pNode);
+    showList("0L1", pList1);
+    pNode = insertToNodeLeft(pList1, pNode);
+    if (pList1!=pNode){
+        LOGD ("Update Head\n");
+        pList1 = pNode;
+    }
+    showList("1L1", pList1);
+*/
+    
+    mergeList(pList1, 3, pList2, 3);      
+//    showListNum("XL1", pList1, 6);
+
 //    pNode = removeNode(&pList2);
 //    LOGD ("Remove Node: %d\n", pNode->mVal);
 //    showList("XL1", pList1);
@@ -313,5 +349,5 @@ void Test_sortingList()
 //    LOGD ("P3 Node: %d\n", pList3->mVal);
 //    insertToNodeRight(&pList3, pNode);
 //    showList("XL2", pList1);
-    freeList(pList1);
+//    freeList(pList1);
 }
