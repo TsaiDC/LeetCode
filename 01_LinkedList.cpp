@@ -70,16 +70,175 @@ class CNodeList
 public:
     CNodeList():mNum(0), pHead(NULL), pTail(NULL){}
     ~CNodeList();
-    bool getVal(int idx, int* outVal);
+    int getVal(int idx);
     void addNode(int val);
     void showList();
-    void swap(int idx1, int idx2);
+    bool swapNode(int idx1, int idx2);
+    int getNum();
+    CNode* removeNode(int idx);
+    bool insertToLeft(int idx, CNode* pNode);
     
 private:
     int mNum;
     CNode* pHead;
     CNode* pTail;
 };
+
+bool CNodeList::insertToLeft(int idx, CNode* pNode)
+{
+    if (idx >= mNum){
+        return false;
+    }
+    
+    CNode* ptr = pHead;
+    CNode *pP, *pN;
+    int i=0;
+    while(i!=idx)
+    {
+        if(i==idx)
+            break;
+        ++i;
+        ptr = ptr->pNext;
+    }    
+}
+
+int CNodeList::getNum()
+{
+    return mNum;
+}
+
+CNode* CNodeList::removeNode(int idx)
+{
+    if (idx >= mNum){
+        return NULL;
+    }
+    
+    CNode* ptr = pHead;
+    CNode *pP, *pN;
+    int i=0;
+    while(i!=idx)
+    {
+        if(i==idx)
+            break;
+        ++i;
+        ptr = ptr->pNext;
+    }
+    
+    if(idx==0){
+        pHead = pHead->pNext;
+    }
+    if(idx == mNum-1){
+        pTail = pTail->pPre;
+    }
+    pP = ptr->pPre;
+    pN = ptr->pNext;
+
+    if(pP != NULL) {
+        pP->pNext = pN;
+    }
+    if(pN != NULL) {
+        pN->pPre = pP;
+    }
+    return ptr;
+}
+
+bool CNodeList::swapNode(int idx1, int idx2)
+{
+    CNode *p1 = NULL, *p2 = NULL, *ptr;
+    int i=0;
+    LOGD("idx1: %d, idx2: %d, mNum: %d\n", idx1, idx2, mNum);
+    if(idx1>mNum || idx2>mNum) {
+        return false;
+    }
+    
+    ptr = pHead;
+    while (p1==NULL || p2==NULL)
+    {
+        if(ptr==NULL)
+            break;
+        
+        if(i==idx1) {
+            p1 = ptr;
+        }
+        
+        if(i==idx2) {
+            p2 = ptr;
+        }
+        ++i;
+        ptr = ptr->pNext;        
+    }
+    
+    if(p1 == pHead) {
+        pHead = p2;
+        pHead->pPre = NULL;
+    }
+    if(p1 == pTail) {
+        pTail = p2;
+        pTail->pNext = NULL;
+    }
+    if(p2 == pHead) {
+        pHead = p1;
+        pHead->pPre = NULL;
+    }    
+    if(p2 == pTail) {
+        pTail = p1;
+        pTail->pNext = NULL;
+    }
+    LOGD("-- %d, %d\n", p1->mVal, p2->mVal);
+    
+    CNode *pP1 = p1->pPre, *pP2 = p2->pPre;
+    CNode *pN1 = p1->pNext, *pN2 = p2->pNext;
+//    LOGD("-- %d, %d, %d\n", p1->mVal, p1->pNext->mVal, p2->mVal);
+    if (p1->pNext == p2 ) {
+        if(pP1 != NULL) {
+            pP1->pNext = p2;
+        }
+        p2->pPre = pP1;        
+        p2->pNext = p1;
+        p1->pPre = p2;
+        p1->pNext = pN2;
+        if(pN2 != NULL){
+            pN2->pPre = p1;
+        }
+        LOGD("-- %d, %d\n", p1->mVal, p2->mVal);
+    }
+    else if(p1->pPre == p2) {
+        if(pP2 != NULL) {
+            pP2->pNext = p1;
+        }
+        p1->pPre = pP2;
+        p1->pNext = p2;
+        p2->pPre = p1;
+        p2->pNext = pN1;
+        if(pN1 != NULL){
+            pN1->pPre = p2;
+        }
+        LOGD("-- %d, %d\n", p1->mVal, p2->mVal);
+    }
+    else {
+        if (pP1 !=NULL) {
+            pP1->pNext = p2;
+            
+        }
+        p2->pPre = pP1;
+        
+        if (pN1 !=NULL) {
+            pN1->pPre = p2;
+            
+        }
+        p2->pNext = pN1;
+        if (pP2 !=NULL) {
+            pP2->pNext = p1;
+            
+        }
+        p1->pPre = pP2;
+        if (pN2 !=NULL) {
+            pN2->pPre = p1;       
+        }
+        p1->pNext = pN2;
+    }
+    return true;    
+}
 
 CNodeList::~CNodeList()
 {
@@ -89,7 +248,6 @@ CNodeList::~CNodeList()
         --mNum;
         ptr = pHead;
         pHead = pHead->pNext;
-//        LOGD ("Free: %d\n", ptr->mVal);
         delete ptr;
     }
 }
@@ -118,9 +276,10 @@ void CNodeList::addNode(int val)
         ptr->pPre = pTail;
         pTail = ptr;
     }
+    ++mNum;
 }
 
-bool CNodeList::getVal(int idx, int* outVal)
+int CNodeList::getVal(int idx)
 {
     CNode* ptr = pHead;
     while (idx > 0 && ptr !=NULL)
@@ -128,9 +287,96 @@ bool CNodeList::getVal(int idx, int* outVal)
         --idx;
         ptr = ptr->pNext;
     }
-    *outVal = ptr == NULL ? -1 : ptr->mVal;
-    return ptr == NULL ? false : true;
+    return ptr->mVal;
 }
+
+void doQuickSort(CNodeList* pData, int i, int j)
+{    
+    int p = j;
+    int x = i, y = j-1;
+    int tmp = 0;
+    
+    LOGD("QSort: %d -> %d, p: %d\n", x, y, p);
+    
+    if(x>y) {
+        LOGE("Stop\n");
+        return;
+    }
+    
+    LOGD("-------\n");
+    pData->showList();
+    while(x<y)
+    {
+        LOGE("1: x:%d  y:%d, (%d, %d, %d)v\n", x, y, pData->getVal(x), pData->getVal(y), pData->getVal(p));        
+        while (x<=y && (pData->getVal(x) <= pData->getVal(p))){++x;}
+        LOGE("2: x:%d  y:%d, (%d, %d, %d)v\n", x, y, pData->getVal(x), pData->getVal(y), pData->getVal(p));
+        while (y>x && (pData->getVal(y) > pData->getVal(p))){--y;}    
+        LOGE("3: x:%d  y:%d, (%d, %d, %d)v\n", x, y, pData->getVal(x), pData->getVal(y), pData->getVal(p));
+        
+        if(x<y) {
+            pData->swapNode(x,y);
+        }
+    }
+    LOGD("-------\n");
+    pData->showList();    
+    if (pData->getVal(x) > pData->getVal(p)) {
+        pData->swapNode(x,p);
+    }
+    LOGD("-------\n");
+    pData->showList();
+
+//    LOGD("p: %d,  0~%d <=> %d~%d \n", x, x-1, x+1, j);
+    doQuickSort(pData, 0, x-1);
+    doQuickSort(pData, x+1, j);
+}
+
+#if 0
+void doMergeSort(CNodeList* pData, int i, int j, int* oData)
+{
+    LOGD("Range: %d -> %d, (%d <-> %d), (%d <->%d)\n", i, j, i, i+(j-i)/2, i+(j-i)/2 + 1, j);
+
+    int tmp = 0;
+    if(j-i == 0 || j-i == 1) {
+        if(pData->getVal(i) > pData->getVal(j)) {
+            pData->swapNode(i, j);
+    
+        }
+        return;
+    }
+
+    doMergeSort(pData, i, i+(j-i)/2, oData);
+    doMergeSort(pData, i+(j-i)/2 + 1, j, oData);
+    int i1 = i, j1 = i+(j-i)/2;
+    int i2 = i+(j-i)/2 + 1, j2 = j;
+//    LOGE("Start Merge i: %d, j: %d, (%d->%d), (%d->%d)\n", i, j, i1, j1, i2, j2);
+    
+    int io = i;
+    while (i1<=j1 && i2<=j2)
+    {
+        if(pData->getVal(i1) < pData->getVal(i2)) {
+            oData[io] = pData[i1];
+            ++i1;
+        }
+        else {
+            oData[io] = pData[i2];
+            ++i2;
+        }
+        ++io;
+    }
+    while(i1<=j1)
+    {
+        oData[io] = pData[i1];
+        ++i1;
+        ++io;
+    }
+    while(i2<=j2)
+    {
+        oData[io] = pData[i2];
+        ++i2;
+        ++io;
+    }
+}
+#endif
 
 //
 // Create Linked List
@@ -376,11 +622,27 @@ void Test_sortingList()
 {
     LOGI("%s\n", __TIME__);
     CNodeList *pList = new CNodeList();
-    pList->addNode(1);
-    pList->addNode(3);
-    pList->addNode(5);
+#if 1
+    pList->addNode(0);
+    pList->addNode(1);    
+    pList->addNode(2);    
+    pList->addNode(1);    
+#else
+    for(int i=0; i<2; ++i)
+    {
+       pList->addNode(i); 
+    }
+
+    for(int i=2; i>0; --i)
+    {
+       pList->addNode(i); 
+    }
+#endif
     pList->showList();
-    delete pList;
+    pList->swapNode(2, 3);
+//    doQuickSort(pList, 0, pList->getNum()-1);
+    pList->showList();
+//    delete pList;
 #if 0
     Node_t *pList1, *pList2, *pList3, *pNode;
 
