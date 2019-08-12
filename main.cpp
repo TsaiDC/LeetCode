@@ -90,8 +90,12 @@ int main()
     Test_sorting();
 #endif
 
-#if 1
+#if 0
     Test_sortingList();
+#endif
+
+#if 1
+    Test_maxArea();
 #endif
 
 #if 0
