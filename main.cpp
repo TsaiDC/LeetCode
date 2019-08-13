@@ -94,8 +94,12 @@ int main()
     Test_sortingList();
 #endif
 
-#if 1
+#if 0
     Test_maxArea();
+#endif
+
+#if 1
+    Test_intToRoman();
 #endif
 
 #if 0
