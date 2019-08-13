@@ -77,15 +77,35 @@ Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 */
 
 string intToRoman(int num) {
-    int leng = 7;
-    int A[] =  {1000, 500, 100, 50, 10, 5,  1};
-    char B[] = {'M',  'D', 'C','L','X','V','I'};
-    return NULL;    
+    string str ="";
+    int leng = 13;
+    int    A[] =  {1000,   900, 500,  400,  100,    90,  50,   40,  10,    9,   5,    4,   1};
+    string B[] =  { "M",  "CM", "D", "CD",  "C",  "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+    
+    int a = 0, b = 0, val = num;
+    
+    for(int i=0; i<leng; ++i)
+    {
+        a = val/A[i];
+        b = val%A[i];
+        for(int j=0; j<a; ++j)
+        {
+            str.append(B[i]);
+        }
+//        LOGD("a: %d, b: %d, val: %d,  str: %s\n", a, b, val, str.c_str());
+        val = val - a*A[i];
+    }
+//    LOGD("num: %d, str: %s\n", num, str.c_str());
+    return str;
 }
 
 void Test_intToRoman()
 {
     LOGD("%s\n", __TIME__);
-    intToRoman(1994);    
+    intToRoman(3);
+    intToRoman(4);
+    intToRoman(99);
+    intToRoman(58);
+    intToRoman(1994);
     LOGD("Done \n");
 }

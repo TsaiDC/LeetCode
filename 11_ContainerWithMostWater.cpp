@@ -54,7 +54,7 @@ int maxArea(vector<int>& height)
     
     while(left < right){
         
-        largest = std::max(largest, std::abs(left - right) * std::min(height[left], height[right]));
+//        largest = std::max(largest, std::abs(left - right) * std::min(height[left], height[right]));
         
         if(height[left] <= height[right]){
             ++left;
@@ -71,9 +71,9 @@ void Test_maxArea()
 {
     LOGD("%s\n", __TIME__);
 
-    vector<int> input = {1,8,6,2,5,4,8,3,7};    
-    int result = maxArea(input);
-    LOGD("Result: %d\n", result);
+ //   vector<int> input = {1,8,6,2,5,4,8,3,7};    
+ //   int result = maxArea(input);
+ //   LOGD("Result: %d\n", result);
     
     LOGD("Done \n");
 }
