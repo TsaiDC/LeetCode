@@ -45,8 +45,12 @@ A solution set is:
 ]
 */
 
-vector<vector<int>> threeSum(vector<int>& nums) {
-    vector<vector<int>> retVector;
+vector< vector<int> > threeSum(vector<int>& nums) {
+    if(nums.size()<3) {
+        return {};
+    }
+    vector< vector<int> > retVector;
+    vector<int>row;
     //1. Create Ref Map
     int min = nums[0], max = nums[0], length;
     int *plist, *plist2;
@@ -90,31 +94,85 @@ vector<vector<int>> threeSum(vector<int>& nums) {
     printf("\n");
     
     //2.
-    for(int i=0; i<nums.size(); ++i)
-    {       
-        int target;
-        if(plist2[nums[i]-min]==0) {
+    int first, second, third, sum;
+    for(int i=0; i<length; ++i)
+    {
+        if(plist2[i] == 0)
             continue;
+
+        first = i + min;
+        
+        if(first > 0)
+            break;
+
+        sum = 0-first;
+
+        if(first-min < 0) {
+            LOGE("Error, first: %d, sum: %d\n", first, min);
+            return retVector;
         }
+        plist2[first-min] -=1;
         
-        memcpy(plist2,plist, sizeof(int)*length);
-        target = 0 - nums[i];
-        plist2[nums[i]-min] -= 1;
-        
-        LOGD("Check %d + %d \n", nums[i], target);
-        
+        for(int j=0; j<length; ++j)
+        {
+            if(plist2[j] == 0)
+                continue;
+
+            second = j + min;
+            third = sum - second;
+            if(second != third) {
+                if(third - min < 0)
+                    continue;
+
+                if(third - min > length-1)
+                    continue;
+
+                if(plist2[second-min] > 0 && plist2[third-min] > 0) {
+//                    LOGD("%d(%d) + %d(%d) + %d(%d) = 0\n", first, (first-min), second, (second - min), third, (third - min));
+                    LOGD("%d + %d + %d = 0\n", first, second, third);
+                    row.clear();
+                    row.push_back(first);
+                    row.push_back(second);
+                    row.push_back(third);
+                    retVector.push_back(row);
+                    
+                    break;
+                }
+            }
+            else {
+                if(plist2[second-min] >= 2) {
+//                    LOGD("%d(%d) + %d(%d) + %d(%d) = 0\n", first, (first-min), second, (second - min), third, (third - min));
+                    LOGD("%d + %d + %d = 0\n", first, second, third);
+                    row.clear();
+                    row.push_back(first);
+                    row.push_back(second);
+                    row.push_back(third);
+                    retVector.push_back(row);
+                    break;
+                }
+            }            
+        }
+        plist2[first-min] +=1;
     }
-    
+
     delete [] plist;
     delete [] plist2;
-    
+    if(retVector.size() == 0) {
+        return {};
+    }    
     return retVector;
 }
 
 void Test_threeSum()
 {
     LOGD("%s\n", __TIME__);
-    vector<int> input = {-1, 0, 1, 2, -1, -4};
+//    int arr[] = {-1, 0, 1, 2, -1, -4};
+//    int arr[] = {1, 0, 0, 2, 1, 1, 1};
+    int arr[] = {-1, 0, 1};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    
+//    vector<int> input = {-1, 0, 1, 2, -1, -4};
+    vector<int> input(arr, arr+n);
     threeSum(input);
     LOGD("Done \n");
 }
