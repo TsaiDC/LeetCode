@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
+#include <map>
 
 #include "apiheader.h"
 
@@ -49,6 +50,7 @@ vector< vector<int> > threeSum(vector<int>& nums) {
     if(nums.size()<3) {
         return {};
     }
+    map<long,int> mMap;
     vector< vector<int> > retVector;
     vector<int>row;
     //1. Create Ref Map
@@ -94,17 +96,14 @@ vector< vector<int> > threeSum(vector<int>& nums) {
     printf("\n");
     
     //2.
-    int first, second, third, sum;
+    long first, second, third, sum;
+    long pSum;
     for(int i=0; i<length; ++i)
     {
         if(plist2[i] == 0)
             continue;
 
-        first = i + min;
-        
-        if(first > 0)
-            break;
-
+        first = i + min;       
         sum = 0-first;
 
         if(first-min < 0) {
@@ -128,8 +127,12 @@ vector< vector<int> > threeSum(vector<int>& nums) {
                     continue;
 
                 if(plist2[second-min] > 0 && plist2[third-min] > 0) {
-//                    LOGD("%d(%d) + %d(%d) + %d(%d) = 0\n", first, (first-min), second, (second - min), third, (third - min));
-                    LOGD("%d + %d + %d = 0\n", first, second, third);
+//                    LOGD("%d(%d) + %d(%d) + %d(%d) = 0\n", first, (first-min), second, (second - min), third, (third - min));                    
+                    pSum = first*first + second*second + third*third;
+                    LOGD("%d + %d + %d = 0, mMap[%d]: %d\n", first, second, third, pSum, mMap[pSum]);
+                    if(mMap[pSum] != 0)
+                        break;
+                    mMap[pSum] = 1;
                     row.clear();
                     row.push_back(first);
                     row.push_back(second);
@@ -142,7 +145,11 @@ vector< vector<int> > threeSum(vector<int>& nums) {
             else {
                 if(plist2[second-min] >= 2) {
 //                    LOGD("%d(%d) + %d(%d) + %d(%d) = 0\n", first, (first-min), second, (second - min), third, (third - min));
-                    LOGD("%d + %d + %d = 0\n", first, second, third);
+                    pSum = first*first + second*second + third*third;
+                    LOGD("%d + %d + %d = 0, mMap[%d]: %d\n", first, second, third, pSum, mMap[pSum]);
+                    if(mMap[pSum] != 0)
+                        break;
+                    mMap[pSum] = 1;
                     row.clear();
                     row.push_back(first);
                     row.push_back(second);
@@ -166,13 +173,16 @@ vector< vector<int> > threeSum(vector<int>& nums) {
 void Test_threeSum()
 {
     LOGD("%s\n", __TIME__);
+#if 1
 //    int arr[] = {-1, 0, 1, 2, -1, -4};
+    int arr[] = {-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6};
 //    int arr[] = {1, 0, 0, 2, 1, 1, 1};
-    int arr[] = {-1, 0, 1};
+//    int arr[] = {-1, 0, 1};
     int n = sizeof(arr)/sizeof(arr[0]);
     
 //    vector<int> input = {-1, 0, 1, 2, -1, -4};
     vector<int> input(arr, arr+n);
     threeSum(input);
+#endif
     LOGD("Done \n");
 }
