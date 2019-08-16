@@ -103,9 +103,14 @@ int main()
     Test_intToRoman();
 #endif
 
-#if 1
+#if 0
 //#15
     Test_threeSum();
+#endif
+
+#if 1
+//#16
+    Test_threeSumClosest();
 #endif
 
 #if 0
