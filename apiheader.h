@@ -27,4 +27,6 @@ void Test_threeSum();
 void Test_threeSumClosest();
 //17
 void Test_letterCombinations();
+//18
+void Test_fourSum();
 #endif

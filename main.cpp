@@ -113,9 +113,14 @@ int main()
     Test_threeSumClosest();
 #endif
 
-#if 1
+#if 0
 //#17
     Test_letterCombinations();
+#endif
+
+#if 1
+//#18
+    Test_fourSum();
 #endif
 
 #if 0
