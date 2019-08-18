@@ -50,6 +50,93 @@ A solution set is:
 ]
 */
 
+//Time Limit Exceeded
+vector< vector<int> > threeSum3(vector<int>& nums) {
+    vector< vector<int> > retVector;
+    vector<int>row;
+    if(nums.size()<3) {
+        return {};
+    }
+    int leng = nums.size();
+
+    bool firstOK, secondOK, thirdOK;
+    char buff[10];    
+
+    map<int, int> mMap;
+    map<string, int> mStrMap;
+    map<string, int>::iterator iter;
+    //1. Create Ref Map
+    for(int i=0; i<nums.size(); ++i)
+    {
+        mMap[nums[i]] = mMap[nums[i]] == 0 ? 1 : mMap[nums[i]] + 1;
+    }
+    
+    vector<vector<vector<double> > > array3D;
+    // Set up sizes
+    array3D.resize(leng);
+    for (int i = 0; i < leng; ++i) {
+    array3D[i].resize(leng);
+
+    for (int j = 0; j < leng; ++j)
+      array3D[i][j].resize(leng);
+    }
+    
+    for(int i=0; i<leng; ++i)
+    {
+        for(int j=0;j<leng; ++j)
+        {
+            for(int k=0; k<leng; ++k)
+            {
+                firstOK = false; secondOK = false; thirdOK = false;
+                if(mMap[nums[i]] > 0){
+                    mMap[nums[i]] -=1;
+                    firstOK = true;
+                }
+                if(mMap[nums[j]] > 0){
+                    mMap[nums[j]] -=1;
+                    secondOK = true;
+                }
+                if(mMap[nums[k]] > 0){
+                    mMap[nums[k]] -=1;
+                    thirdOK = true;
+                }
+
+                if( firstOK && secondOK && thirdOK && ((nums[i] + nums[j] + nums[k]) == 0)) {                   
+                    if(nums[j] < nums[i] || nums[k] < nums[i] || nums[k] < nums[j]) {
+                        if (firstOK) mMap[nums[i]] +=1;
+                        if (secondOK) mMap[nums[j]] +=1;
+                        if (thirdOK) mMap[nums[k]] +=1;                    
+                        continue;
+                    }
+                    memset(buff, '\0', sizeof(buff)/sizeof(buff[0]));
+//                    LOGD("%d, %d, %d\n", nums[i], nums[j], nums[k]);
+                    sprintf(buff, "%d%d%d", nums[i], nums[j], nums[k]);
+//                    LOGD("Buff: %s\n", buff);
+                    string strBuff(buff);
+                    iter = mStrMap.find(strBuff);
+                    if(iter == mStrMap.end()) {
+                        LOGD("StrBuff: %s\n", strBuff.c_str());
+                        mStrMap[strBuff] = 1;
+                        row.clear();
+                        row.push_back(nums[i]);
+                        row.push_back(nums[j]);
+                        row.push_back(nums[k]);
+                        retVector.push_back(row);
+                    }
+                }
+                if (firstOK) mMap[nums[i]] +=1;
+                if (secondOK) mMap[nums[j]] +=1;
+                if (thirdOK) mMap[nums[k]] +=1;                
+            }
+        }
+    }
+    if(retVector.size() == 0) {
+        return {};
+    }
+    
+    return retVector;
+}
+
 vector< vector<int> > threeSum2(vector<int>& nums) {
     if(nums.size()<3) {
         return {};
@@ -119,11 +206,11 @@ void Test_threeSum()
 {
     LOGD("%s\n", __TIME__);
 #if 1
-//    int arr[] = {-1, 0, 1, 2, -1, -4};
+    int arr[] = {-1, 0, 1, 2, -1, -4};
 //    int arr[] = {-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6};
 //    int arr[] = {1, 0, 0, 2, 1, 1, 1};
 //    int arr[] = {-1, 0, 1};
-    int arr[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
+//    int arr[] = {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
     int n = sizeof(arr)/sizeof(arr[0]);
     
     printf("Input: ");
@@ -133,7 +220,7 @@ void Test_threeSum()
     }
     printf("\n");
     vector<int> input(arr, arr+n);
-    threeSum2(input);
+    threeSum3(input);
 #endif
     LOGD("Done \n");
 }

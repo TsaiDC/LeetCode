@@ -103,7 +103,7 @@ int main()
     Test_intToRoman();
 #endif
 
-#if 0
+#if 1
 //#15
     Test_threeSum();
 #endif
@@ -118,7 +118,7 @@ int main()
     Test_letterCombinations();
 #endif
 
-#if 1
+#if 0
 //#18
     Test_fourSum();
 #endif
