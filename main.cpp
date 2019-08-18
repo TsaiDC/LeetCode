@@ -103,7 +103,7 @@ int main()
     Test_intToRoman();
 #endif
 
-#if 1
+#if 0
 //#15
     Test_threeSum();
 #endif
@@ -121,6 +121,11 @@ int main()
 #if 0
 //#18
     Test_fourSum();
+#endif
+
+#if 1
+//#19
+    Test_removeNthFromEnd();
 #endif
 
 #if 0
