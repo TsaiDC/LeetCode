@@ -103,7 +103,7 @@ int main()
     Test_intToRoman();
 #endif
 
-#if 1
+#if 0
 //#15
     Test_threeSum();
 #endif
@@ -111,6 +111,11 @@ int main()
 #if 0
 //#16
     Test_threeSumClosest();
+#endif
+
+#if 1
+//#17
+    Test_letterCombinations();
 #endif
 
 #if 0

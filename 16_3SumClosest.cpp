@@ -50,7 +50,7 @@ int threeSumClosest(vector<int>& nums, int target) {
     }
     
     int s = (nums[0] + nums[1] + nums[2]);
-    int d = std::abs((nums[0] + nums[1] + nums[2]) - target);
+    int d = abs((nums[0] + nums[1] + nums[2]) - target);
     int xd;
     
     for(int i=0; i<nums.size(); ++i)
@@ -59,7 +59,7 @@ int threeSumClosest(vector<int>& nums, int target) {
         {
             for(int k=j+1; k<nums.size(); ++k)
             {                
-                xd = std::abs((nums[i] + nums[j] + nums[k]) - target); 
+                xd = abs((nums[i] + nums[j] + nums[k]) - target); 
                 LOGD("%d, %d, %d (%d, %d)\n", nums[i], nums[j], nums[k], d, xd);
                 
                 if(xd < d) {
