@@ -133,9 +133,14 @@ int main()
     Test_nextPermutation();
 #endif
 
-#if 1
+#if 0
 //#33
     Test_SearchInRotatedSortedArray();
+#endif
+
+#if 1
+//#34
+    Test_searchRange();
 #endif
 
 #if 0

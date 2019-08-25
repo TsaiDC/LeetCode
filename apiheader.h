@@ -35,4 +35,6 @@ void Test_removeNthFromEnd();
 void Test_nextPermutation();
 //33
 void Test_SearchInRotatedSortedArray();
+//34
+void Test_searchRange();
 #endif
