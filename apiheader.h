@@ -31,4 +31,8 @@ void Test_letterCombinations();
 void Test_fourSum();
 //19
 void Test_removeNthFromEnd();
+//31
+void Test_nextPermutation();
+//33
+void Test_SearchInRotatedSortedArray();
 #endif

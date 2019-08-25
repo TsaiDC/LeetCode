@@ -123,9 +123,19 @@ int main()
     Test_fourSum();
 #endif
 
-#if 1
+#if 0
 //#19
     Test_removeNthFromEnd();
+#endif
+
+#if 0
+//#31
+    Test_nextPermutation();
+#endif
+
+#if 1
+//#33
+    Test_SearchInRotatedSortedArray();
 #endif
 
 #if 0
