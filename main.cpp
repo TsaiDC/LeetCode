@@ -138,9 +138,14 @@ int main()
     Test_SearchInRotatedSortedArray();
 #endif
 
-#if 1
+#if 0
 //#34
     Test_searchRange();
+#endif
+
+#if 1
+//#46
+    Test_permute();
 #endif
 
 #if 0

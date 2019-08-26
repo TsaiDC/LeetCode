@@ -37,4 +37,6 @@ void Test_nextPermutation();
 void Test_SearchInRotatedSortedArray();
 //34
 void Test_searchRange();
+//46
+void Test_permute();
 #endif
