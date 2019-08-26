@@ -49,14 +49,20 @@ Output:
 ]
 */
 
-void display(vector<int>& nums)
+void display(int idx, int i, vector<int>& nums)
 {
-    printf("-> ");
+    printf("idx: %d, i: %d -> ", idx, i);
     for (int i=0; i<nums.size();++i)
     {
         printf("%d ", nums[i]);
     }
-    printf("\n");
+    if(idx == i) {
+        printf(" ** \n");
+    }
+    else {
+        printf("\n");
+    }
+    
 }
 void swap(int i, int j, vector<int>& nums)
 {
@@ -69,24 +75,47 @@ void swap(int i, int j, vector<int>& nums)
     nums[j] = tmp;
 }
 
-void pp(int idx, vector<int>& nums)
+void pp(int idx, vector<int>& nums, vector< vector<int> >& result)
 {    
     if (idx == nums.size()-1) {
+//        LOGD("*Idx: %d \n", idx);
         return;
     }
-
+    
     for(int i=idx; i<nums.size(); ++i)
-    {        
-        LOGD("i: %d, Idx: %d \n", i, idx);
+    {
         swap(i, idx, nums);
-        display(nums);
-        pp(i+1, nums);
+        if (i!= idx) {
+#if 0
+            for(int j=0; j<idx; j++)
+            {
+                printf("  ");
+            }
+            display(idx, i, nums);
+#endif
+            result.push_back(nums);
+        }
+        pp(idx+1, nums, result);
         swap(i, idx, nums);
     }
+    
 }
 
 vector< vector<int> > permute(vector<int>& nums) {
-    vector<vector<int>> result;
+    vector< vector<int> > result;
+    result.push_back(nums);
+    pp(0, nums, result);
+#if 0
+    LOGE("-----------------------------\n");
+    for(int i=0; i<result.size(); ++i)
+    {
+        for(int j=0; j<result[i].size(); ++j)
+        {
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
+#endif    
     return result;
 }
 
@@ -102,7 +131,6 @@ void Test_permute()
     }
     printf("\n");
     vector<int> input(arr, arr+n);
-//    permute(input);
-    pp(0, input);
+    permute(input);    
     LOGD("Done \n");
 }
