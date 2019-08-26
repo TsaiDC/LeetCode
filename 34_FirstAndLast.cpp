@@ -54,12 +54,13 @@ int getIdx(vector<int>& nums, int start, int end, int target)
     left = start;
     right = end;
     mid = (right + left)/2;
-    
+    LOGD("@@ S: %d, E: %d, M: %d\n", left, right, mid);
     while ((right - left) > 1)
     {
+        LOGD("-- S: %d, E: %d, M: %d\n", left, right, mid);
         if(nums[mid] == target) {
             //First idx
-            LOGD("Hit, IDX: %d\n", mid);
+            LOGD("Hit, Mid IDX: %d\n", mid);
             return mid;            
         }
         else if (nums[mid]<target) {
@@ -69,6 +70,21 @@ int getIdx(vector<int>& nums, int start, int end, int target)
         else {
             right = mid;
             mid = (right+left)/2;
+        }
+    }
+    if((right - left) == 1) {
+        if(nums[right] == target) {
+            LOGD("Hit, Right IDX: %d\n", right);
+            return right;
+        }
+        else if(nums[left] == target) {
+            LOGD("Hit, Left IDX: %d\n", left);
+            return left;
+        }        
+    } else if((right - left) == 0) {
+        if(nums[right] == target) {
+            LOGD("Hit, IDX: %d\n", right);
+            return right;
         }
     }
     return -1;
@@ -83,13 +99,14 @@ vector<int> searchRange(vector<int>& nums, int target) {
     int idx, idx2;
     idx = getIdx(nums, 0, nums.size()-1, target);
     idx2 = idx;
-    LOGD("left: %d\n", idx);
+    LOGD("first Idx: %d\n", idx);
     
     //Get Left
     while(idx != -1)
     {
         result[0] = idx;
-        idx = getIdx(nums, 0, idx-1, target);
+        LOGD("Left - Idx: %d\n", idx);
+        idx = getIdx(nums, 0, idx-1, target);        
     }
     
     idx = idx2;
@@ -97,16 +114,18 @@ vector<int> searchRange(vector<int>& nums, int target) {
     while(idx != -1)
     {
         result[1] = idx;
-        idx = getIdx(nums, idx+1, nums.size()-1, target);
+        LOGD("Right Idx: %d\n", idx);
+        idx = getIdx(nums, idx+1, nums.size()-1, target);        
     }
 
+    LOGD("Result: %d, %d\n", result[0], result[1]);
     return result;
 }
 void Test_searchRange()
 {
     LOGD("%s\n", __TIME__);
-    int arr[] = {5,7,7,8,8,10};
-    int target = 8;
+    int arr[] = {5,7,7,7,7,8,8,8,8,8,10};
+    int target = 9;
     int n = sizeof(arr)/sizeof(arr[0]);
     
     printf("Target: %d, Input: ", target);
