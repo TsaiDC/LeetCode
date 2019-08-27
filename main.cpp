@@ -143,9 +143,14 @@ int main()
     Test_searchRange();
 #endif
 
-#if 1
+#if 0
 //#46
     Test_permute();
+#endif
+
+#if 1
+//#47
+    Test_permuteUnique();
 #endif
 
 #if 0

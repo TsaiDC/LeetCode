@@ -6,6 +6,7 @@
 #include <string.h>
 #include <vector>
 #include <map>
+#include <math.h>
 
 #include "apiheader.h"
 
@@ -30,22 +31,19 @@ using namespace std;
 //
 
 /*
-https://leetcode.com/problems/permutations/
-46. Permutations
+https://leetcode.com/problems/permutations-ii/
+47. Permutations II
 
-Given a collection of distinct integers, return all possible permutations.
+Given a collection of numbers that might contain duplicates, return all possible unique permutations.
 
 Example:
 
-Input: [1,2,3]
+Input: [1,1,2]
 Output:
 [
-  [1,2,3],
-  [1,3,2],
-  [2,1,3],
-  [2,3,1],
-  [3,1,2],
-  [3,2,1]
+  [1,1,2],
+  [1,2,1],
+  [2,1,1]
 ]
 */
 
@@ -76,7 +74,32 @@ static void swap(int i, int j, vector<int>& nums)
     nums[j] = tmp;
 }
 
-void pp(int idx, vector<int>& nums, vector< vector<int> >& result)
+static int getInt(vector<int>& nums)
+{
+    int result = 0;
+    int m = 1;
+
+    for(int i=0; i<nums.size(); ++i)
+    {
+        m *=10;
+        result += (nums[i]*m);
+    }
+//    LOGD("Result: %d\n", result);
+    return result;
+}
+
+static bool isExist(map<int, int>& mMap, int key)
+{    
+    map<int,int>::iterator iter;
+    iter = mMap.find(key);
+    if(iter == mMap.end()) {
+        mMap[key] = 1;
+        return false;
+    }
+    return true;
+}
+
+void pp(int idx, vector<int>& nums, vector< vector<int> >& result, map<int, int>& record)
 {    
     if (idx == nums.size()-1) {
 //        LOGD("*Idx: %d \n", idx);
@@ -94,18 +117,24 @@ void pp(int idx, vector<int>& nums, vector< vector<int> >& result)
             }
             display(idx, i, nums);
 #endif
-            result.push_back(nums);
+            if(!isExist(record, getInt(nums))) {
+                result.push_back(nums);
+            }
         }
-        pp(idx+1, nums, result);
+        pp(idx+1, nums, result, record);
         swap(i, idx, nums);
     }
     
 }
 
-vector< vector<int> > permute(vector<int>& nums) {
+vector< vector<int> > permuteUnique(vector<int>& nums) {
     vector< vector<int> > result;
-    result.push_back(nums);
-    pp(0, nums, result);
+    map<int, int> record;
+//    int idx = getInt(nums);
+    if(!isExist(record, getInt(nums))) {
+        result.push_back(nums);
+    }
+    pp(0, nums, result, record);
 #if 0
     LOGE("-----------------------------\n");
     for(int i=0; i<result.size(); ++i)
@@ -120,10 +149,10 @@ vector< vector<int> > permute(vector<int>& nums) {
     return result;
 }
 
-void Test_permute()
+void Test_permuteUnique()
 {
     LOGD("%s\n", __TIME__);
-    int arr[] = {1,2,3};
+    int arr[] = {1,1,2};
     int n = sizeof(arr)/sizeof(arr[0]);
         
     for(int i=0; i<n; ++i) 
@@ -132,6 +161,6 @@ void Test_permute()
     }
     printf("\n");
     vector<int> input(arr, arr+n);
-    permute(input);    
+    permuteUnique(input);    
     LOGD("Done \n");
 }
