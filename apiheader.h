@@ -41,4 +41,6 @@ void Test_searchRange();
 void Test_permute();
 //47
 void Test_permuteUnique();
+//61
+void Test_rotateRight();
 #endif

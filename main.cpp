@@ -148,9 +148,14 @@ int main()
     Test_permute();
 #endif
 
-#if 1
+#if 0
 //#47
     Test_permuteUnique();
+#endif
+
+#if 1
+//#61
+    Test_rotateRight();
 #endif
 
 #if 0
