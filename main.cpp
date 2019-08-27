@@ -153,7 +153,7 @@ int main()
     Test_permuteUnique();
 #endif
 
-#if 1
+#if 0
 //#61
     Test_rotateRight();
 #endif
@@ -162,6 +162,12 @@ int main()
 //#350
     Test_intersect();
 #endif
+
+#if 1
+//#1091
+    Test_shortestPathBinaryMatrix();
+#endif
+
     END = clock();
 	cout << endl << "Used Time: " << (END - START) / CLOCKS_PER_SEC << " S" << endl;
     return 0;

@@ -43,4 +43,6 @@ void Test_permute();
 void Test_permuteUnique();
 //61
 void Test_rotateRight();
+//1091
+void Test_shortestPathBinaryMatrix();
 #endif
