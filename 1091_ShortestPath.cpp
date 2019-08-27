@@ -45,7 +45,121 @@ If C_i is located at (r, c), then grid[r][c] is empty (ie. grid[r][c] == 0).
 Return the length of the shortest such clear path from top-left to bottom-right.  If such a path does not exist, return -1.
 */
 
+int BfsTree(vector< vector<int> >& grid, int x, int y, int level)
+{
+//A B C
+//D X E
+//F G H
+    int N = grid.size();
+    int ax = x-1, ay = y-1;
+    int bx = x,   by = y-1;
+    int cx = x+1, cy = y-1;
+    int dx = x-1, dy = y;
+    int ex = x+1, ey = y;
+    int fx = x-1, fy = y+1;
+    int gx = x,   gy = y+1;
+    int hx = x+1, hy = y+1;
+    
+    bool isA = false, isB = false, isC = false, isD = false, isE = false, isF = false, isG = false, isH = false;
+    
+    grid[y][x] = -1; //Passed
+
+    if(ax >= 0 && ay >= 0 && grid[ay][ax] != 1 && grid[ay][ax] != -1) {
+        isA = true;
+    }
+    if(by >= 0 && grid[by][bx] != 1 && grid[by][bx] != -1) {
+        isB = true;
+    }
+    if(cx < N && cy >= 0 && grid[cy][cx] != 1 && grid[cy][cx] != -1) {
+        isC = true;
+    }
+    if(dx >= 0 && grid[dy][dx] != 1 && grid[dy][dx] != -1) {
+        isD = true;
+    }
+    if(ex < N && grid[ey][ex] != 1 && grid[ey][ex] != -1) {
+        isE = true;
+    }
+    if(fx >= 0 && fy < N && grid[fy][fx] != 1 && grid[fy][fx] != -1) {
+        isF = true;
+    }
+    if(gy < N && grid[gy][gx] != 1 && grid[gy][gx] != -1) {
+        isG = true;
+    }
+    if(hx < N && hy < N && grid[hy][hx] != 1 && grid[hy][hx] != -1) {
+        isH = true;
+    }
+    if(x == N-1 && y == N-1) {
+        LOGE("Hit: %d\n", level);
+        return level;
+    }
+    if (!isA && !isB && !isC && !isD && !isE && !isF && !isG && !isH) {
+        LOGE("Dead\n");
+        return -1;
+    }
+    
+    if(isA) {
+        LOGD("Node: (y: %d, x :%d) -A-> (y: %d, x :%d)\n", y, x, ay, ax);
+        BfsTree(grid, ax, ay, level+1);
+    }
+    if(isC) {
+        LOGD("Node: (y: %d, x :%d) -C-> (y: %d, x :%d)\n", y, x, cy, cx);
+        BfsTree(grid, cx, cy, level+1);
+    }
+    if(isF) {
+        LOGD("Node: (y: %d, x :%d) -F-> (y: %d, x :%d)\n", y, x, fy, fx);
+        BfsTree(grid, fx, fy, level+1);
+    }
+    if(isH) {
+        LOGD("Node: (y: %d, x :%d) -H-> (y: %d, x :%d)\n", y, x, hy, hx);
+        BfsTree(grid, hx, hy, level+1);
+    }    
+    if(isB) {
+        LOGD("Node: (y: %d, x :%d) -B-> (y: %d, x :%d)\n", y, x, by, bx);
+        BfsTree(grid, bx, by, level+1);
+    }
+
+    if(isD) {
+        LOGD("Node: (y: %d, x :%d) -D-> (y: %d, x :%d)\n", y, x, dy, dx);
+        BfsTree(grid, dx, dy, level+1);
+    }
+    if(isE) {
+        LOGD("Node: (y: %d, x :%d) -E-> (y: %d, x :%d)\n", y, x, ey, ex);
+        BfsTree(grid, ex, ey, level+1);
+    }
+    if(isG) {
+        LOGD("Node: (y: %d, x :%d) -G-> (y: %d, x :%d)\n", y, x, gy, gx);
+        BfsTree(grid, gx, gy, level+1);
+    }
+    
+
+    return level;
+}
 int shortestPathBinaryMatrix(vector< vector<int> >& grid) {
+    
+    int N = grid.size();
+    int Result;
+    //Display
+    for(int i=0; i<N; ++i)
+    {
+        for(int j=0; j<N; ++j)
+        {
+            printf("%2d ",grid[i][j]);
+        }
+        printf("\n");
+    }    
+    Result = BfsTree(grid, 0, 0, 1);
+    LOGD("Result: %d\n", Result);
+/*
+    for(int y=0; y<N; ++y)
+    {
+        for(int x=0; x<N; ++x)
+        {
+            BfsTree(grid, x, y);            
+        }
+    }
+*/
+
+#if 0
     int N = grid.size();
     LOGD("N: %d\n", N);
     int **ary = new int*[N];
@@ -152,7 +266,7 @@ int shortestPathBinaryMatrix(vector< vector<int> >& grid) {
         delete [] ary[i];
     }
     delete [] ary;
-
+#endif
     return 0;
 }
 
