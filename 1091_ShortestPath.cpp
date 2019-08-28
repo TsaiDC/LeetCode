@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <math.h>
+#include <queue>
 
 #include "apiheader.h"
 
@@ -151,6 +152,51 @@ int BfsTree(vector< vector<int> >& grid, int x, int y, int level, int* result)
     grid[y][x] = 0; //Recover
     return level;
 }
+
+int getPathByQueue(vector< vector<int> >& grid) 
+{
+    int N = grid.size();
+    int result = 0;
+    int x, y, size;
+    queue<int> xPos;
+    queue<int> yPos;
+    xPos.push(0);
+    yPos.push(0);
+    while (!xPos.empty())
+    {
+        size = xPos.size();
+        ++result;
+        for(int i=0; i<size; ++i)
+        {
+            x = xPos.front();
+            y = yPos.front();
+            xPos.pop();
+            yPos.pop();                  
+            LOGD("%d size: %d,(%d,%d): %d\n", result, size, x, y, grid[y][x]);
+            if(x==N-1 && y==N-1) {
+                return result;
+            }
+            
+            for(int yy=y-1; yy<y+2; ++yy)
+            {
+                for(int xx=x-1; xx<x+2; ++xx)
+                {
+                    if(yy>=0 && yy<N && xx>=0 && xx<N && grid[yy][xx] == 0) {
+                        LOGD(" Push(%d,%d) = %d\n", xx, yy, result);
+                        xPos.push(xx);
+                        yPos.push(yy);
+                        grid[yy][xx] = -1; //Counted                    
+                    }
+                }        
+            }            
+        }
+
+
+    }
+    
+    return -1;
+}
+
 int shortestPathBinaryMatrix(vector< vector<int> >& grid) {
     
     int N = grid.size();
@@ -158,7 +204,7 @@ int shortestPathBinaryMatrix(vector< vector<int> >& grid) {
     if(N==0){
         return -1;
     }
-    if(grid[0][0] != 0) {
+    if(grid[0][0] != 0 || grid[N-1][N-1] != 0) {
         return -1;
     }
     
@@ -171,8 +217,18 @@ int shortestPathBinaryMatrix(vector< vector<int> >& grid) {
         }
         printf("\n");
     }    
-    BfsTree(grid, 0, 0, 1,&Result);
-    LOGD("Result: %d\n", Result);    
+//    BfsTree(grid, 0, 0, 1,&Result);
+    Result = getPathByQueue(grid);
+    LOGD("Result: %d\n", Result); 
+    //Display
+    for(int i=0; i<N; ++i)
+    {
+        for(int j=0; j<N; ++j)
+        {
+            printf("%2d ",grid[i][j]);
+        }
+        printf("\n");
+    }        
     return Result;
 }
 
