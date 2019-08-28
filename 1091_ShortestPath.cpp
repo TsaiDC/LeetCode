@@ -45,7 +45,7 @@ If C_i is located at (r, c), then grid[r][c] is empty (ie. grid[r][c] == 0).
 Return the length of the shortest such clear path from top-left to bottom-right.  If such a path does not exist, return -1.
 */
 
-int BfsTree(vector< vector<int> >& grid, int x, int y, int level)
+int BfsTree(vector< vector<int> >& grid, int x, int y, int level, int* result)
 {
 //A B C
 //D X E
@@ -59,6 +59,13 @@ int BfsTree(vector< vector<int> >& grid, int x, int y, int level)
     int fx = x-1, fy = y+1;
     int gx = x,   gy = y+1;
     int hx = x+1, hy = y+1;
+    
+    if(level > *result && *result > 0){
+        return *result;
+    }
+    if(level > N*N) {
+        return *result;
+    }
     
     bool isA = false, isB = false, isC = false, isD = false, isE = false, isF = false, isG = false, isH = false;
     
@@ -90,54 +97,71 @@ int BfsTree(vector< vector<int> >& grid, int x, int y, int level)
     }
     if(x == N-1 && y == N-1) {
         LOGE("Hit: %d\n", level);
+        if(*result < 0) {
+            *result = level;
+        } 
+        else {
+            if(*result > level) {
+                *result = level;
+            }
+        }
+        grid[y][x] = 0; //Recover
         return level;
     }
     if (!isA && !isB && !isC && !isD && !isE && !isF && !isG && !isH) {
-        LOGE("Dead\n");
+        LOGE("Dead Y: %d, X: %d\n", y, x);
+        grid[y][x] = 0; //Recover
         return -1;
     }
     
-    if(isA) {
-        LOGD("Node: (y: %d, x :%d) -A-> (y: %d, x :%d)\n", y, x, ay, ax);
-        BfsTree(grid, ax, ay, level+1);
-    }
-    if(isC) {
-        LOGD("Node: (y: %d, x :%d) -C-> (y: %d, x :%d)\n", y, x, cy, cx);
-        BfsTree(grid, cx, cy, level+1);
-    }
-    if(isF) {
-        LOGD("Node: (y: %d, x :%d) -F-> (y: %d, x :%d)\n", y, x, fy, fx);
-        BfsTree(grid, fx, fy, level+1);
+    //Search Direction
+ 
+    if(isG) {
+        LOGD("Node: (y: %d, x :%d) -G-> (y: %d, x :%d)\n", y, x, gy, gx);
+        BfsTree(grid, gx, gy, level+1, result);
     }
     if(isH) {
         LOGD("Node: (y: %d, x :%d) -H-> (y: %d, x :%d)\n", y, x, hy, hx);
-        BfsTree(grid, hx, hy, level+1);
-    }    
-    if(isB) {
-        LOGD("Node: (y: %d, x :%d) -B-> (y: %d, x :%d)\n", y, x, by, bx);
-        BfsTree(grid, bx, by, level+1);
-    }
-
-    if(isD) {
-        LOGD("Node: (y: %d, x :%d) -D-> (y: %d, x :%d)\n", y, x, dy, dx);
-        BfsTree(grid, dx, dy, level+1);
+        BfsTree(grid, hx, hy, level+1, result);
     }
     if(isE) {
         LOGD("Node: (y: %d, x :%d) -E-> (y: %d, x :%d)\n", y, x, ey, ex);
-        BfsTree(grid, ex, ey, level+1);
+        BfsTree(grid, ex, ey, level+1, result);
     }
-    if(isG) {
-        LOGD("Node: (y: %d, x :%d) -G-> (y: %d, x :%d)\n", y, x, gy, gx);
-        BfsTree(grid, gx, gy, level+1);
+    if(isC) {
+        LOGD("Node: (y: %d, x :%d) -C-> (y: %d, x :%d)\n", y, x, cy, cx);
+        BfsTree(grid, cx, cy, level+1, result);
+    }    
+    if(isB) {
+        LOGD("Node: (y: %d, x :%d) -B-> (y: %d, x :%d)\n", y, x, by, bx);
+        BfsTree(grid, bx, by, level+1, result);
+    }    
+    if(isA) {
+        LOGD("Node: (y: %d, x :%d) -A-> (y: %d, x :%d)\n", y, x, ay, ax);
+        BfsTree(grid, ax, ay, level+1, result);
     }
-    
-
+    if(isD) {
+        LOGD("Node: (y: %d, x :%d) -D-> (y: %d, x :%d)\n", y, x, dy, dx);
+        BfsTree(grid, dx, dy, level+1, result);
+    }  
+    if(isF) {
+        LOGD("Node: (y: %d, x :%d) -F-> (y: %d, x :%d)\n", y, x, fy, fx);
+        BfsTree(grid, fx, fy, level+1, result);
+    }    
+    grid[y][x] = 0; //Recover
     return level;
 }
 int shortestPathBinaryMatrix(vector< vector<int> >& grid) {
     
     int N = grid.size();
-    int Result;
+    int Result = -1;
+    if(N==0){
+        return -1;
+    }
+    if(grid[0][0] != 0) {
+        return -1;
+    }
+    
     //Display
     for(int i=0; i<N; ++i)
     {
@@ -147,144 +171,77 @@ int shortestPathBinaryMatrix(vector< vector<int> >& grid) {
         }
         printf("\n");
     }    
-    Result = BfsTree(grid, 0, 0, 1);
-    LOGD("Result: %d\n", Result);
-/*
-    for(int y=0; y<N; ++y)
-    {
-        for(int x=0; x<N; ++x)
-        {
-            BfsTree(grid, x, y);            
-        }
-    }
-*/
-
-#if 0
-    int N = grid.size();
-    LOGD("N: %d\n", N);
-    int **ary = new int*[N];
-    for(int i = 0; i < N; ++i) {
-        ary[i] = new int[N];
-    }
-    
-    for(int i=0; i<N; ++i)
-    {
-        for(int j=0; j<N; ++j)
-        {
-            ary[i][j] = grid[i][j] == 1 ? -1 : 0;
-        }
-    }
-    
-    //Display
-    for(int i=0; i<N; ++i)
-    {
-        for(int j=0; j<N; ++j)
-        {
-            printf("%2d ",ary[i][j]);
-        }
-        printf("\n");
-    }
-    
-    for(int i=0; i<N; ++i)
-    {
-        for(int j=0; j<N; ++j)
-        {
-            if(ary[i][j] <0) {
-                continue;
-            }
-            for(int ii=i-1; ii<3; ++ii)
-            {
-                if(ii<0)
-                    continue;
-
-                for(int jj=j-1; jj<3; ++jj)
-                {
-                    if(jj<0)
-                        continue;
-                    if( ary[ii][jj] >=0) {
-                        ary[ii][jj] = ary[i][j] + 1;
-                    }
-                }
-            }
-        }
-    }
-    
-#if 0
-    int a[4]; //left, up, upleft,upriht
-    int min;
-    for(int i=0; i<N; ++i)
-    {
-        for(int j=0; j<N; ++j)
-        {
-            a[0] = -1; a[1] = -1; a[2] = -1; a[3] = -1;
-            min = -1;
-            if(j-1 >=0) {
-                a[0] = ary[i][j-1];
-            }
-            if(i-1 >=0) {
-                a[1] = ary[i-1][j];
-            }
-            if((i-1 >=0) && (j-1>=0)) {
-                a[2] = ary[i-1][j-1];
-            }
-            if((i-1 >= 0) && (j+1 < N)) {
-                a[3] = ary[i-1][j+1];
-            }            
-            //Find min
-            for(int x =0; x<4; ++x)
-            {
-                if(a[x] >=0) {
-                    if(min < 0) {
-                        min = a[x];
-                    }
-                    else {
-                        if(a[x]<min) {
-                            min = a[x];
-                        }
-                    }
-                }
-            }
-            LOGD("i: %d, j: %d, MIN: %d, (%d, %d, %d, %d)\n", i, j, min, a[0], a[1], a[2], a[3]);
-            if(min>=0 && ary[i][j] >=0) {
-                ary[i][j] = min+1;
-            }
-        }
-    }
-#endif
-    //Display
-    LOGD("\n");
-    for(int i=0; i<N; ++i)
-    {
-        for(int j=0; j<N; ++j)
-        {
-            printf("%2d ",ary[i][j]);
-        }
-        printf("\n");
-    }
-    
-    for(int i = 0; i < N; ++i) {
-        delete [] ary[i];
-    }
-    delete [] ary;
-#endif
-    return 0;
+    BfsTree(grid, 0, 0, 1,&Result);
+    LOGD("Result: %d\n", Result);    
+    return Result;
 }
+
+#if 0
+//Ref Solution
+public int shortestPathBinaryMatrix(int[][] grid) {
+    int N = grid.length;
+    if (grid[0][0] != 0 || grid[N-1][N-1] != 0) {
+        return -1;
+    }
+    int len = 0;
+    Queue<int[]> q = new LinkedList<>();
+    q.add(new int[] {0, 0});
+    while (!q.isEmpty()) {
+        int size = q.size();
+        len++;
+        for (int i = 0; i < size; i++) {
+            int[] n = q.poll();
+            int r = n[0], c = n[1];
+            if (r == N-1 && c == N - 1) {
+                return len;
+            }
+            for (int x = -1; x <= 1; x++) {
+                for (int y = -1; y <= 1; y++) {
+                    int nr = r + x;
+                    int nc = c + y;
+                    if (nr >= 0 && nc >= 0 && nr < N && nc < N && grid[nr][nc] == 0) {
+                        grid[nr][nc] = 2;
+                        q.add(new int[] {nr, nc});
+                    }
+                }
+            }
+        }
+    }
+    return -1;
+}
+#endif
 
 void Test_shortestPathBinaryMatrix()
 {
     LOGD("%s\n", __TIME__);
-    int arr1[] = {0,0,0,0,0,0,0};
-    int arr2[] = {1,1,1,1,1,1,0};
-    int arr3[] = {1,0,0,0,1,1,0};
-    int arr4[] = {1,0,1,0,1,1,0};
-    int arr5[] = {1,0,1,0,0,0,0};
-    int arr6[] = {1,0,1,1,1,1,1};
-    int arr7[] = {1,0,0,0,0,0,0};
-
+    int Result;
+    vector< vector<int> > grid;
     
+#if 0
+    int arr1[] = {0,0,0};
+    int arr2[] = {0,1,0};
+    int arr3[] = {0,1,0};
     int n = sizeof(arr1)/sizeof(arr1[0]);
 
-    printf("\n");
+    vector<int> input1(arr1, arr1+n);
+    vector<int> input2(arr2, arr2+n);
+    vector<int> input3(arr3, arr3+n);
+    
+    grid.push_back(input1);
+    grid.push_back(input2);
+    grid.push_back(input3);
+#endif
+
+#if 1
+    int arr1[] = {0,1,0,0,1,1,0};
+    int arr2[] = {1,0,0,0,0,0,0};
+    int arr3[] = {1,0,0,1,1,1,1};
+    int arr4[] = {0,1,0,0,0,0,0};
+    int arr5[] = {1,0,0,0,0,0,1};
+    int arr6[] = {1,0,0,1,0,0,0};
+    int arr7[] = {1,0,1,0,0,1,0};    
+    int n = sizeof(arr1)/sizeof(arr1[0]);
+
     vector<int> input1(arr1, arr1+n);
     vector<int> input2(arr2, arr2+n);
     vector<int> input3(arr3, arr3+n);
@@ -292,7 +249,7 @@ void Test_shortestPathBinaryMatrix()
     vector<int> input5(arr5, arr5+n);
     vector<int> input6(arr6, arr6+n);
     vector<int> input7(arr7, arr7+n);
-    vector< vector<int> > grid;
+    
     grid.push_back(input1);
     grid.push_back(input2);
     grid.push_back(input3);
@@ -300,7 +257,36 @@ void Test_shortestPathBinaryMatrix()
     grid.push_back(input5);
     grid.push_back(input6);
     grid.push_back(input7);
-    shortestPathBinaryMatrix(grid);
+#endif
+
+#if 0
+    int arr1[] = {0,0,0,0,0,0,0};
+    int arr2[] = {1,0,1,1,1,1,0};
+    int arr3[] = {1,0,0,0,1,1,0};
+    int arr4[] = {1,0,1,0,1,1,0};
+    int arr5[] = {1,0,1,0,0,0,0};
+    int arr6[] = {1,0,1,1,1,1,0};
+    int arr7[] = {1,0,0,0,0,0,0};
+    int n = sizeof(arr1)/sizeof(arr1[0]);
+
+    vector<int> input1(arr1, arr1+n);
+    vector<int> input2(arr2, arr2+n);
+    vector<int> input3(arr3, arr3+n);
+    vector<int> input4(arr4, arr4+n);
+    vector<int> input5(arr5, arr5+n);
+    vector<int> input6(arr6, arr6+n);
+    vector<int> input7(arr7, arr7+n);
+    
+    grid.push_back(input1);
+    grid.push_back(input2);
+    grid.push_back(input3);
+    grid.push_back(input4);
+    grid.push_back(input5);
+    grid.push_back(input6);
+    grid.push_back(input7);
+#endif
+    Result = shortestPathBinaryMatrix(grid);
+    LOGD("Result: %d\n", Result);
     
     LOGD("Done \n");
 }
