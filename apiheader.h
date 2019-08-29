@@ -43,6 +43,8 @@ void Test_permute();
 void Test_permuteUnique();
 //61
 void Test_rotateRight();
+//62
+void Test_uniquePaths();
 //338
 void Test_countBits();
 //1091

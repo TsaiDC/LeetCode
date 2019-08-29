@@ -159,6 +159,11 @@ int main()
 #endif
 
 #if 1
+//#62
+    Test_uniquePaths();
+#endif;
+
+#if 0
 //#338
     Test_countBits();
 #endif
