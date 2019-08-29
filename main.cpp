@@ -158,12 +158,17 @@ int main()
     Test_rotateRight();
 #endif
 
+#if 1
+//#338
+    Test_countBits();
+#endif
+
 #if 0
 //#350
     Test_intersect();
 #endif
 
-#if 1
+#if 0
 //#1091
     Test_shortestPathBinaryMatrix();
 #endif
