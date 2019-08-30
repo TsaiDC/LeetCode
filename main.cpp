@@ -158,10 +158,15 @@ int main()
     Test_rotateRight();
 #endif
 
-#if 1
+#if 0
 //#62
     Test_uniquePaths();
 #endif;
+
+#if 1
+//#98
+    Test_isValidBST();
+#endif
 
 #if 0
 //#338

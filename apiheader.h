@@ -45,6 +45,8 @@ void Test_permuteUnique();
 void Test_rotateRight();
 //62
 void Test_uniquePaths();
+//98
+void Test_isValidBST();
 //338
 void Test_countBits();
 //1091
