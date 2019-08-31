@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <math.h>
+#include <limits.h>
 
 #include "apiheader.h"
 
@@ -50,20 +51,27 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
-void treeDFS(TreeNode* root, bool* pRet) 
-{
+void treeDFS(TreeNode* root, vector<int>& array)
+{    
     if(root == NULL)
         return;
     
-    treeDFS(root->left, pRet);
+    treeDFS(root->left, array);
     LOGD("Val: %d\n", root->val);
-    treeDFS(root->right, pRet);
+    array.push_back(root->val);
+    treeDFS(root->right, array);
 }
 
 bool isValidBST(TreeNode* root) {
-    bool ret = true;
-    treeDFS(root, &ret);
-    return ret;
+    vector<int> result; 
+    treeDFS(root, result);
+    for(int i=1; i<result.size(); ++i)
+    {
+        if(result[i]<=result[i-1]) {
+            return false;
+        }        
+    }
+    return true;
 }
 
 void Test_isValidBST()
@@ -74,7 +82,17 @@ void Test_isValidBST()
     {
         node[i] = new TreeNode(i);
     }
+#if 1
+    TreeNode* pRoot = node[0];
+    node[0]->left = node[1];
+    node[0]->right = NULL;
+    node[0]->val = 1;
     
+    node[1]->left = NULL;
+    node[1]->right = NULL;   
+    node[1]->val = 1;
+#endif    
+#if 0    
     TreeNode* pRoot = node[3];
     
     node[3]->left = node[1];
@@ -97,7 +115,7 @@ void Test_isValidBST()
 
     node[6]->left = NULL;
     node[6]->right = NULL;
-    
+#endif    
     bool ret = isValidBST(pRoot);
     
     
