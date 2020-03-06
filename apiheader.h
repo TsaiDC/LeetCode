@@ -17,6 +17,7 @@ void Test_isMatch();
 //For Special Test
 void Test_sorting();
 void Test_sortingList();
+void Test_tree();
 //11
 void Test_maxArea();
 //12

@@ -28,10 +28,27 @@ void c_recur(int k, int n, int m, vector<int> list, bool isInit)
         cout<<endl;
     }
 }
+
+void localTest()
+{
+    const char *str = "abcdefg";
+    printf("[DBG] %s(%d) %s : str: %s\n", __FUNCTION__, __LINE__, __TIME__, str);
+    
+}
+
 int main()
 {
     double START,END;
     START = clock();
+
+#if 1
+    Test_tree();
+#endif
+
+#if 0
+    localTest();
+#endif
+
 #if 0
     int m=5, n=3;
     vector<int> list;
@@ -161,9 +178,9 @@ int main()
 #if 0
 //#62
     Test_uniquePaths();
-#endif;
+#endif
 
-#if 1
+#if 0
 //#98
     Test_isValidBST();
 #endif
