@@ -41,8 +41,16 @@ int main()
     double START,END;
     START = clock();
 
-#if 1
+#if 0
     Test_tree();
+#endif
+
+#if 0
+    Test_avltree();
+#endif
+
+#if 1
+    Test_splaytree();
 #endif
 
 #if 0

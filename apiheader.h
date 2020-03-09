@@ -18,6 +18,8 @@ void Test_isMatch();
 void Test_sorting();
 void Test_sortingList();
 void Test_tree();
+void Test_splaytree();
+void Test_avltree();
 //11
 void Test_maxArea();
 //12
