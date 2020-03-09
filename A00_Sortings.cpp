@@ -30,7 +30,128 @@ using namespace std;
 /*
 Sortings:
 http://notepad.yehyeh.net/Content/Algorithm/Sort/Sort.php
+140
+https://tkucsiepr.pixnet.net/blog/post/6167009
 */
+
+#if 0
+https://www.youtube.com/watch?v=9qFR2WQGqkU
+public String minWindow<string s, string t)
+{
+    if(s.size()<t.size()) {
+        return "";
+    }
+    map<char, int>::iterator iter;
+    map<char, int> wordDict = constructWord(t);
+    int slow = 0, minLen = INT_MAX, matchCount = 0, index = 0;
+    for(int fast = 0; fast < s.size(); ++fast)
+    {
+        char ch = s.at(fast);
+        iter = wordDict.find(ch);
+        if(iter == wordDict.end()) {
+            continue;
+        }
+        if(iter->second == 1) {
+            matchCount++;
+        }        
+        wordMap[c] -= 1;
+
+        while(matchCount == wordDict.size())
+        {
+            //Find a valid substr
+            if(fast - slow +1 < minLen) {
+                minLen = fast-slow+1;
+                index = slow;
+            }
+            
+            char left = s.at(slow++);
+            iter = wordDict.find(left);
+            if(iter == wordDict.end()) {
+                continue;
+            }            
+            
+            if(iter->second == 0) {
+                --matchCount;
+            }
+            wordDict[left] += 1;
+        }
+    }
+    return minLen == INT_MAX ? "" : s.substring(index, index+minLen);
+}
+
+public map<char, int> constructWord(string t)
+{
+    map<char, int> wordMap;
+    map<char, int>::iterator iter;
+    
+    for(int i=0; i<t.size(); ++i)
+    {
+        char c = t.at(i);
+        int val = 
+        iter = wordMap.find(c);
+        if(iter != wordMap.end())
+            wordMap[c] += 1;
+        else
+            wordMap[c] = 1;
+    }  
+}
+
+#endif
+//Merge Sort with linked list
+#if 0
+//The main function
+public static Node merge_sort(Node head) 
+{
+    if(head == null || head.next == null) 
+        return head;
+
+    Node middle = getMiddle(head);      //get the middle of the list
+    Node left_head = head;
+    Node right_head = middle.next; 
+    middle.next = null;             //split the list into two halfs
+
+    return merge(merge_sort(left_head), merge_sort(right_head));  //recurse on that
+}
+
+//Merge subroutine to merge two sorted lists
+public static Node merge(Node a, Node b)
+{
+    Node dummyHead = new Node();
+
+    for(Node current  = dummyHead; a != null && b != null; current = current.next;)
+    {
+        if(a.data <= b.data) 
+        {
+            current.next = a; 
+            a = a.next; 
+        }
+        else
+        { 
+            current.next = b;
+            b = b.next; 
+        }
+
+    }
+    current.next = (a == null) ? b : a;
+    return dummyHead.next;
+}
+
+//Finding the middle element of the list for splitting
+public static Node getMiddle(Node head)
+{
+    if(head == null) 
+        return head;
+
+    Node slow = head, fast = head;
+
+    while(fast.next != null && fast.next.next != null)
+    {
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    return slow;
+}
+#endif
 
 static void showList(int* pData, int leng)
 {

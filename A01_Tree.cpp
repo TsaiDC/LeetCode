@@ -5,7 +5,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
+#include <queue> 
 
+using namespace std; 
 #include "apiheader.h"
 
 using namespace std;
@@ -30,44 +32,69 @@ using namespace std;
 /*
 Tree:
 practice 
+Ref: https://www.geeksforgeeks.org/insertion-in-a-binary-tree-in-level-order/
+https://www.itread01.com/articles/1476616127.html
+http://www.csie.ntnu.edu.tw/~u91029/Order.html
 */
 
-typedef struct node_t
+typedef struct node_s
 {
     int data;
-    struct node_t* left;
-    struct node_t* right;
-}node;
+    struct node_s* left;
+    struct node_s* right;
+}node_t;
 
-node* create()
-{
-    node *p;
-    int x;
-    printf("Enter date (-1 exist):");
-    scanf("%d", &x);
-    
-    if(x==-1)
-        return NULL;
-    
-    p = (node*)malloc(sizeof(node));
-    p->data = x;
-    printf("Left Child of %x\n", x);
-    p->left = create();
-    printf("Right Child of %x\n", x);
-    p->right = create();
-    return p;
+node_t* newNode(int key)
+{   
+    LOGI("Key: %d\n", key);
+    node_t* t = (node_t*)malloc(sizeof(node_t));
+    t->data = key;
+    t->left = t->right = NULL;
+    return t;
 }
 
-void preorder(node *t)
+void insert(node_t *root, int key)
+{
+    if(!root) {
+        root = newNode(key);
+        return;
+    }
+
+    queue<node_t*> q;
+    q.push(root);
+    
+    while(!q.empty()) {
+        node_t* tmp = q.front();
+        q.pop();
+        
+        if(!tmp->left) {
+            tmp->left = newNode(key);
+            break;
+        }
+        else {
+            q.push(tmp->left);
+        }
+        
+        if(!tmp->right) {
+            tmp->right = newNode(key);
+            break;
+        }
+        else {
+            q.push(tmp->right);
+        }
+    }
+}
+
+void preorder(node_t *t)
 {
     if(t == NULL)
         return;
     LOGD("%d\n", t->data);
     preorder(t->left);
-    preorder(t->right);    
+    preorder(t->right);
 }
 
-void postorder(node *t)
+void postorder(node_t *t)
 {
     if(t == NULL)
         return;
@@ -76,7 +103,7 @@ void postorder(node *t)
     LOGD("%d\n", t->data);
 }
 
-void inorder(node *t)
+void inorder(node_t *t)
 {
     if(t == NULL)
         return;
@@ -85,22 +112,32 @@ void inorder(node *t)
     inorder(t->right);
 }
 
-void freeTree(node *t)
+void freeTree(node_t *t)
 {
-    if(t== NULL)
-        return;
 }
 
 void Test_tree()
 {
     LOGI("%s\n", __TIME__);
-    node *root;
-    root = create();
+
+    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int n = sizeof(arr)/sizeof(arr[0]);
+
+    node_t *root = newNode(arr[0]);
     
-    LOGD("Preorder: \n");
-    preorder(root);
-    LOGD("Postorder: \n");
-    postorder(root);
+    for(int i=1; i<n; ++i)
+    {
+        insert(root, arr[i]);
+    }
+    
+    
+
+//    LOGD("Preorder: \n");
+//    preorder(root);
+
+//    LOGD("Postorder: \n");
+//    postorder(root);
     LOGD("inorder: \n");
-    inorder(root);    
+    inorder(root);
+
 }
