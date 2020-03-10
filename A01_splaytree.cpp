@@ -91,6 +91,7 @@ static position insert_value(TREE tr, ElementTP value)
  */
 TREE find_value(TREE tr, ElementTP value)
 {
+    LOGE("%d\n", value);
     position np;
 
     np = search_value(tr, value);
@@ -105,9 +106,11 @@ TREE find_value(TREE tr, ElementTP value)
  */
 static void splay_tree(TREE tr, position np)
 {
+    LOGI("\n");
     while (tr->lchild != np && tr->rchild != np) {
         with_grandpa(tr, np);
     }
+    LOGI("=====================\n");
     if (tr->lchild == np) {
         right_single_rotate(tr);
     }
@@ -121,6 +124,7 @@ static void splay_tree(TREE tr, position np)
  */
 static void with_grandpa(TREE tr, position np)
 {
+    LOGI("tr->value: %d, np->value: %d\n", tr->element, np->element);
     position parent, grandPa;
     int i,j; 
 
@@ -148,6 +152,7 @@ static void with_grandpa(TREE tr, position np)
  */
 static position search_value(TREE tr, ElementTP value) 
 {
+//    LOGD("%d\n", value);
     if (tr == NULL) return NULL; 
 
     if (tr->element == value) {
@@ -167,6 +172,7 @@ static position search_value(TREE tr, ElementTP value)
  */
 static TREE left_single_rotate(TREE tr) 
 {
+    LOGI("\n");
     TREE newRoot, parent;
     parent  = tr->parent;
     newRoot = tr->rchild;
@@ -179,11 +185,11 @@ static TREE left_single_rotate(TREE tr)
     newRoot->parent = parent;
     if (parent != NULL) {
         if (parent->lchild == tr) {
-        parent->lchild = newRoot;
-    }
-    else {
-        parent->rchild = newRoot;
-    }
+            parent->lchild = newRoot;
+        }
+        else {
+            parent->rchild = newRoot;
+        }
     }
     tr->parent = newRoot;
     return newRoot;
@@ -195,6 +201,7 @@ static TREE left_single_rotate(TREE tr)
  */
 static TREE right_single_rotate(TREE tr) 
 {
+    LOGI("\n");
     TREE newRoot, parent;
     parent  = tr->parent;
     newRoot = tr->lchild;
@@ -224,6 +231,7 @@ static TREE right_single_rotate(TREE tr)
  */
 static TREE left_double_rotate(TREE tr) 
 {
+    LOGI("\n");
     right_single_rotate(tr->rchild);
     return left_single_rotate(tr);
 }
@@ -234,6 +242,7 @@ static TREE left_double_rotate(TREE tr)
  */
 static TREE right_double_rotate(TREE tr) 
 {
+    LOGI("\n");
     left_single_rotate(tr->lchild);
     return right_single_rotate(tr);
 }
@@ -273,6 +282,7 @@ static void insert_node_to_nonempty_tree(TREE tr, position np)
  */
 static TREE right_zig_zig(TREE tr)
 {
+    LOGI("\n");
     position parent,middle,newRoot;
     parent  = tr->parent;
     middle  = tr->lchild;
@@ -294,10 +304,10 @@ static TREE right_zig_zig(TREE tr)
     if (parent != NULL) {
         if (parent->lchild == tr) {
         parent->lchild = newRoot;
-    }
-    else {
-        parent->rchild = newRoot;
-    }
+        }
+        else {
+            parent->rchild = newRoot;
+        }
     }
     return newRoot;  
 }
@@ -307,6 +317,7 @@ static TREE right_zig_zig(TREE tr)
  */
 static TREE left_zig_zig(TREE tr)
 {
+    LOGI("\n");
     position parent,middle,newRoot;
     parent  = tr->parent;
     middle  = tr->rchild;
@@ -336,6 +347,24 @@ static TREE left_zig_zig(TREE tr)
     return newRoot;  
 }
 
+void splaytree_preorder(TREE t)
+{
+    if(t == NULL)
+        return;
+    LOGD("%d\n", (int)t->element);
+    splaytree_preorder(t->lchild);
+    splaytree_preorder(t->rchild);
+}
+
+void splaytree_inorder(TREE t)
+{
+    if(t == NULL)
+        return;
+    splaytree_inorder(t->lchild);
+    LOGD("%d\n", t->element);
+    splaytree_inorder(t->rchild);
+}
+
 void Test_splaytree()
 {
     LOGI("%s\n", __TIME__);
@@ -348,6 +377,13 @@ void Test_splaytree()
     tr = insert_value(tr, 1); 
     tr = insert_value(tr, 2); 
 
+    splaytree_preorder(tr);
+
     tr = find_value(tr, 2);
     printf("%d\n", tr->rchild->lchild->element);
+    
+    LOGD("Preoder\n");
+    splaytree_preorder(tr);
+    LOGD("Inorder\n");
+    splaytree_inorder(tr);
 }
