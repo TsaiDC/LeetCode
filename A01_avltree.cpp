@@ -94,19 +94,18 @@ void main(void)
  */
 static position insert_value(TREE tr, ElementTP value)
 {
-#if 0
-    position new;
+    position newNode;
 
     /* insert a value to a binary search tree */
-    new = insert_leaf(tr, value);
-    update_root_depth(new);
+    newNode = insert_leaf(tr, value);
+    update_root_depth(newNode);
     if (tr == NULL) {
-        tr = new;
+        tr = newNode;
     }
     else {
-        tr = recover_avl(tr, new);
+        tr = recover_avl(tr, newNode);
     }
-#endif
+
     return tr;
 }
 
@@ -136,21 +135,24 @@ static TREE recover_avl(TREE tr, position np)
     while (np != NULL) {
         update_root_depth(np);
         myDiff = depth_diff(np);
-    if (myDiff > 1 || myDiff < -1) {
+        if (myDiff > 1 || myDiff < -1) {
             if (myDiff > 1) {
-                /* left rotate needed */
+                /* left rotate needed */ //RR Case
                 if(depth_diff(np->rchild) > 0) {
                     np = left_single_rotate(np);
                 }
                 else {
+                    //RL Case
                     np = left_double_rotate(np);
                 }
             }
             if (myDiff < -1) {
+                //LL Case
                 if(depth_diff(np->lchild) < 0) {
                     np = right_single_rotate(np);
                 }
                 else {
+                    //LR Case
                     np = right_double_rotate(np);
                 }
             }
@@ -326,10 +328,19 @@ static void insert_node_to_nonempty_tree(TREE tr, position np)
     }
 }
 
+void avltree_inorder(TREE t)
+{
+    if(t == NULL)
+        return;
+    avltree_inorder(t->lchild);
+    LOGD("%d\n", t->element);
+    avltree_inorder(t->rchild);
+}
+
 void Test_avltree()
 {
     LOGI("%s\n", __TIME__);
-#if 0
+#if 1
     TREE tr;
     position np;
     ElementTP element;
@@ -351,4 +362,5 @@ void Test_avltree()
     printf("root->lchild: %d\n", tr->lchild->element);
     printf("root->lchild->lchild: %d\n", tr->lchild->lchild->element);
 #endif
+    avltree_inorder(tr);
 }
