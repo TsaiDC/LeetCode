@@ -45,7 +45,7 @@ int main()
     Test_tree();
 #endif
 
-#if 1
+#if 0
     Test_avltree();
 #endif
 
@@ -201,6 +201,11 @@ int main()
 #if 0
 //#350
     Test_intersect();
+#endif
+
+#if 1
+    //#503
+    Test_NextGreaterElmentII();
 #endif
 
 #if 0
