@@ -44,7 +44,7 @@ The number 2 can't find next greater number;
 The second 1's next greater number needs to search circularly, which is also 2.
 Note: The length of given array won't exceed 10000.
 */
-
+#if 0
 vector<int> nextGreaterElements(vector<int>& nums) {
     vector<int> result;
     
@@ -67,16 +67,56 @@ vector<int> nextGreaterElements(vector<int>& nums) {
     }
     return result;
 }
+#endif
+
+vector<int> nextGreaterElements(vector<int>& nums) {
+    int n = nums.size();
+    vector<int> next_greater(n);
+    if(n==0) return next_greater;
+    
+    int maxi=0;
+    for(int i=0; i<n; i++){
+        maxi = nums[i] > nums[maxi]? i:maxi;
+    }
+    LOGD("maxi: %d\n", maxi);
+    next_greater[maxi] = - 1;
+    
+    int p;
+    for(int i=(maxi-1+n)%n; i!=maxi; i=(i-1+n)%n){
+        p = (i+1)%n;
+        LOGD("+++P: %d, i: %d\n", p, i);
+        while(p != -1 && nums[i] >= nums[p]) 
+        {
+            LOGD("  p:%d, next_greater[p]: %d\n", p, next_greater[p]);
+            p = next_greater[p];
+        }
+        LOGD("---P: %d, i: %d\n", p, i);
+        next_greater[i] = p;
+    }
+    
+    for(int i=0; i<n ;i++) {
+        LOGD("%d\n", next_greater[i]);
+    }
+    for(int i=0; i<n; i++){
+        if (next_greater[i] != -1) {
+            LOGE("Change, i: %d, %d\n", i, next_greater[i]);
+            next_greater[i] = nums[next_greater[i]];
+        }
+    }
+    
+    return next_greater;
+}
 
 void Test_NextGreaterElmentII()
 {
     LOGD("%s\n", __TIME__);
     vector<int> input;
     vector<int> output;
-//    input.push_back(4);
-//    input.push_back(3);
-//    input.push_back(2);
-    input.push_back(1);
+    input.push_back(5);
+    input.push_back(6);
+    input.push_back(9);
+    input.push_back(7);
+    input.push_back(8);
     output = nextGreaterElements(input);
     
     for(int i=0; i<output.size(); ++i)
