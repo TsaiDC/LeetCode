@@ -29,11 +29,21 @@ void c_recur(int k, int n, int m, vector<int> list, bool isInit)
     }
 }
 
+void revertStr(char *str)
+{
+    char c = *str;
+    if(c=='\0'){        
+        return;
+    }
+    revertStr(++str);
+    printf("%c", c);
+}
+
 void localTest()
 {
     const char *str = "abcdefg";
-    printf("[DBG] %s(%d) %s : str: %s\n", __FUNCTION__, __LINE__, __TIME__, str);
-    
+    printf("[DBG] %s(%d) %s : str: %s\n", __FUNCTION__, __LINE__, __TIME__, str);    
+    revertStr((char*)str);
 }
 
 int main()
@@ -204,6 +214,10 @@ int main()
 #endif
 
 #if 1
+    Test_SortCharactersByFrequency();
+#endif
+
+#if 0
     //#503
     Test_NextGreaterElmentII();
 #endif
