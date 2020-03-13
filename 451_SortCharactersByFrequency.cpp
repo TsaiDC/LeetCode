@@ -74,11 +74,27 @@ typedef struct node_s{
 
 void insert_a_node(node_t* root, node_t* node)
 {
-    //TODO
+    if(root->num > node->num) {
+        if(root->pL == NULL) {
+            root->pL = node;
+        }
+        else {
+            insert_a_node(root->pL, node);
+        }
+    }
+    else {
+        if(root->pR == NULL) {
+            root->pR = node;
+        }
+        else {
+            insert_a_node(root->pR, node);
+        }
+    }
 }
 
 node_t* insertNode(node_t* root, char c, int num)
 {
+    LOGD("Char: %c, Num: %d\n", c, num);
     node_t* node = (node_t*)malloc(sizeof(node_t));
     node->c = c;
     node->num = num;
@@ -92,6 +108,18 @@ node_t* insertNode(node_t* root, char c, int num)
         insert_a_node(root, node);
     }
     return root;
+}
+
+static void revert_inorder(node_t* root, string* str)
+{
+    if(root==NULL) return;
+    revert_inorder(root->pR, str);
+    LOGD("%c(%d)\n", root->c, root->num);
+    for(int i=0; i<root->num; ++i)
+    {
+        str->push_back(root->c);
+    }
+    revert_inorder(root->pL, str);
 }
 
 string frequencySort(string s) {
@@ -109,10 +137,16 @@ string frequencySort(string s) {
         }        
     }
     
+    node_t *pRoot = NULL;
     for(iter = mapStr.begin(); iter != mapStr.end(); iter++)
-        cout<<iter->first<<" "<<iter->second<<endl;
-                
+    {
+//        cout<<iter->first<<" "<<iter->second<<endl;
+        pRoot = insertNode(pRoot, iter->first, iter->second);
+    }
+
     string result;
+    revert_inorder(pRoot, &result);
+    LOGD("Result: %s\n", result.c_str());
     return result;    
 }
 
