@@ -75,7 +75,7 @@ int main()
 #endif
 
 //A02
-#if 1
+#if 0
     Test_Recursive();
 #endif
 
@@ -220,11 +220,17 @@ int main()
 #endif
 
 #if 0
+//#451
     Test_SortCharactersByFrequency();
 #endif
 
+#if 1
+//#474
+    Test_OnesAndZeros();
+#endif;
+
 #if 0
-    //#503
+//#503
     Test_NextGreaterElmentII();
 #endif
 
