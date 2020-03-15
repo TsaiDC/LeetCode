@@ -52,6 +52,17 @@ int main()
     START = clock();
 
 #if 0
+    localTest();
+#endif
+
+#if 0
+    int m=5, n=3;
+    vector<int> list;
+    c_recur(0, n, m, list, true);
+#endif
+
+//A01
+#if 0
     Test_tree();
 #endif
 
@@ -63,14 +74,9 @@ int main()
     Test_splaytree();
 #endif
 
-#if 0
-    localTest();
-#endif
-
-#if 0
-    int m=5, n=3;
-    vector<int> list;
-    c_recur(0, n, m, list, true);
+//A02
+#if 1
+    Test_Recursive();
 #endif
 
 #if 0
@@ -213,7 +219,7 @@ int main()
     Test_intersect();
 #endif
 
-#if 1
+#if 0
     Test_SortCharactersByFrequency();
 #endif
 
