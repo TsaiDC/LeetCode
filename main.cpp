@@ -209,6 +209,11 @@ int main()
     Test_isValidBST();
 #endif
 
+#if 1
+//#230
+    Test_KthSmallestElement();
+#endif
+
 #if 0
 //#338
     Test_countBits();
@@ -224,7 +229,7 @@ int main()
     Test_SortCharactersByFrequency();
 #endif
 
-#if 1
+#if 0
 //#474
     Test_OnesAndZeros();
 #endif;
