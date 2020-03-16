@@ -210,6 +210,11 @@ int main()
 #endif
 
 #if 1
+//#200
+    Test_NumIslands();
+#endif
+
+#if 0
 //#230
     Test_KthSmallestElement();
 #endif

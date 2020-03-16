@@ -59,6 +59,8 @@ void Test_rotateRight();
 void Test_uniquePaths();
 //98
 void Test_isValidBST();
+//200
+void Test_NumIslands();
 //230
 void Test_KthSmallestElement();
 //338
