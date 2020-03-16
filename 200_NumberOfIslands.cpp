@@ -53,19 +53,89 @@ Input:
 Output: 3
 */
 
+#if 1
+    void visit(int i, int j, vector< vector<char> >& grid, bool isFirstCall, int& cnt, int m, int n) {
+        if(grid[i][j] == '1') {
+            if(isFirstCall) cnt++;
+            grid[i][j]='2';
+            if(i>0) visit(i-1,j, grid, false, cnt, m, n); 
+            if(j>0) visit(i, j-1, grid, false, cnt, m, n); 
+            if(i+1<m) visit(i+1,j, grid, false, cnt, m, n); 
+            if(j+1<n) visit(i,j+1, grid, false, cnt, m, n);
+        }
+    }
+    int numIslands(vector< vector<char> >& grid) {
+        int i = 0, j = 0, m = grid.size();
+        if(!m) return 0;
+        int n = grid[0].size();
+        int ti, tj;
+        int cnt = 0;
+        for(i = 0; i < m; i++)
+            for(j = 0; j < n; j++)
+                if(grid[i][j]=='1') 
+                    visit(i, j, grid, true, cnt, m, n);
+        return cnt;
+    }
+#endif
+#if 0 //Ref solution
+void visit(int i, int j, vector< vector<char> >& grid, bool isFirst, int &cnt)
+{
+    int h = grid.size();
+    int w = grid[0].size();
+    if(grid[j][i] == '1'){
+        if(isFirst) cnt++;
+        grid[j][i] == '2';
+
+        //up
+        if(j>0) visit(i, j-1, grid, false, cnt);
+        //left
+        if(i>0) visit(i-1, j, grid, false, cnt);
+        //down
+        if(j+1 < h) visit(i, j+1, grid, false, cnt);
+        //right
+        if(i+1 < w)visit(i+1, j, grid, false, cnt);
+
+    }
+}
+
+int numIslands(vector< vector<char> >& grid) {
+    int count = 0;
+    int h = grid.size();
+    int w = grid[0].size();
+    
+    for(int j=0; j<h; ++j)
+    {
+        for(int i=0; i<w; ++i)
+        {
+            if(grid[j][i] == '1') {
+                visit(i, j, grid, true, count);
+            }
+        }
+    }
+    return count;
+}
+#endif
+
+
+#if 0
 #define GETX(idx,w) (idx%w)
 #define GETY(idx,h) (idx/h)
 #define GETIDX(xx, yy, width) ((yy)*width+(xx))
 
-int numIslands(vector<vector<char>>& grid) {
+int numIslands(vector< vector<char> >& grid) {
     
     int h = grid.size();
     int w = grid[0].size();
+    vector<int>ans_rol(w, -1);
+    vector< vector<int> > ansMap(h, ans_rol);
     for(int i=0; i<h; i++)
     {
         for(int j=0; j<w; j++)
         {
             printf("%c ", grid[i][j]);
+            if(grid[i][j]=='1') {
+                ansMap[i][j] = 0;
+            }
         }
         printf("\n");
     }
@@ -73,7 +143,7 @@ int numIslands(vector<vector<char>>& grid) {
     LOGD("h: %d, w: %d\n",h, w);
 
     vector<int>rol(h*w, -1);
-    vector<vector<int>> adjacent(h*w, rol);
+    vector< vector<int> > adjacent(h*w, rol);
 
     for(int j=0; j<h; j++)
     {
@@ -82,60 +152,105 @@ int numIslands(vector<vector<char>>& grid) {
             if(grid[j][i]=='1') {
                 int idx_p = GETIDX(i, j, w);
                 int idx_q = GETIDX(i, j, w);
-                adjacent[idx_p][idx_q] = 0;
+                adjacent[idx_p][idx_q] = 1;
                 LOGD("[o]Check (%d, %d) -> (%d, %d)\n", j, i, idx_p, idx_q);
 
                 //UP
                 if(j-1>=0 && grid[j-1][i]=='1'){
                     idx_q = GETIDX(i, j-1, w);                    
                     LOGE("[u]Check (%d, %d) -> (%d, %d)\n", j, i, j-1, i);
-                    adjacent[idx_p][idx_q] = 0;
+                    adjacent[idx_p][idx_q] = 1;
                     LOGD("[u]Check (%d, %d) -> (%d, %d)\n", j, i, idx_p, idx_q);
                 }
                 //DOWN
                 if(j+1<h && grid[j+1][i]=='1'){
                     idx_q = GETIDX(i, j+1, w);
-                    adjacent[idx_p][idx_q] = 0;
+                    adjacent[idx_p][idx_q] = 1;
                     LOGD("[d]Check (%d, %d) -> (%d, %d)\n", j, i, idx_p, idx_q);
                 }
                 //LEFT
                 if(i-1 >= 0 && grid[j][i-1]=='1'){
                     idx_q = GETIDX(i-1, j, w);
-                    adjacent[idx_p][idx_q] = 0;
+                    adjacent[idx_p][idx_q] = 1;
                     LOGD("[L]Check (%d, %d) -> (%d, %d)\n", j, i, idx_p, idx_q);
                 }
                 //RIGHT
                 if(i+1 < w && grid[j][i+1]=='1'){
                     idx_q = GETIDX(i+1, j, w);
-                    adjacent[idx_p][idx_q] = 0;
+                    adjacent[idx_p][idx_q] = 1;
                     LOGD("[R]Check (%d, %d) -> (%d, %d)\n", j, i, idx_p, idx_q);
                 }
             }
         }        
     }
 
-    int mark =0;
     for(int j=0; j<h*w;++j)
     {
         for(int i=0; i<h*w; ++i)
         {
-            if(adjacent[j][i]>=0) {
-                if(mark==0) {
-                    mark++;
-                }
-                adjacent[j][i]=mark;
-            }
             if(adjacent[j][i]<0) {
                 printf("_");
             } else {
-                printf("%d", mark);
+                printf("x");
             }            
         }
         printf("\n");
     }
-
+    
+    int blockNum = 0;
+    for(int j=0;j<h; ++j) 
+    {
+        for(int i=0; i<w; ++i)
+        {
+            
+            if(grid[j][i] == '1') {
+                int idx_y = GETIDX(i, j, w);
+                //find the smallest
+                int smallest = blockNum;
+                for(int x=0; x<adjacent[0].size(); ++x)
+                {
+                    if(adjacent[idx_y][x]==1) {
+                        int x1 = GETX(x,w);
+                        int y1 = GETY(x,h);
+                        LOGD("(%d)%d, %d -> (%d)%d, %d, smallest: %d\n", idx_y, i, j, x, x1, y1, smallest);
+                        if(ansMap[y1][x1] !=0 && ansMap[y1][x1]<smallest) {
+                            smallest =ansMap[y1][x1];
+                        }
+                        if(smallest == 0) smallest++;                        
+                    }
+                }
+                blockNum = smallest;
+                LOGD("Check (%d, %d) S: %d\n", i, j, smallest);
+                //update blockNum
+                for(int x=0; x<adjacent[0].size(); ++x)
+                {
+                    if(adjacent[idx_y][x]==1) {
+                        int x1 = GETX(x,w);
+                        int y1 = GETY(x,h);
+                        ansMap[y1][x1] = blockNum;
+                    }
+                }
+            }
+        }
+    }
+    
+    LOGE("----------------------------\n");
+    for(int j=0;j<h; ++j) 
+    {
+        for(int i=0; i<w; ++i)
+        {
+            if(ansMap[j][i]>0){
+                printf("%d", ansMap[j][i]);
+            }
+            else {
+                printf("_");
+            }
+        }
+        printf("\n");
+    }
     return 0;    
 }
+#endif
 
 void Test_NumIslands()
 {
@@ -155,7 +270,7 @@ void Test_NumIslands()
     vector<char> input2(arr2, arr2+n);
     vector<char> input3(arr3, arr3+n);
     vector<char> input4(arr4, arr4+n);
-    vector<vector<char>> input;
+    vector< vector<char> > input;
     input.push_back(input1);
     input.push_back(input2);
     input.push_back(input3);
