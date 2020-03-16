@@ -63,6 +63,8 @@ void Test_isValidBST();
 void Test_NumIslands();
 //230
 void Test_KthSmallestElement();
+//240
+void Test_search2dMatrixii();
 //338
 void Test_countBits();
 //451
