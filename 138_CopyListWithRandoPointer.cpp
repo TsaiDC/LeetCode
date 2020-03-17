@@ -82,10 +82,82 @@ public:
 };
 
 Node* copyRandomList(Node* head) {
-    return NULL;
+    if(head == NULL) return NULL;
+    Node* pHead = head;
+    Node* tmpNode = NULL;
+    vector<Node*> oldList;    
+    vector<Node*> newList;    
+    while(pHead!=NULL)
+    {    
+        tmpNode = new Node(pHead->val);
+        newList.push_back(tmpNode);        
+        oldList.push_back(pHead);        
+        pHead=pHead->next;
+    }
+    
+    for(int i=oldList.size()-1; i>=0; i--)
+    {
+        if(oldList[i]->random == NULL) {
+            newList[i]->random = NULL;
+            continue;
+        }
+        
+        for(int j=0; j<oldList.size(); ++j)
+        {
+            Node* pTmp = oldList[i]->random;
+            if(pTmp->val == oldList[j]->val &&
+               pTmp->random == oldList[j]->random &&
+               pTmp->next == oldList[j]->next ) {               
+               newList[i]->random = newList[j];
+               break;
+            }
+        }
+    }
+#if 0
+    for(int i=0; i<newList.size(); ++i)
+    {
+        int nextVal = newList[i]->random == NULL ? -1 : newList[i]->random->val;
+        LOGD("New: [%d, %d]\n", newList[i]->val, nextVal);
+    }
+#endif
+    for(int i=0; i<newList.size(); ++i)
+    {
+        if(i+1< newList.size()) {
+            newList[i]->next = newList[i+1];
+        }
+    }    
+    return newList[0];
 }
 
 void Test_copyRandomList()
 {
     LOGD("%s\n", __TIME__);
+
+    Node *p0 = new Node(7);
+    Node *p1 = new Node(13);
+    Node *p2 = new Node(11);
+    Node *p3 = new Node(10);
+    Node *p4 = new Node(1);
+    p0->next=p1;
+    p1->next=p2;
+    p2->next=p3;
+    p3->next=p4;
+    p4->next=NULL;
+
+    p0->random = NULL;
+    p1->random = p0;
+    p2->random = p4;
+    p3->random = p2;
+    p4->random = p0;
+    
+    Node* pHead = copyRandomList(p0);
+//    Node* pHead = copyRandomList(NULL);
+    
+    while(pHead!=NULL)
+    {
+        int nextVal = pHead->random == NULL ? -1 : pHead->random->val;
+        LOGD("New: [%d, %d]\n", pHead->val, nextVal);
+        pHead = pHead->next;
+    }
+
 }
