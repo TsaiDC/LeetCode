@@ -209,6 +209,11 @@ int main()
     Test_isValidBST();
 #endif
 
+#if 1
+//#138
+    Test_copyRandomList();
+#endif
+
 #if 0
 //#200
     Test_NumIslands();
@@ -219,7 +224,7 @@ int main()
     Test_KthSmallestElement();
 #endif
 
-#if 1
+#if 0
 //#240
     Test_search2dMatrixii();
 #endif
