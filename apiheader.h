@@ -73,6 +73,8 @@ void Test_countBits();
 void Test_SortCharactersByFrequency();
 //474
 void Test_OnesAndZeros();
+//477
+void Test_totalHammingDistance();
 //503
 void Test_NextGreaterElmentII();
 //1091

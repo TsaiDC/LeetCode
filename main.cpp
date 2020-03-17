@@ -209,7 +209,7 @@ int main()
     Test_isValidBST();
 #endif
 
-#if 1
+#if 0
 //#138
     Test_copyRandomList();
 #endif
@@ -248,6 +248,11 @@ int main()
 //#474
     Test_OnesAndZeros();
 #endif;
+
+#if 1
+//#477
+    Test_totalHammingDistance();
+#endif
 
 #if 0
 //#503
