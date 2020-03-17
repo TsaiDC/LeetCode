@@ -85,6 +85,60 @@ Node* copyRandomList(Node* head) {
     if(head == NULL) return NULL;
     Node* pHead = head;
     Node* tmpNode = NULL;
+    vector<Node*> newList;
+    map<Node*, int> mapList;
+    map<Node*, int>::iterator iter;
+
+    //init a map and a new list
+    int idx = 0;
+    pHead = head;
+    while(pHead!=NULL)
+    {    
+        tmpNode = new Node(pHead->val);
+        newList.push_back(tmpNode);        
+        mapList[pHead] = idx++;
+        pHead=pHead->next;
+    }
+    
+    //Connect the random point of nodes in the new list
+    idx=0;
+    pHead = head;
+    while(pHead!=NULL)
+    {
+        tmpNode = pHead->random;
+        if(tmpNode == NULL){
+            newList[idx]->random = NULL;
+//            LOGD("[%d, -1]\n", newList[idx]->val);
+            pHead=pHead->next;
+            idx++;
+            continue;
+        }
+
+        iter = mapList.find(tmpNode);
+        if(iter != mapList.end()) {
+            newList[idx]->random = newList[iter->second];
+//            LOGD("[%d, %d]\n", newList[idx]->val, newList[iter->second]->val);
+        }
+        
+        pHead=pHead->next;
+        idx++;
+    }
+    
+    //Connect the new list
+    for(int i=0; i<newList.size(); ++i)
+    {
+        if(i+1< newList.size()) {
+            newList[i]->next = newList[i+1];
+        }
+    }    
+    return newList[0];
+}
+
+#if 0
+Node* copyRandomList(Node* head) {
+    if(head == NULL) return NULL;
+    Node* pHead = head;
+    Node* tmpNode = NULL;
     vector<Node*> oldList;    
     vector<Node*> newList;    
     while(pHead!=NULL)
@@ -128,7 +182,7 @@ Node* copyRandomList(Node* head) {
     }    
     return newList[0];
 }
-
+#endif
 void Test_copyRandomList()
 {
     LOGD("%s\n", __TIME__);
