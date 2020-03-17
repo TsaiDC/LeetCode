@@ -93,6 +93,7 @@ void search2D(vector< vector<int> >& matrix,int matrix_w, int matrix_h, int targ
     search2D(matrix, matrix_w, matrix_h, target, mx+1,my+1, ex, ey, isFound);    
 }
 
+#if 0
 bool searchMatrix(vector< vector<int> >& matrix, int target) {
     bool isFound = false;
     int h = matrix.size();
@@ -104,6 +105,31 @@ bool searchMatrix(vector< vector<int> >& matrix, int target) {
 
     return isFound;    
 }
+#endif
+
+#if 1
+bool searchMatrix(vector< vector<int> >& matrix, int target) {
+    
+    if(matrix.size()<=0 || matrix[0].size() <= 0){return false;}
+    int i = matrix.size()-1;
+    int j = 0;
+    while(i >= 0 && i < matrix.size() && j >= 0 && j < matrix[0].size()){
+        LOGD("(%d, %d)\n", j, i);
+        if(matrix[i][j] == target){
+            return true;
+        }
+        else if(matrix[i][j] > target){
+            i--;
+        }
+        else if(matrix[i][j] < target){
+            j++;
+        }
+    }
+            
+    return false;
+}  
+#endif
+
 void Test_search2dMatrixii()
 {
     LOGD("%s\n", __TIME__);
@@ -115,18 +141,18 @@ void Test_search2dMatrixii()
 
     int n = sizeof(arr1)/sizeof(arr1[0]);
     vector<int> input1(arr1, arr1+n);
-    vector<int> input2(arr2, arr2+n);
+    vector<int> input2(arr2, arr2+n);                               
     vector<int> input3(arr3, arr3+n);
     vector<int> input4(arr4, arr4+n);
     vector<int> input5(arr5, arr5+n);
     vector< vector<int> > input;
-/*    
+
     input.push_back(input1);
     input.push_back(input2);
     input.push_back(input3);
     input.push_back(input4);
     input.push_back(input5);
-*/    
+
     bool b = searchMatrix(input, 12);
     LOGD("Result: %d\n", b);
 }
