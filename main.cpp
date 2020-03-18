@@ -75,8 +75,9 @@ int main()
 #endif
 
 //A02
-#if 0
-    Test_Recursive();
+#if 1
+//    Test_Recursive();
+    Test_RecursiveCombi();
 #endif
 
 #if 0
@@ -249,7 +250,7 @@ int main()
     Test_OnesAndZeros();
 #endif;
 
-#if 1
+#if 0
 //#477
     Test_totalHammingDistance();
 #endif

@@ -24,6 +24,7 @@ void Test_avltree();
 
 //A02
 void Test_Recursive();
+void Test_RecursiveCombi();
 
 void Test_sorting();
 void Test_sortingList();
