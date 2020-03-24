@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <math.h>
+#include <time.h>
 
 #include "apiheader.h"
 
@@ -68,28 +69,69 @@ randomSet.getRandom();
 
 class RandomizedSet {
 public:
+    map<int, int> mapRecord;
+    map<int, int>::iterator iter;
+    int mSize;
     /** Initialize your data structure here. */
     RandomizedSet() {
-        
+        mSize = 0;
     }
     
     /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
     bool insert(int val) {
-        return true;
+        iter = mapRecord.find(val);
+        if(iter == mapRecord.end()) {
+            mapRecord[val] = 1;
+            mSize++;
+            return true;
+        }
+
+        return false;
     }
     
     /** Removes a value from the set. Returns true if the set contained the specified element. */
     bool remove(int val) {
-        return true;        
+        iter = mapRecord.find(val);
+        if(iter == mapRecord.end()) {
+            return false;
+        }
+        mapRecord.erase(iter);
+        mSize--;
+        return true;
     }
     
     /** Get a random element from the set. */
     int getRandom() {
-        return 0;        
+        int idx;
+        srand(time(NULL));
+        idx=(rand()%mSize);        
+        iter = mapRecord.begin();
+        while(idx>0){
+            iter++;
+            idx--;
+        }
+        return iter->first;
     }
 };
 
 void Test_InsertDeleteGetRandom()
 {
     LOGD("%s\n", __TIME__);
+    RandomizedSet *xRandomizedSet = new RandomizedSet();
+    int val = 10;
+    LOGD("Insert Val: %d, Result: %d\n", val, xRandomizedSet->insert(val));
+    LOGD("Insert Val: %d, Result: %d\n", val, xRandomizedSet->insert(val));
+    val = 5;
+    LOGD("Insert Val: %d, Result: %d\n", val, xRandomizedSet->insert(val));
+    val = 6;
+    LOGD("Insert Val: %d, Result: %d\n", val, xRandomizedSet->insert(val));
+    val = 7;
+    LOGD("Insert Val: %d, Result: %d\n", val, xRandomizedSet->insert(val));
+    val = 8;
+    LOGD("Insert Val: %d, Result: %d\n", val, xRandomizedSet->insert(val));    
+    val = 6;
+    LOGD("Remove Val: %d, Result: %d\n", val, xRandomizedSet->remove(val));
+    
+    LOGD("Random Val: %d, \n", xRandomizedSet->getRandom());
+    delete xRandomizedSet;
 }

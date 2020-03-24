@@ -64,7 +64,7 @@ int main()
 #endif
 
 //A00
-#if 1
+#if 0
     Test_sorting();
 #endif
 
