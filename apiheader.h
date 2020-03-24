@@ -70,6 +70,8 @@ void Test_KthSmallestElement();
 void Test_search2dMatrixii();
 //338
 void Test_countBits();
+//380
+void Test_InsertDeleteGetRandom();
 //451
 void Test_SortCharactersByFrequency();
 //474

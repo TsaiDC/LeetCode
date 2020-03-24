@@ -75,7 +75,7 @@ int main()
 #endif
 
 //A02
-#if 1
+#if 0
 //    Test_Recursive();
     Test_RecursiveCombi();
 #endif
@@ -238,6 +238,11 @@ int main()
 #if 0
 //#350
     Test_intersect();
+#endif
+
+#if 1
+//#380
+    Test_InsertDeleteGetRandom();
 #endif
 
 #if 0
