@@ -299,6 +299,32 @@ void doQuickSort(int* pData, int i, int j)
     doQuickSort(pData, x+1, j);
 }
 
+void doQuickSort2(int* pData, int i, int j) {
+    if(i>=j) return;
+    LOGD("Sort: %d->%d\n", i, j);    
+    int l = i, r=j-1;
+    int temp;
+    while(1)
+    {   
+        //Find L,R index    
+        while(pData[r] > pData[j])r--;
+        while(pData[l] < pData[j])l++;
+        if(r>l) {            
+            temp = pData[r];
+            pData[r] = pData[l];
+            pData[l] = temp;
+        }
+        else {
+            temp = pData[j];
+            pData[j] = pData[l];
+            pData[l] = temp;
+            break;
+        }        
+    }
+    doQuickSort2(pData, i, l-1);
+    doQuickSort2(pData, l+1, j);
+}
+
 void doMergeSort(int* pData, int i, int j, int* oData)
 {
     LOGD("Range: %d -> %d, (%d <-> %d), (%d <->%d)\n", i, j, i, i+(j-i)/2, i+(j-i)/2 + 1, j);
@@ -356,6 +382,46 @@ void doMergeSort(int* pData, int i, int j, int* oData)
 //    showList(pData, 10);
 }
 
+void doMergeSort2(int* pData, int l, int r, int* oData)
+{    
+    if(l>=r) return;
+    int middle = (l+r)/2;
+    doMergeSort2(pData, l, middle, oData);
+    doMergeSort2(pData, middle+1, r, oData);
+
+    int i=0;
+    int j=0;    
+
+    i=l;
+    j=middle+1;
+    int idx = i;
+    LOGE("Merge: %d <-> %d & %d <->%d \n", i, middle, j, r);
+    showList(pData, 10);
+    showList(oData, 10);
+    while(i<=middle && j<=r) {
+        if(pData[i]>pData[j]){
+            oData[idx++]=pData[j];
+            j++;
+        }
+        else {
+            oData[idx++]=pData[i];
+            i++;
+        }
+    }    
+    while(i<=middle) {
+        oData[idx++]=pData[i];
+        i++;
+    }
+    while(j<=r) {
+        oData[idx++]=pData[j];
+        j++;
+    }
+    for(i=0; i<=r; i++) {
+        pData[i] = oData[i];
+    }    
+    showList(oData, 10);
+}
+
 void doHanoi (int n, char src, char tmp, char dest)
 {
     if(n<=0) {
@@ -382,11 +448,14 @@ void Test_sorting()
 //    doSelectionSort(iData, Num);
 //    doBubbleSort(iData, Num);
 //    doQuickSort(iData, 0, Num-1);
-    doMergeSort(iData, 0, Num-1, oData);
+//    doQuickSort2(iData, 0, Num-1);
+//    doMergeSort(iData, 0, Num-1, oData);
+    doMergeSort2(iData, 0, Num-1, oData);
 //    doHanoi(4, 'A', 'B', 'C');
     
     LOGI("+++Result\n");
     showList(iData, Num);
+//    showList(oData, Num);
     LOGI("---Result\n");
     LOGI("Done \n");
 #endif

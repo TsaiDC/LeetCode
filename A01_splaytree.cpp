@@ -216,10 +216,10 @@ static TREE right_single_rotate(TREE tr)
     if (parent != NULL) {
         if (parent->lchild == tr) {
         parent->lchild = newRoot;
-    }
-    else {
-        parent->rchild = newRoot;
-    }
+        }
+        else {
+            parent->rchild = newRoot;
+        }
     }
     tr->parent = newRoot;
     return newRoot;

@@ -7,6 +7,8 @@
 
 using namespace std;
 
+// <https://drive.google.com/open?dac=1&id=1UG4lMpbPY5wggiV7alUx88tlwRPnwxbMs4vrinqAgT0>
+
 void c_recur(int k, int n, int m, vector<int> list, bool isInit)
 {
     if(k-1 >=0) {
@@ -59,6 +61,19 @@ int main()
     int m=5, n=3;
     vector<int> list;
     c_recur(0, n, m, list, true);
+#endif
+
+//A00
+#if 1
+    Test_sorting();
+#endif
+
+#if 0
+    Test_sortingList();
+#endif
+
+#if 0
+    Test_maxArea();
 #endif
 
 //A01
@@ -126,18 +141,6 @@ int main()
 #if 0
 //#10
     Test_isMatch();
-#endif
-
-#if 0
-    Test_sorting();
-#endif
-
-#if 0
-    Test_sortingList();
-#endif
-
-#if 0
-    Test_maxArea();
 #endif
 
 #if 0

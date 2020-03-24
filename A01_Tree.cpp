@@ -116,6 +116,27 @@ void freeTree(node_t *t)
 {
 }
 
+void BfsSearch(node_t* root, int val)
+{
+    queue<node_t*> q;
+    q.push(root);
+    
+    while(!q.empty())
+    {
+        node_t* tmp = q.front();
+        q.pop();
+        if(tmp == NULL)
+            continue;
+        if(tmp->data == val) {
+            LOGD("Found!\n");
+            return;
+        }
+        q.push(tmp->left);
+        q.push(tmp->right);        
+    }
+    LOGD("Miss\n");    
+}
+
 void Test_tree()
 {
     LOGI("%s\n", __TIME__);
@@ -129,15 +150,8 @@ void Test_tree()
     {
         insert(root, arr[i]);
     }
-    
-    
 
-//    LOGD("Preorder: \n");
-//    preorder(root);
-
-//    LOGD("Postorder: \n");
-//    postorder(root);
     LOGD("inorder: \n");
     inorder(root);
-
+    BfsSearch(root, 15);
 }
