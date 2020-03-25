@@ -72,9 +72,13 @@ public:
     map<int, int> mapRecord;
     map<int, int>::iterator iter;
     int mSize;
+    unsigned seed;
+    
     /** Initialize your data structure here. */
     RandomizedSet() {
         mSize = 0;
+        seed = (unsigned)time(NULL);
+        srand(seed);
     }
     
     /** Inserts a value to the set. Returns true if the set did not already contain the specified element. */
@@ -103,7 +107,6 @@ public:
     /** Get a random element from the set. */
     int getRandom() {
         int idx;
-        srand(time(NULL));
         idx=(rand()%mSize);        
         iter = mapRecord.begin();
         while(idx>0){
@@ -132,6 +135,10 @@ void Test_InsertDeleteGetRandom()
     val = 6;
     LOGD("Remove Val: %d, Result: %d\n", val, xRandomizedSet->remove(val));
     
+    LOGD("Random Val: %d, \n", xRandomizedSet->getRandom());
+    LOGD("Random Val: %d, \n", xRandomizedSet->getRandom());
+    LOGD("Random Val: %d, \n", xRandomizedSet->getRandom());
+    LOGD("Random Val: %d, \n", xRandomizedSet->getRandom());
     LOGD("Random Val: %d, \n", xRandomizedSet->getRandom());
     delete xRandomizedSet;
 }
