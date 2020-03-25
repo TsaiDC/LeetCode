@@ -75,26 +75,23 @@ The flattened tree should look like:
  }TreeNode;
  
 class Solution {
-public:
-    TreeNode* mRoot = NULL;
-    void flatten(TreeNode* root) {
-        if(mRoot==NULL) mRoot=root;
-        if(root==NULL) return;
-        LOGD("Val: %d\n", root->val);
-        flatten(root->left);
+public:    
+    void flatten(TreeNode* root) {       
+        if(root==NULL) return;        
         flatten(root->right);
-        if(mRoot != root)
-            mRoot->right = root;        
-    }
-    
-    void showResult() {
-        TreeNode* tmpRoot = mRoot;
-        while(tmpRoot != NULL)
-        {
-            LOGD("Val: %d\n", tmpRoot->val);
-            tmpRoot = tmpRoot->right;
+        flatten(root->left);
+
+        TreeNode* pL = root->left;
+        TreeNode* pR = root->right;
+        if(pL == NULL) return;
+        
+        while(pL->right != NULL) {
+            pL = pL->right;
         }
-    }    
+        pL->right = pR;
+        root->right = root->left;
+        root->left = NULL;
+    }
 };
 
 void preorder(TreeNode* root) {
@@ -127,7 +124,7 @@ void Test_flatten()
     node4->val = 4;
     node5->val = 5;
     node6->val = 6;
-    
+#if 1
     node1->left  = node2;
     node1->right = node5;
     node2->left  = node3;
@@ -140,10 +137,38 @@ void Test_flatten()
     node5->right = node6;
     node6->left  = NULL;
     node6->right = NULL;
-    
+#endif
+#if 0
+    node1->left  = node2;
+    node1->right = node3;
+    node2->left  = NULL;
+    node2->right = NULL;
+    node3->left  = node4;
+    node3->right = node5;
+    node4->left  = NULL;
+    node4->right = NULL;
+    node5->left  = NULL;
+    node5->right = node6;
+    node6->left  = NULL;
+    node6->right = NULL;
+#endif
+
+#if 0
+    node1->left  = node2;
+    node1->right = node3;
+    node2->left  = NULL;
+    node2->right = NULL;
+    node3->left  = node4;
+    node3->right = node6;
+    node4->left  = NULL;
+    node4->right = node5;
+    node5->left  = NULL;
+    node5->right = NULL;
+    node6->left  = NULL;
+    node6->right = NULL;
+#endif
     solution->flatten(node1);
-    solution->showResult();
-    
+    showResult(node1);
     
     delete node1;
     delete node2;
