@@ -213,6 +213,10 @@ int main()
     Test_isValidBST();
 #endif
 
+#if 1
+    Test_flatten();
+#endif
+
 #if 0
 //#138
     Test_copyRandomList();
@@ -240,10 +244,6 @@ int main()
 
 #if 0
 //#350
-    Test_intersect();
-#endif
-
-#if 1
     Test_IntersectionOfTwoArrays();
 #endif
 

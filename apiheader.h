@@ -8,7 +8,6 @@ void Test_addTwoNumbers();
 void Test_lengthOfLongestSubstring();
 void Test_findMedianSortedArrays();
 void Test_longestPalindrome();
-void Test_intersect();
 void Test_convert();
 void Test_reverse();
 void Test_myAtoi();
@@ -60,6 +59,8 @@ void Test_rotateRight();
 void Test_uniquePaths();
 //98
 void Test_isValidBST();
+//114
+void Test_flatten();
 //138
 void Test_copyRandomList();
 //200
