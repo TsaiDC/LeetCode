@@ -70,6 +70,8 @@ void Test_KthSmallestElement();
 void Test_search2dMatrixii();
 //338
 void Test_countBits();
+//350
+void Test_IntersectionOfTwoArrays();
 //380
 void Test_InsertDeleteGetRandom();
 //451

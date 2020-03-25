@@ -244,6 +244,10 @@ int main()
 #endif
 
 #if 1
+    Test_IntersectionOfTwoArrays();
+#endif
+
+#if 0
 //#380
     Test_InsertDeleteGetRandom();
 #endif
