@@ -76,12 +76,25 @@ The flattened tree should look like:
  
 class Solution {
 public:
+    TreeNode* mRoot = NULL;
     void flatten(TreeNode* root) {
+        if(mRoot==NULL) mRoot=root;
         if(root==NULL) return;
-        LOGD("Val: %d\n", root->val);       
+        LOGD("Val: %d\n", root->val);
         flatten(root->left);
         flatten(root->right);
+        if(mRoot != root)
+            mRoot->right = root;        
     }
+    
+    void showResult() {
+        TreeNode* tmpRoot = mRoot;
+        while(tmpRoot != NULL)
+        {
+            LOGD("Val: %d\n", tmpRoot->val);
+            tmpRoot = tmpRoot->right;
+        }
+    }    
 };
 
 void preorder(TreeNode* root) {
@@ -89,6 +102,12 @@ void preorder(TreeNode* root) {
     LOGD("Val: %d\n", root->val);
     preorder(root->left);
     preorder(root->right);
+}
+
+void showResult(TreeNode* root) {
+    if(root==NULL) return;
+    LOGD("Val: %d\n", root->val);
+    showResult(root->right);
 }
 
 void Test_flatten()
@@ -123,7 +142,8 @@ void Test_flatten()
     node6->right = NULL;
     
     solution->flatten(node1);
-//    preorder(node1);
+    solution->showResult();
+    
     
     delete node1;
     delete node2;
