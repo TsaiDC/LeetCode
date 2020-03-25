@@ -57,6 +57,8 @@ void Test_permuteUnique();
 void Test_rotateRight();
 //62
 void Test_uniquePaths();
+//78
+void Test_Subsets();
 //98
 void Test_isValidBST();
 //114

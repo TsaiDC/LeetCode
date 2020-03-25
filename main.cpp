@@ -208,12 +208,18 @@ int main()
     Test_uniquePaths();
 #endif
 
+#if 1
+//#78
+    Test_Subsets();
+#endif;
+
 #if 0
 //#98
     Test_isValidBST();
 #endif
 
-#if 1
+#if 0
+//#114
     Test_flatten();
 #endif
 
