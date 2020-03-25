@@ -71,6 +71,7 @@ class RandomizedSet {
 public:
     map<int, int> mapRecord;
     map<int, int>::iterator iter;
+    vector<int> mDataArray;
     int mSize;
     unsigned seed;
     
@@ -85,7 +86,8 @@ public:
     bool insert(int val) {
         iter = mapRecord.find(val);
         if(iter == mapRecord.end()) {
-            mapRecord[val] = 1;
+            mapRecord[val] = mSize;
+            mDataArray.push_back(val);
             mSize++;
             return true;
         }
@@ -99,21 +101,25 @@ public:
         if(iter == mapRecord.end()) {
             return false;
         }
-        mapRecord.erase(iter);
         mSize--;
+        int target_idx = iter->second;
+        int lastItem_idx = mSize;
+        int lastItem_val = mDataArray[lastItem_idx];        
+
+        mDataArray[target_idx] = lastItem_val;
+        mDataArray.pop_back();
+        mapRecord.erase(iter);
+        iter = mapRecord.find(lastItem_val);
+        iter->second = target_idx;
+
         return true;
     }
     
     /** Get a random element from the set. */
     int getRandom() {
         int idx;
-        idx=(rand()%mSize);        
-        iter = mapRecord.begin();
-        while(idx>0){
-            iter++;
-            idx--;
-        }
-        return iter->first;
+        idx=(rand()%mSize);
+        return mDataArray[idx];
     }
 };
 

@@ -256,7 +256,7 @@ int main()
 #if 0
 //#474
     Test_OnesAndZeros();
-#endif;
+#endif
 
 #if 0
 //#477
