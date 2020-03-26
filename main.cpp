@@ -211,7 +211,7 @@ int main()
 #if 1
 //#78
     Test_Subsets();
-#endif;
+#endif
 
 #if 0
 //#98
