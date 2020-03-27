@@ -78,25 +78,38 @@ C(3,3) = 3 + C(2,2) = 3 + 2 + C(1,1)
 
 void combin(int n, int m)
 {
-    if(n<m) return;
+    static vector<int>index;
+//    if(n<m) return;
     if(n<=0 || m<=0) return;
-    LOGD("C(%d,%d)\n", n, m);
-#if 1
+    printf("C(%d, %d)\n", n, m);
     if(m==1) {
-        LOGD("+++ Final C(%d,%d)\n", n, m);
-/*
-        for(int i=1; i<=n; i++)
+        LOGD("+++Done\n");
+        for(int j=n;j>0; j--)
         {
-            LOGD("%d\n", i);
+            index.push_back(j);
+            for(int i=0; i<index.size(); ++i)
+            {
+                printf("%d ", index[i]);
+            }
+            index.pop_back();
+            printf("\n");
         }
-        LOGD("--- Final C(%d,%d)\n", n, m);
-*/
+        LOGD("---Done\n");
         return;
     }
-#endif
-    LOGD("[%d]\n", n);
-    combin(n-1, m-1);
-    combin(n-1, m);
+    for(int i=n; i>=m; i--)
+    {
+        index.push_back(i);
+        printf(" = ");
+        for(int j=0; j<index.size(); ++j)
+        {
+            printf("%d + ", index[j]);
+        }        
+        combin(i-1, m-1);
+        index.pop_back();
+    }
+    
+    printf("\n");
 }
 
 void Test_Subsets()
@@ -104,5 +117,7 @@ void Test_Subsets()
     LOGD("%s\n", __TIME__);
     Solution *solution = new Solution();
     delete solution;
-    combin(4,2);
+    
+    vector<int>index;
+    combin(5,3);
 }
