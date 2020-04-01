@@ -71,6 +71,8 @@ void Test_NumIslands();
 void Test_KthSmallestElement();
 //240
 void Test_search2dMatrixii();
+//300
+void Test_lengthOfLIS();
 //338
 void Test_countBits();
 //350

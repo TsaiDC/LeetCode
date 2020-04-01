@@ -208,7 +208,7 @@ int main()
     Test_uniquePaths();
 #endif
 
-#if 1
+#if 0
 //#78
     Test_Subsets();
 #endif
@@ -241,6 +241,11 @@ int main()
 #if 0
 //#240
     Test_search2dMatrixii();
+#endif
+
+#if 1
+//#300
+    Test_lengthOfLIS();
 #endif
 
 #if 0
