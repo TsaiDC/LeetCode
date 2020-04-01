@@ -53,8 +53,7 @@ Output:
 ]
 */
 
-//void combin(int n, int m, vector< vector<int> > &result);
-
+#if 0
 class Solution {
 public:
     vector< vector<int> > subsets(vector<int>& nums) {
@@ -130,7 +129,35 @@ public:
     }
 
 };
+#endif
 
+#if 1
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> subsets = {vector<int>()};
+        for (int num : nums) {
+            LOGE("+++ num: %d\n", num);
+            int currentSubsetsSize = subsets.size();
+            for (int i = 0; i < currentSubsetsSize; i++) {
+                vector<int> tempSet = subsets[i];
+                tempSet.push_back(num);
+                LOGD("Get Row: %d\n", i);
+                subsets.push_back(tempSet);
+                
+                LOGD("------\n");
+                for(int x=0; x<tempSet.size(); ++x)
+                {
+                    printf("%d ", tempSet[x]);
+                }
+                printf("\n");
+            }
+            LOGE("--- num: %d\n\n", num);
+        }
+        return subsets;
+    }
+};
+#endif
 void Test_Subsets()
 {
     LOGD("%s\n", __TIME__);
