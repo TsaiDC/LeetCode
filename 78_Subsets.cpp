@@ -53,7 +53,7 @@ Output:
 ]
 */
 
-#if 0
+#if 1
 class Solution {
 public:
     vector< vector<int> > subsets(vector<int>& nums) {
@@ -131,7 +131,7 @@ public:
 };
 #endif
 
-#if 1
+#if 0
 class Solution {
 public:
     vector<vector<int>> subsets(vector<int>& nums) {
