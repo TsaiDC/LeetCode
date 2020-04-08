@@ -87,6 +87,8 @@ void Test_OnesAndZeros();
 void Test_totalHammingDistance();
 //503
 void Test_NextGreaterElmentII();
+//621
+void Test_TaskScheduler();
 //1091
 void Test_shortestPathBinaryMatrix();
 #endif
