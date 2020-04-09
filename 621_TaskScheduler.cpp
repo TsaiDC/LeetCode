@@ -47,7 +47,8 @@ Input: tasks = ["A","A","A","B","B","B"], n = 2
 Output: 8
 Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
  
-
+["A","A","B","B","C","C","D","D","E","E","F","F","G","G","H","H","I","I","J","J","K","K","L","L","M","M","N","N","O","O","P","P","Q","Q","R","R","S","S","T","T","U","U","V","V","W","W","X","X","Y","Y","Z","Z"]
+2
 Constraints:
 
 The number of tasks is in the range [1, 10000].
@@ -57,11 +58,70 @@ The integer n is in the range [0, 100].
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
-        return 0;
+        int leng = tasks.size();
+        int max_leng = leng*(n+1);
+        char *p = (char*) malloc(sizeof(char)*max_leng);
+        memset(p, '\0', max_leng);
+        map<char, int> mapRecord;
+        map<char, int>::iterator iter;
+        int idx=0;
+        for(int i=0; i<tasks.size(); ++i)
+        {
+            if(idx>=max_leng) {
+                LOGE("ERROR\n");
+                break;
+            }
+
+            iter = mapRecord.find(tasks[i]);
+            if(iter != mapRecord.end()) {                
+                idx= iter->second + n + 1;
+                LOGD("%c(%d) -> (%d)\n", tasks[i], iter->second, idx);
+                while(p[idx]!='\0') idx++;
+                p[idx]=tasks[i];
+                mapRecord[tasks[i]] = idx;
+            }
+            else {
+                idx=0;
+                while(p[idx]!='\0') idx++;
+                LOGD("%c -> (%d)\n", tasks[i], idx);
+                p[idx]=tasks[i];
+                mapRecord[tasks[i]] = idx;
+            }
+        }
+        
+        printf("\n");
+        idx=0;
+        for(int i=0; i<max_leng; i++)
+        {
+            if(p[i]!='\0') {
+                printf("%c", p[i]);
+                idx++;
+            }
+            else {
+                printf("_");
+            }
+            if(idx==leng) {
+                idx = i+1;
+                break;
+            }
+        }
+        printf("\n idx: %d\n", idx);
+
+        free(p);
+        return idx;
     }
 };
 
 void Test_TaskScheduler()
 {
     LOGD("%s\n", __TIME__);
+//    char arr1[] = {'A','A','A','B','B','B'};
+    char arr1[] = {'A','A','B','B','C','C','D','D','E','E','F','F','G','G','H','H','I','I','J','J','K',
+                   'K','L','L','M','M','N','N','O','O','P','P','Q','Q','R','R','S','S','T','T','U','U',
+                   'V','V','W','W','X','X','Y','Y','Z','Z'};
+    int n = sizeof(arr1)/sizeof(arr1[0]);
+    vector<char> input1(arr1, arr1+n);
+    Solution *solution = new Solution();
+    solution->leastInterval(input1, 2);
+    delete solution;
 }
