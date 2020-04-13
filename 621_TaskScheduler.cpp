@@ -24,6 +24,11 @@ using namespace std;
 #define LOGE(...)
 #endif
 
+//
+// MAP Ref:
+// https://mropengate.blogspot.com/2015/12/cc-map-stl.html
+//
+
 /*
 https://leetcode.com/problems/task-scheduler/
 621. Task Scheduler
@@ -55,8 +60,60 @@ The number of tasks is in the range [1, 10000].
 The integer n is in the range [0, 100].
 */
 
+//AAABBB
+//0361
+//AB_AB_AB
 class Solution {
 public:
+    int leastInterval(vector<char>& tasks, int n) {
+        vector<int> task_idx(-1, tasks.size());
+        map<char, int> mapRecord;
+        map<char, int>::iterator iter;
+        int leng = tasks.size();
+        int max_leng = leng*(n+1);
+        char *p = (char*) malloc(sizeof(char)*max_leng);
+        memset(p, '\0', max_leng);
+
+        for(int i=0; i<tasks.size(); ++i)
+        {
+            iter = mapRecord.find(tasks[i]);
+            if(iter != mapRecord.end()) {
+                //Exist
+                int next_idx = iter->second + n + 1;
+                if(p[next_idx]=='\0') {
+                    p[next_idx]=tasks[i];
+                    mapRecord[tasks[i]] = next_idx;
+                }
+                else {
+                    //Shift to right
+                    p[next_idx]=tasks[i];
+                }
+            }
+            else {
+                //First appear
+                //1. Update Idx record list
+                for(int j=0; j<i; ++j) {
+                    if(task_idx[j]>0) task_idx[j]++;
+                }
+
+                //2. Update the last idx map
+                for(iter = mapRecord.begin(); iter != mapRecord.end(); iter++)
+                    iter->second+=1;
+
+                //3. Update the char idx.
+                task_idx[i] = 0;
+                
+                //4. Refresh record
+                memset(p, '\0', max_leng);
+                for(int j=0; j<i; ++j) {
+                    p[task_idx[j]] = tasks[j];
+                }
+            }
+        }
+        free(p);
+        return 0;
+    }
+#if 0
     int leastInterval(vector<char>& tasks, int n) {
         int leng = tasks.size();
         int max_leng = leng*(n+1);
@@ -110,6 +167,7 @@ public:
         free(p);
         return idx;
     }
+#endif
 };
 
 void Test_TaskScheduler()
