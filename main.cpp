@@ -208,7 +208,7 @@ int main()
     Test_uniquePaths();
 #endif
 
-#if 1
+#if 0
 //#72
     Test_minDistance();
 #endif
@@ -271,6 +271,11 @@ int main()
 #if 0
 //#380
     Test_InsertDeleteGetRandom();
+#endif
+
+#if 1
+//#402
+    Test_removeKdigits();
 #endif
 
 #if 0

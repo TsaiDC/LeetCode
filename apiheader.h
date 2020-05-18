@@ -83,6 +83,8 @@ void Test_countBits();
 void Test_IntersectionOfTwoArrays();
 //380
 void Test_InsertDeleteGetRandom();
+//402
+void Test_removeKdigits();
 //451
 void Test_SortCharactersByFrequency();
 //474
