@@ -208,9 +208,19 @@ int main()
     Test_uniquePaths();
 #endif
 
+#if 1
+//#72
+    Test_minDistance();
+#endif
+
 #if 0
 //#78
     Test_Subsets();
+#endif
+
+#if 0
+//#86
+    Test_partition();
 #endif
 
 #if 0
@@ -283,7 +293,7 @@ int main()
     Test_NextGreaterElmentII();
 #endif
 
-#if 1
+#if 0
 //#621
     Test_TaskScheduler();
 #endif

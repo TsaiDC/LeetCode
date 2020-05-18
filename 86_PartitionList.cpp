@@ -43,6 +43,14 @@ Input: head = 1->4->3->2->5->2, x = 3
 Output: 1->2->2->4->3->5
 */
 
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
