@@ -258,6 +258,11 @@ int main()
     Test_lengthOfLIS();
 #endif
 
+#if 1
+//#321
+    Test_maxNumber();
+#endif
+
 #if 0
 //#338
     Test_countBits();
@@ -273,7 +278,7 @@ int main()
     Test_InsertDeleteGetRandom();
 #endif
 
-#if 1
+#if 0
 //#402
     Test_removeKdigits();
 #endif

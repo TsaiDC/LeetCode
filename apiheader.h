@@ -77,6 +77,8 @@ void Test_KthSmallestElement();
 void Test_search2dMatrixii();
 //300
 void Test_lengthOfLIS();
+//321
+void Test_maxNumber();
 //338
 void Test_countBits();
 //350
