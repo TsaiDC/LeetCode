@@ -107,10 +107,52 @@ public:
         }
         return vector_int;
     }
+#if 1
     vector<int> getMaxCombine(vector<int>& num1, vector<int>& num2)
     {
-        vector<int> tmp1 = num1;
-        vector<int> tmp2 = num2;
+        vector<int> tmp1(num1.begin(), num1.end());        
+        vector<int> tmp2(num2.begin(), num2.end());
+        vector<int> vector_int;
+        while(!tmp1.empty() && !tmp2.empty())
+        {
+            if(tmp1[0] > tmp2[0]) {
+                vector_int.push_back(tmp1[0]);
+                tmp1.erase(tmp1.begin());
+            }
+            else if(tmp1[0] < tmp2[0]) {
+                vector_int.push_back(tmp2[0]);
+                tmp1.erase(tmp2.begin());
+            }
+            else {
+                int i = 0;
+                do {
+                    if(i < tmp1.size() && i < tmp2.size()) {
+                        if(tmp1[i] > tmp2[i]){
+                            break;
+                        }
+                        else if(tmp1[i] < tmp2[i]){
+                            break;
+                        }
+                        else {
+                            vector_int.push_back(tmp1[i]);
+                            ++i;
+                        }
+                    }
+                    else {
+                        break;
+                    }
+                }while(1);
+            }
+        }
+
+        return vector_int;
+    }
+#endif
+#if 0
+    vector<int> getMaxCombine(vector<int>& num1, vector<int>& num2)
+    {
+        vector<int> tmp1(num1.begin(), num1.end());        
+        vector<int> tmp2(num2.begin(), num2.end());
         vector<int> vector_int;
         int i, j;
 #if 1
@@ -309,6 +351,7 @@ public:
 #endif
         return vector_int;
     }
+#endif
 
     vector<int> getKdigitMax(vector<int>& num, int k)
     {        
