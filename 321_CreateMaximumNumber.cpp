@@ -109,158 +109,34 @@ public:
         return vector_int;
     }
 
-    bool getRemoveVec(vector<int>& num1, vector<int>& num2, int i)
-    {    
-        if(num1.size() == num2.size()){
-            //The same vector length
-            //A: x,x,x
-            //B: x,x,x
-            if(num1[i] > num2[i]) {
-                //A: x,2,...
-                //B: x,1,...
-                return true;
-            }
-            else if(num1[i] < num2[i]) {
-                //A: x,1,...
-                //B: x,2,...
-                return false;
-            }
-            else if(num1[i] == num2[i]) {
-                //A: x,2,...
-                //B: x,2,...
-                if(i == num1.size()) {
-                    //Two vector are the same
-                    //A: x,x
-                    //B: x,x
-                    return true;
-                }
-                else{
-                    //A: x,z,...
-                    //B: x,y,...
-                    return getRemoveVec(num1, num2, i+1);
-                }
-            }
+    bool getTheBiggerVec(vector<int>& num1, vector<int>& num2, int i)
+    {  
+        //A:
+        //B: x,...
+        if(num1.empty()) {
+            return false;
         }
-        else if(num1.size() > num2.size()){
-            //Vector A is longer
-            //A: x,x,x
-            //B: x,x
-            if(i<num2.size()) {
-                //     i
-                //A: 5,x,y,z,...
-                //B: 5,w
-                
-                //     i
-                //A: 5,6,y,z,...
-                //B: 5,4
-                if(num1[i]>num2[i]) return true;
-
-                //     i
-                //A: 5,4,y,z,...
-                //B: 5,6
-                if(num1[i]<num2[i]) return false;
-                
-                //     i
-                //A: 5,4,y,z,...
-                //B: 5,4
-                if(num1[i]==num2[i]) return getRemoveVec(num1, num2, i+1);
-            }
-            else {            
-                //i>=num2.size()
-                // Check Vector A only
-                //   i
-                //A: y,z,...
-                //B: 
-                if(num2.empty()) return true;
-
-                //     i
-                //A: a,y,z,...
-                //B: a
-                int j = i;
-                for(j=i; j<num1.size(); j++)
-                {
-                    //     i
-                    //A: 3,4,z,...
-                    //B: 3
-                    if(num1[j]>num1[i-1]) return true;
-                    //     i
-                    //A: 3,2,z,...
-                    //B: 3
-                    if(num1[j]<num1[i-1]) return false;
-                    //     i
-                    //A: 3,3,z,...
-                    //B: 3
-                    if(num1[j]==num1[i-1]) continue;
-                }
-                
-                if(j==num1.size()){
-                    //       j
-                    //A: 3,3,3
-                    //B: 3
-                    return false;
-                }
-            }
+        //A: x,...
+        //B:
+        if(num2.empty()) {
+            return true;
         }
-        else { //num1.size() < num2.size()            
-            //Vector B is longer
-            //A: x,x
-            //B: x,x,x
-            if(i<num1.size()) {
-                //     i
-                //A: 5,w
-                //B: 5,x,y,z,...
-                
-                //     i
-                //A: 5,6
-                //B: 5,4,y,z,...
-                if(num1[i]>num2[i]) return true;
 
-                //     i
-                //A: 5,4
-                //B: 5,6,y,z,...
-                if(num1[i]<num2[i]) return false;
-                
-                //     i
-                //A: 5,4
-                //B: 5,4,y,z,...
-                if(num1[i]==num2[i]) return getRemoveVec(num1, num2, i+1);
-            }
-            else {            
-                //i>=num1.size()
-                // Check Vector B only
-                //   i
-                //A: 
-                //B: y,z,...
-                if(num1.empty()) return false;
-
-                //     i
-                //A: a
-                //B: a,y,z,...
-                int j = i;
-                for(j=i; j<num2.size(); j++)
-                {
-                    //     i
-                    //A: 3
-                    //B: 3,4,z,...
-                    if(num2[j]>num2[i-1]) return false;
-                    //     i
-                    //A: 3
-                    //B: 3,2,z,...
-                    if(num1[j]<num1[i-1]) return true;
-                    //     i
-                    //A: 3,3,z,...
-                    //B: 3
-                    if(num1[j]==num1[i-1]) continue;
-                }
-                
-                if(j==num2.size()){
-                    //       j
-                    //A: 3
-                    //B: 3,3,3
-                    return true;
-                }
-            }
-        }
+        vector<int> tmp1(num1.begin(), num1.end());        
+        vector<int> tmp2(num2.begin(), num2.end());
+        
+        //Let the two vector has the same length
+        int lastVal;
+        lastVal = tmp1.back();
+        while(tmp1.size()<tmp2.size()) tmp1.push_back(lastVal);
+        lastVal = tmp2.back();
+        while(tmp2.size()<tmp1.size()) tmp2.push_back(lastVal);
+        
+        for(int i=0; i<tmp1.size(); ++i)
+        {
+            if(tmp1[i]>tmp2[i]) return true;
+            if(tmp1[i]<tmp2[i]) return false;
+        }        
         return true;
     }
 #if 1
@@ -285,7 +161,7 @@ public:
                 tmp2.erase(tmp2.begin());
             }
             else { //tmp1[0] == tmp2[0]
-                if(getRemoveVec(tmp1, tmp2, 0)) {
+                if(getTheBiggerVec(tmp1, tmp2, 0)) {
                     LOGD("Push A: %d\n", tmp1[0]);
                     vector_int.push_back(tmp1[0]);
                     tmp1.erase(tmp1.begin());
@@ -388,7 +264,6 @@ void Test_maxNumber()
 
 #if 0
 //[7,3,8,2,5,6,4,4,0,6,5,7,6,2,0]
- //7 3 8 2 5 6 4 4 0 6 0 5 7 6 2
     int arr1[] = {2,5,6,4,4,0};
     int arr2[] = {7,3,8,0,6,5,7,6,2};
     int k = 15;
@@ -431,7 +306,7 @@ void Test_maxNumber()
     vector<int> input2(arr2, arr2+n2);
     vector<int> result;
 
-#if 0
+#if 1
     input1.clear();
     input2.clear();
     input2.push_back(1);
