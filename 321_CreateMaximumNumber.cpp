@@ -89,6 +89,7 @@ public:
             if(v1.size() + v2.size() !=k) {
                 continue;
             }
+
             ret = getMaxCombine(v1, v2);
             Max = getMaxInt(Max, ret);
         }
@@ -107,248 +108,204 @@ public:
         }
         return vector_int;
     }
+
+    bool getRemoveVec(vector<int>& num1, vector<int>& num2, int i)
+    {    
+        if(num1.size() == num2.size()){
+            //The same vector length
+            //A: x,x,x
+            //B: x,x,x
+            if(num1[i] > num2[i]) {
+                //A: x,2,...
+                //B: x,1,...
+                return true;
+            }
+            else if(num1[i] < num2[i]) {
+                //A: x,1,...
+                //B: x,2,...
+                return false;
+            }
+            else if(num1[i] == num2[i]) {
+                //A: x,2,...
+                //B: x,2,...
+                if(i == num1.size()) {
+                    //Two vector are the same
+                    //A: x,x
+                    //B: x,x
+                    return true;
+                }
+                else{
+                    //A: x,z,...
+                    //B: x,y,...
+                    return getRemoveVec(num1, num2, i+1);
+                }
+            }
+        }
+        else if(num1.size() > num2.size()){
+            //Vector A is longer
+            //A: x,x,x
+            //B: x,x
+            if(i<num2.size()) {
+                //     i
+                //A: 5,x,y,z,...
+                //B: 5,w
+                
+                //     i
+                //A: 5,6,y,z,...
+                //B: 5,4
+                if(num1[i]>num2[i]) return true;
+
+                //     i
+                //A: 5,4,y,z,...
+                //B: 5,6
+                if(num1[i]<num2[i]) return false;
+                
+                //     i
+                //A: 5,4,y,z,...
+                //B: 5,4
+                if(num1[i]==num2[i]) return getRemoveVec(num1, num2, i+1);
+            }
+            else {            
+                //i>=num2.size()
+                // Check Vector A only
+                //   i
+                //A: y,z,...
+                //B: 
+                if(num2.empty()) return true;
+
+                //     i
+                //A: a,y,z,...
+                //B: a
+                int j = i;
+                for(j=i; j<num1.size(); j++)
+                {
+                    //     i
+                    //A: 3,4,z,...
+                    //B: 3
+                    if(num1[j]>num1[i-1]) return true;
+                    //     i
+                    //A: 3,2,z,...
+                    //B: 3
+                    if(num1[j]<num1[i-1]) return false;
+                    //     i
+                    //A: 3,3,z,...
+                    //B: 3
+                    if(num1[j]==num1[i-1]) continue;
+                }
+                
+                if(j==num1.size()){
+                    //       j
+                    //A: 3,3,3
+                    //B: 3
+                    return false;
+                }
+            }
+        }
+        else { //num1.size() < num2.size()            
+            //Vector B is longer
+            //A: x,x
+            //B: x,x,x
+            if(i<num1.size()) {
+                //     i
+                //A: 5,w
+                //B: 5,x,y,z,...
+                
+                //     i
+                //A: 5,6
+                //B: 5,4,y,z,...
+                if(num1[i]>num2[i]) return true;
+
+                //     i
+                //A: 5,4
+                //B: 5,6,y,z,...
+                if(num1[i]<num2[i]) return false;
+                
+                //     i
+                //A: 5,4
+                //B: 5,4,y,z,...
+                if(num1[i]==num2[i]) return getRemoveVec(num1, num2, i+1);
+            }
+            else {            
+                //i>=num1.size()
+                // Check Vector B only
+                //   i
+                //A: 
+                //B: y,z,...
+                if(num1.empty()) return false;
+
+                //     i
+                //A: a
+                //B: a,y,z,...
+                int j = i;
+                for(j=i; j<num2.size(); j++)
+                {
+                    //     i
+                    //A: 3
+                    //B: 3,4,z,...
+                    if(num2[j]>num2[i-1]) return false;
+                    //     i
+                    //A: 3
+                    //B: 3,2,z,...
+                    if(num1[j]<num1[i-1]) return true;
+                    //     i
+                    //A: 3,3,z,...
+                    //B: 3
+                    if(num1[j]==num1[i-1]) continue;
+                }
+                
+                if(j==num2.size()){
+                    //       j
+                    //A: 3
+                    //B: 3,3,3
+                    return true;
+                }
+            }
+        }
+        return true;
+    }
 #if 1
     vector<int> getMaxCombine(vector<int>& num1, vector<int>& num2)
     {
         vector<int> tmp1(num1.begin(), num1.end());        
         vector<int> tmp2(num2.begin(), num2.end());
         vector<int> vector_int;
+        int eraseCount = 0;
+        int eraseTarget = 0;
+
         while(!tmp1.empty() && !tmp2.empty())
         {
             if(tmp1[0] > tmp2[0]) {
                 vector_int.push_back(tmp1[0]);
+                LOGD("Push A: %d\n", tmp1[0]);
                 tmp1.erase(tmp1.begin());
             }
             else if(tmp1[0] < tmp2[0]) {
+                LOGD("Push B: %d\n", tmp2[0]);
                 vector_int.push_back(tmp2[0]);
-                tmp1.erase(tmp2.begin());
+                tmp2.erase(tmp2.begin());
             }
-            else {
-                int i = 0;
-                do {
-                    if(i < tmp1.size() && i < tmp2.size()) {
-                        if(tmp1[i] > tmp2[i]){
-                            break;
-                        }
-                        else if(tmp1[i] < tmp2[i]){
-                            break;
-                        }
-                        else {
-                            vector_int.push_back(tmp1[i]);
-                            ++i;
-                        }
-                    }
-                    else {
-                        break;
-                    }
-                }while(1);
-            }
-        }
-
-        return vector_int;
-    }
-#endif
-#if 0
-    vector<int> getMaxCombine(vector<int>& num1, vector<int>& num2)
-    {
-        vector<int> tmp1(num1.begin(), num1.end());        
-        vector<int> tmp2(num2.begin(), num2.end());
-        vector<int> vector_int;
-        int i, j;
-#if 1
-        printf("N1: { \n");
-        for(i=0; i<num1.size(); ++i)
-        {
-            if(i>0 && i%10 ==0)
-                printf("\n");
-            printf("%d ,", num1[i]);
-        }
-        printf("\n} \n");
-
-        printf("N2: { \n");
-        for(i=0; i<num2.size(); ++i)
-        {
-            if(i>0 && i%10 ==0)
-                printf("\n");
-            printf("%d ,", num2[i]);
-        }
-        printf("\n} \n");
-#endif
-        int vSize = -1;
-        for(i=0, j=0; i<num1.size() && j<num2.size();)
-        {
-            vSize = vector_int.size();
-            LOGD("Check i: %d, j: %d\n", i,j);
-            if(num1[i]==num2[j]) {
-                int x=i, y=j;
-                LOGD("=Check i: %d, j: %d\n", i,j);
-                while(num1[x]==num2[y])
-                {
-                    LOGD("Push = (x: %d, y: %d): %d\n", x, y, num2[j]);
-                    vector_int.push_back(num2[j]);
-                    ++x;
-                    ++y;
-                    if(x==num1.size() || y==num2.size()) break;
+            else { //tmp1[0] == tmp2[0]
+                if(getRemoveVec(tmp1, tmp2, 0)) {
+                    LOGD("Push A: %d\n", tmp1[0]);
+                    vector_int.push_back(tmp1[0]);
+                    tmp1.erase(tmp1.begin());
                 }
-                LOGD("  Check x: %d, y: %d\n", x, y);
-                if(x==num1.size() && y < num2.size()) {
-                    i = x;
-                    int yy = y;
-                    while(yy<num2.size() && num2[yy] == num2[yy-1]){
-                        LOGD("Push B: %d\n", num2[yy-1]);
-                        vector_int.push_back(num2[yy-1]);
-                        ++yy;
-                    }
-                    if(yy == num2.size()) {
-                        //2
-                        //2,2,2
-                        LOGD("Push B: %d\n", num2[yy-1]);
-                        vector_int.push_back(num2[yy-1]);
-                        j=yy;
-                    }
-                    else {
-                        //2
-                        //2,4,3
-                        if(num2[yy] > num2[yy-1]) {
-                            LOGD("Push B: %d\n", num2[yy]);
-                            vector_int.push_back(num2[yy]);
-//                            LOGD("Push A: %d\n", num1[x-1]);
-//                            vector_int.push_back(num1[x-1]);
-                            j=yy+1;
-                        }
-                        //2
-                        //2,1,1
-                        else if(num2[yy] < num2[yy-1]) {
-                            LOGD("Push A: %d\n", num1[x-1]);
-                            vector_int.push_back(num1[x-1]);
-//                            LOGD("Push B: %d\n", num2[yy]);
-//                            vector_int.push_back(num2[yy]);
-                            j=yy;
-                        }
-                        else {
-                            LOGE("Error\n");
-                        }
-                    }
-                    LOGD("I: %d, j: %d\n",i, j);
-                }
-                else if(x < num1.size() && y == num2.size()) {
-                    j = y;
-                    int xx = x;
-                    while(xx<num1.size() && num1[xx] == num1[xx-1]){
-                        LOGD("Push A: %d\n", num1[xx-1]);
-                        vector_int.push_back(num1[xx-1]);
-                        ++xx;
-                    }
-                    if(xx == num1.size()) {                        
-                        //2,2,2
-                        //2
-                        LOGD("Push A: %d\n", num1[xx-1]);
-                        vector_int.push_back(num1[xx-1]);
-                        i=xx;
-                    }
-                    else {
-                        //2,3,2
-                        //2
-                        if(num1[xx] > num1[xx-1]) {
-                            LOGD("Push A: %d\n", num1[xx]);
-                            vector_int.push_back(num1[xx]);
-//                            LOGD("Push B: %d\n", num2[y-1]);
-//                            vector_int.push_back(num2[y-1]);
-                            i=xx+1;
-                        } 
-                        //2,1,3
-                        //2                        
-                        else if(num1[xx] < num1[xx-1]) {
-                            LOGD("Push B: %d\n", num2[y-1]);
-                            vector_int.push_back(num2[y-1]);
-//                            LOGD("Push A: %d\n", num1[xx]);
-//                            vector_int.push_back(num1[xx]);
-                            i=xx;
-                        }
-                        else {
-                            LOGE("Error\n");
-                        }
-                    }
-                    LOGD("I: %d, j: %d\n",i, j);
-                }
-                else if(x < num1.size() && y < num2.size()) {
-                    if(num1[x]>num2[y]) {
-                        if(num1[x] > num1[x-1]) {                            
-                            //6,6,7
-                            //6,6,0
-                            LOGD("Push A: %d\n", num1[x]);
-                            vector_int.push_back(num1[x]);
-                            i=x+1;                            
-                        }
-                        else {
-                            //6,6,5
-                            //6,6,0
-                            i = x;                            
-                        }
-                    }
-                    else {
-                        if(num2[y] > num1[x-1]) {
-                            //6,6,0
-                            //6,6,7
-                            LOGD("Push B: %d\n", num2[y]);
-                            vector_int.push_back(num2[y]);
-                            j=y+1;
-                        }
-                        else {
-                            //6,6,0
-                            //6,6,5                            
-                            j = y;
-                        }
-                    }
-                }
-                else if(x==num1.size() && y == num2.size()) {
-                    //2,2,2
-                    //2,2,2
-                    //2,2,2
-                    for(int xx=i; xx<x;++xx)
-                        vector_int.push_back(num1[xx]);
-                    i=x;
-                    j=y;
+                else {
+                    LOGD("Push B: %d\n", tmp2[0]);
+                    vector_int.push_back(tmp2[0]);
+                    tmp2.erase(tmp2.begin());
                 }
             }
-            else if(num1[i]>num2[j]) {
-                LOGD("Push 1: %d\n", num1[i]);
-                vector_int.push_back(num1[i]);
-                ++i;
-            }
-            else if(num1[i]<num2[j]) {
-                LOGD("Push 2: %d\n", num2[j]);
-                vector_int.push_back(num2[j]);
-                ++j;
-            }
-            else {
-                LOGE("Error\n");
-            }
-            
-            if(vSize == vector_int.size()){
-                LOGE("Stop at size: %d\n", vSize);
-                break;
-            }
         }
-        LOGD("--------------------------------------i: %d, j: %d\n", i, j);
-        while(i<num1.size())
+        LOGD("@@ %d, %d, %d\n", vector_int.size(), tmp1.size(), tmp2.size());
+        for(int i=0; i<tmp1.size(); ++i)
         {
-            vector_int.push_back(num1[i]);
-            ++i;
+            vector_int.push_back(tmp1[i]);
         }
-        while(j<num2.size())
+        for(int i=0; i<tmp2.size(); ++i)
         {
-            vector_int.push_back(num2[j]);
-            ++j;
+            vector_int.push_back(tmp2[i]);
         }
-#if 1
-        printf("Combine: ");
-        for(i=0; i<vector_int.size(); ++i)
-        {
-            printf("%d ", vector_int[i]);
-        }
-        printf("\n");
-#endif
         return vector_int;
     }
 #endif
@@ -429,7 +386,7 @@ void Test_maxNumber()
     int k = 6;
 #endif
 
-#if 1
+#if 0
 //[7,3,8,2,5,6,4,4,0,6,5,7,6,2,0]
  //7 3 8 2 5 6 4 4 0 6 0 5 7 6 2
     int arr1[] = {2,5,6,4,4,0};
@@ -438,11 +395,35 @@ void Test_maxNumber()
 #endif
 
 #if 0
+//[9,9,9,9,9,9,9,7,8,7,6,1,7,2,7,5,5,1,5,2,5,7,1,0,4,3,8,7,3,8,5,3,8,3,4,0,2,3,8,2,7,1,2,3,8,7,6,7,1,1,3,9,0,5,2,8,2,8,7,5,0,8,0,7,2,8,5,6,5,9,5,1,5,2,6,2,4,9,9,7,6,5,7,9,2,8,8,3,5,9,5,1,8,8,4,6,6,3,8,4,6,6,1,3,4,1,6,7,0,8,0,3,3,1,8,2,2,4,5,7,3,7,7,4,3,7,3,0,7,3,0,9,7,6,0,3,0,3,1,5,1,4,5,2,7,6,2,4,2,9,5,5,9,8,4,2,3,6,1,9]
+// 9 9 9 9 9 9 9 7 8 7 6 1 7 2 7 5 5 1 5 2 5 7 1 0 4 3 8 7 3 8 5 3 8 3 4 0 2 3 8 2 7 1 2 3 8 7 6 7 1 1 3 9 0 5 2 8 2 8 7 5 0 8 0 7 2 8 5 6 5 9 5 1 5 2 6 2 4 9 9 7 6 5 7 9 2 8 8 3 5 9 5 1 8 8 4 6 6 3 8 4 6 6 1 3 4 1 6 7 0 8 0 3 3 1 8 2 2 4 5 7 3 7 7 4 3 7 3 0 7 3 0 9 7 6 0 3 0 3 1 5 1 4 5 2 7 6 2 4 2 9 5 5 9 8 4 2 3 6 1 9
+    int arr1[] = {3,3,3,2,3,7,3,8,6,0,5,0,7,8,9,2,9,6,6,9,9,7,9,7,6,1,7,2,7,5,5,1};
+    int arr2[] = {5,6,4,9,6,9,2,2,7,5,4,3,0,0,1,7,1,8,1,5,2,5,7,0,4,3,8,7,3,8,5,3,8,3,4,0,2,3,8,2,7,1,2,3,8,7,6,7,1,1,3,9,0,5,2,8,2,8,7,5,0,8,0,7,2,8,5,6,5,9,5,1,5,2,6,2,4,9,9,7,6,5,7,9,2,8,8,3,5,9,5,1,8,8,4,6,6,3,8,4,6,6,1,3,4,1,6,7,0,8,0,3,3,1,8,2,2,4,5,7,3,7,7,4,3,7,3,0,7,3,0,9,7,6,0,3,0,3,1,5,1,4,5,2,7,6,2,4,2,9,5,5,9,8,4,2,3,6,1,9};
+    int k = 160;
+#endif
+
+#if 1
     int arr1[] = {2,0,2,1,2,2,2,2,0,1,0,0,2,0,2,0,2,1,0,1,1,0,1,0,1,2,1,1,1,0,1,2,2,1,0,0,1,2,1,2,2,1,1,0,1,2,0,2,0,1,2,0,2,1,1,1,2,0,0,1,0,2,1,2,0,1,0,0,0,1,2,1,0,1,1,2,0,2,2,0,0,1,1,2,2,1,1,2,2,1,0,1,2,0,1,2,2,0,0,0,2,0,2,0,2,2,0,1,1,1,1,2,2,2,2,0,0,2,2,2,2,0,2,0,1,0,0,2,1,0,0,2,0,2,1,1,1,1,0,1,2,0,2,1,0,1,1,1,0,0,2,2,2,0,2,1,1,1,2,2,0,0,2,2,2,2,2,0,2,0,2,0,2,0,0,1,0,1,1,0,0,2,1,1,2,2,2,1,2,2,0,0,2,1,0,2,1,2,1,1,1,0,2,0,1,1,2,1,1,0,0,1,0,1,2,2,2,0,2,2,1,0,1,2,1,2,0,2,2,0,1,2,2,1,2,2,1,1,2,2,2,2,2,1,2,0,1,1,1,2,2,2,0,2,0,2,0,2,1,1,0,2,2,2,1,0,2,1,2,2,2,0,1,1,1,1,1,1,0,0,0,2,2,0,1,2,1,0,0,2,2,2,2,1,0,2,0,1,2,0};
     int arr2[] = {1,1,1,0,0,1,1,0,2,1,0,1,2,1,0,2,2,1,0,2,0,1,1,0,0,2,2,0,1,0,2,0,2,2,2,2,1,1,1,1,0,0,0,0,2,1,0,2,1,1,2,1,2,2,0,2,1,0,2,0,0,2,0,2,2,1,0,1,0,0,2,1,1,1,2,2,0,0,0,1,1,2,0,2,2,0,1,0,2,1,0,2,1,1,1,0,1,1,2,0,2,0,1,1,2,0,2,0,1,2,1,0,2,0,1,0,0,0,1,2,1,2,0,1,2,2,1,1,0,1,2,1,0,0,1,0,2,2,1,2,2,0,0,0,2,0,0,0,1,0,2,0,2,1,0,0,1,2,0,1,1,0,1,0,2,2,2,1,1,0,1,1,2,1,0,2,2,2,1,2,2,2,2,0,1,1,0,1,2,1,2,2,0,0,0,0,0,1,1,1,2,1,2,1,1,0,1,2,0,1,2,1,2,2,2,2,0,0,0,0,2,0,1,2,0,1,1,1,1,0,1,2,2,1,0,1,2,2,1,2,2,2,0,2,0,1,1,2,0,0,2,2,0,1,0,2,1,0,0,1,1,1,1,0,0,2,2,2,2,0,0,1,2,1,1,2,0,1,2,1,0,2,0,0,2,1,1,0,2,1,1,2,2,0,1,0,2,0,1,0};
     int k = 600;
 #endif
 
+
+#if 0
+//    int arr1[] = {0, 2, 1, 2, 2, 2, 2, 0, 1, 0 };
+//    int arr2[] = {0, 0, 1, 1, 0, 2, 1, 0, 1, 2 };
+//    int k = 20;
+//    int arr1[] = {0, 2, 1, 2, 2, 2, 2, 0 };
+//    int arr2[] = {0, 0, 1, 1, 0, 2, 1, 0 };
+//    int k = 16;
+//    int arr1[] = { 2, 2, 0 };
+//    int arr2[] = { 2, 1, 0 };
+//    int k = 6;
+    
+    int arr1[] = { 2, 0 };
+    int arr2[] = { 1, 0 };
+    int k = 4;
+#endif
     
     int n1 = sizeof(arr1)/sizeof(arr1[0]);
     int n2 = sizeof(arr2)/sizeof(arr2[0]);
