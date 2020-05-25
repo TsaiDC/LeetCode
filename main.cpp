@@ -188,6 +188,11 @@ int main()
     Test_searchRange();
 #endif
 
+#if 1
+//#38
+    Test_countAndSay();
+#endif
+
 #if 0
 //#46
     Test_permute();
@@ -258,7 +263,7 @@ int main()
     Test_lengthOfLIS();
 #endif
 
-#if 1
+#if 0
 //#321
     Test_maxNumber();
 #endif
