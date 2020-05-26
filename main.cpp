@@ -188,7 +188,7 @@ int main()
     Test_searchRange();
 #endif
 
-#if 1
+#if 0
 //#38
     Test_countAndSay();
 #endif
@@ -298,7 +298,7 @@ int main()
     Test_OnesAndZeros();
 #endif
 
-#if 0
+#if 1
 //#477
     Test_totalHammingDistance();
 #endif
