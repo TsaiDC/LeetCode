@@ -213,6 +213,11 @@ int main()
     Test_uniquePaths();
 #endif
 
+#if 1
+//#64
+    Test_minPathSum();
+#endif
+
 #if 0
 //#72
     Test_minDistance();
@@ -298,7 +303,7 @@ int main()
     Test_OnesAndZeros();
 #endif
 
-#if 1
+#if 0
 //#477
     Test_totalHammingDistance();
 #endif

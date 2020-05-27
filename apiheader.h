@@ -59,6 +59,8 @@ void Test_permuteUnique();
 void Test_rotateRight();
 //62
 void Test_uniquePaths();
+//64
+void Test_minPathSum();
 //72
 void Test_minDistance();
 //78
