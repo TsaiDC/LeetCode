@@ -56,57 +56,55 @@ Explanation: Because the path 1→3→1→1→1 minimizes the sum.
 class Solution {
 public:
     int minPathSum(vector< vector<int> >& grid) {
-        vector<bool> row(grid[0].size(), false);
-        vector< vector<bool> > map (grid.size(), row);
-        vector<int> vrow(grid[0].size(), false);
-        vector< vector<int> > vmap (grid.size(), vrow);
-        queue<int> rQ;
-        queue<int> cQ;
-
-        rQ.push(0);
-        cQ.push(0);
-        map[0][0] = true;
-        
         int width = grid[0].size();
         int hight = grid.size();
+        vector<bool> row(width, false);
+        vector< vector<bool> > map (hight, row);
+        vector<int> vrow(width, false);
+        vector< vector<int> > vmap (hight, vrow);
+        queue< pair<int,int> >nodeQ;
+        pair <int, int> node;        
+        node = make_pair(0,0);
+        nodeQ.push(node);
         
-        while(!rQ.empty() && !cQ.empty())
-        {
-            int r = rQ.front();
-            int c = cQ.front();
-            rQ.pop();
-            cQ.pop();
-            if(r>=grid.size()) continue;
-            if(c>=grid[0].size()) continue;
+        while(!nodeQ.empty())
+        {           
+            node = nodeQ.front();
+            nodeQ.pop();
+
+            //map[y][x]
+            int y = node.first;
+            int x = node.second;
+            if(y>=hight || x>=width || map[y][x]) {
+                continue;
+            }
 
             //Left-Top Corner
-            if((r-1)<0 && (c-1)<0) {
-                vmap[r][c] = grid[r][c];
-                map[r][c] = true;                
+            if((x-1)<0 && (y-1)<0) {
+                vmap[y][x] = grid[y][x];               
             }
             //Top Row
-            else if((r-1)<0 && (c-1)>=0) {
-                vmap[r][c] = grid[r][c] + vmap[r][c-1];
-                map[r][c] = true;
+            else if((y == 0) && (x>0)) {
+                vmap[y][x] = grid[y][x] + vmap[y][x-1];                
             }
             //Left Column
-            else if((r-1)>=0 && (c-1)<0) {
-                vmap[r][c] = grid[r][c] + vmap[r-1][c];
-                map[r][c] = true;
+            else if((y>0) && (x==0)) {
+                vmap[y][x] = grid[y][x] + vmap[y-1][x];
             }
-            else {
-                map[r][c] = true;
-                vmap[r][c]= (grid[r][c]+vmap[r-1][c]) > (grid[r][c]+vmap[r][c-1]) ? (grid[r][c]+vmap[r][c-1]) : (grid[r][c]+vmap[r-1][c]);
+            else {            
+                vmap[y][x]= (vmap[y-1][x]) < (vmap[y][x-1]) ? (grid[y][x]+vmap[y-1][x]) : (grid[y][x]+vmap[y][x-1]);
             }
-            int rR = r;
-            int rC = c+1;
-            int dR = r+1;
-            int dC = c;
-//TODO
-            rQ.push(r);cQ.push(c+1);
-            rQ.push(r+1);cQ.push(c);
+            map[y][x] = true;
+
+            //Right Node
+            node = make_pair(y,x+1);
+            nodeQ.push(node);
+
+            //Down Node
+            node = make_pair(y+1,x);
+            nodeQ.push(node);
         }
-        return 0;
+        return vmap[hight-1][width-1];
     }
 };
 
