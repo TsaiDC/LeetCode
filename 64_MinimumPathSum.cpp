@@ -58,6 +58,34 @@ public:
     int minPathSum(vector< vector<int> >& grid) {
         int width = grid[0].size();
         int hight = grid.size();
+        
+        for(int y=0; y<hight; ++y)
+        {
+            for(int x=0; x<width;++x)
+            {
+                //Left-Top Corner
+                if((x==0) && (y==0)) {
+                    continue;
+                }
+                //Top Row
+                else if((y == 0) && (x>0)) {
+                    grid[y][x] = grid[y][x] + grid[y][x-1];                
+                }
+                //Left Column
+                else if((y>0) && (x==0)) {
+                    grid[y][x] = grid[y][x] + grid[y-1][x];
+                }
+                else {            
+                    grid[y][x]= (grid[y-1][x]) < (grid[y][x-1]) ? (grid[y][x]+grid[y-1][x]) : (grid[y][x]+grid[y][x-1]);
+                }
+            }
+        }
+        return grid[hight-1][width-1];
+    }
+#if 0
+    int minPathSum(vector< vector<int> >& grid) {
+        int width = grid[0].size();
+        int hight = grid.size();
         vector<bool> row(width, false);
         vector< vector<bool> > map (hight, row);
         vector<int> vrow(width, false);
@@ -106,6 +134,7 @@ public:
         }
         return vmap[hight-1][width-1];
     }
+#endif
 };
 
 void Test_minPathSum()
