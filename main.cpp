@@ -213,7 +213,7 @@ int main()
     Test_uniquePaths();
 #endif
 
-#if 1
+#if 0
 //#64
     Test_minPathSum();
 #endif
@@ -231,6 +231,11 @@ int main()
 #if 0
 //#86
     Test_partition();
+#endif
+
+#if 1
+//#96
+    Test_numTrees();
 #endif
 
 #if 0
