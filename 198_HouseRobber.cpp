@@ -24,6 +24,11 @@ using namespace std;
 #define LOGE(...)
 #endif
 
+//
+// MAP Ref:
+// https://mropengate.blogspot.com/2015/12/cc-map-stl.html
+//
+
 /*
 https://leetcode.com/problems/house-robber/
 198. House Robber
@@ -42,6 +47,7 @@ without alerting the police.
 Example 1:
 
 Input: nums = [1,2,3,1]
+
 Output: 4
 Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
              Total amount you can rob = 1 + 3 = 4.
@@ -69,7 +75,6 @@ public:
 void Test_rob()
 {
     LOGD("%s\n", __TIME__);
-
     int arr1[] = {2, 7, 9, 3, 1};
 
     int n = sizeof(arr1)/sizeof(arr1[0]);
