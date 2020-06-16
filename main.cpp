@@ -233,7 +233,7 @@ int main()
     Test_partition();
 #endif
 
-#if 1
+#if 0
 //#96
     Test_numTrees();
 #endif
@@ -251,6 +251,11 @@ int main()
 #if 0
 //#138
     Test_copyRandomList();
+#endif
+
+#if 1
+//#198
+    Test_rob();
 #endif
 
 #if 0
