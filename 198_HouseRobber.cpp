@@ -68,14 +68,55 @@ Constraints:
 class Solution {
 public:
     int rob(vector<int>& nums) {
-        return 0;    
+        vector<int> dp;
+        int idxa = 0, idxb = 0;
+        int retval = 0;
+        for(int i=0; i<nums.size(); ++i)
+        {
+            idxa = i-2;
+            idxb = i-3;
+            LOGD("----->  i: %d, a: %d, b: %d\n", i, idxa, idxb);
+            if(idxa < 0 && idxb < 0) {
+                dp.push_back(nums[i]);
+                LOGD("I: %d, %d\n", i, nums[i]);
+                continue;
+            }
+            else if(idxa >= 0 && idxb < 0) {
+                dp.push_back(nums[i] + dp[idxa]);
+                LOGD("I: %d, %d\n", i, nums[i] + dp[idxa]);
+            }
+            else if(idxa < 0 && idxb >= 0) {
+                dp.push_back(nums[i] + dp[idxb]);
+                LOGD("I: %d, %d\n", i, nums[i] + dp[idxb]);
+            }
+            else if(idxa >= 0 && idxb >= 0) {
+                dp.push_back(nums[i] + (dp[idxa] > dp[idxb] ? dp[idxa] : dp[idxb]));
+                LOGD("I: %d, %d\n", i, (nums[i] + (dp[idxa] > dp[idxb] ? dp[idxa] : dp[idxb])));
+            }
+        }
+#if 0
+        for(int i=0; i<dp.size(); ++i)
+        {
+            LOGD("%d\n", dp[i]);
+        }
+#endif
+        int i = dp.size();
+        if(i>1){
+            retval = dp[i-1] > dp[i-2] ? dp[i-1] : dp[i-2];
+        }
+        else if (i==1) {
+            retval = dp[i-1];
+        }
+        
+        return retval;
     }
 };
 
 void Test_rob()
 {
     LOGD("%s\n", __TIME__);
-    int arr1[] = {2, 7, 9, 3, 1};
+//    int arr1[] = {2, 7, 9, 3, 1};
+    int arr1[] = {1, 1};
 
     int n = sizeof(arr1)/sizeof(arr1[0]);
     vector<int> input1(arr1, arr1+n);
