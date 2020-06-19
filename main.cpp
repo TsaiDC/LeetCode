@@ -254,6 +254,11 @@ int main()
 #endif
 
 #if 1
+//#149
+    Test_sortList();
+#endif
+
+#if 0
 //#198
     Test_rob();
 #endif
