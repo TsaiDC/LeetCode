@@ -233,6 +233,11 @@ int main()
     Test_partition();
 #endif
 
+#if 1
+//#94
+    Test_inorderTraversal();
+#endif
+
 #if 0
 //#96
     Test_numTrees();
@@ -253,7 +258,7 @@ int main()
     Test_copyRandomList();
 #endif
 
-#if 1
+#if 0
 //#149
     Test_sortList();
 #endif

@@ -61,8 +61,8 @@ Output: -1->0->3->4->5
 struct ListNode {
     int val;
     ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode() : val(0), next(NULL) {}
+    ListNode(int x) : val(x), next(NULL) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
@@ -84,7 +84,7 @@ public:
         fast = slow->next;
         slow->next = NULL;
         
-        return merge(sortList(head), sortList(fast));
+        return merge2(sortList(head), sortList(fast));
     }
     
     ListNode* merge(ListNode* l1, ListNode* l2)
@@ -115,6 +115,44 @@ public:
             
         return dump.next;
     }
+    
+    ListNode* merge2(ListNode* l1, ListNode* l2)
+    {
+        ListNode *pHead = NULL;
+        ListNode *pTail = NULL;
+        while (l1 != NULL && l2 != NULL)
+        {
+            if(l1->val < l2-> val) {
+                if (!pHead) {
+                    pHead = l1;
+                    pTail = l1;
+                }
+                else {
+                    pTail->next = l1;
+                    pTail = pTail->next;
+                }
+                l1 = l1->next;
+            }
+            else {
+                if (!pHead) {
+                    pHead = l2;
+                    pTail = l2;
+                }
+                else {
+                    pTail->next = l2;
+                    pTail = pTail->next;
+                }
+                l2 = l2->next;
+            }
+        }
+        if(l1!=NULL) {
+            pTail->next = l1;
+        }
+        if(l2!=NULL) {
+            pTail->next = l2;
+        }
+        return pHead;
+    }
 };
 
 void Test_sortList()
@@ -133,5 +171,16 @@ void Test_sortList()
         delete pTmp;
     }
 
+    ListNode *p1 = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4))));
+    ListNode *p2 = new ListNode(7, new ListNode(6, new ListNode(5, new ListNode(4))));
+    pHead = solution->merge2(p1, p2);
+    while(pHead)
+    {
+        pTmp = pHead;
+        pHead = pHead->next;
+        LOGD("- %d\n", pTmp->val);
+        delete pTmp;
+    }
+    
     delete solution;
 }

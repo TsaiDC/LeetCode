@@ -67,6 +67,8 @@ void Test_minDistance();
 void Test_Subsets();
 //86
 void Test_partition();
+//94
+void Test_inorderTraversal();
 //96
 void Test_numTrees();
 //98
