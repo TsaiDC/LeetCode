@@ -233,9 +233,14 @@ int main()
     Test_partition();
 #endif
 
-#if 1
+#if 0
 //#94
     Test_inorderTraversal();
+#endif
+
+#if 1
+//#100
+    Test_isSameTree();
 #endif
 
 #if 0

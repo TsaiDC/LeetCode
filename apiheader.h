@@ -73,6 +73,8 @@ void Test_inorderTraversal();
 void Test_numTrees();
 //98
 void Test_isValidBST();
+//100
+void Test_isSameTree();
 //114
 void Test_flatten();
 //138
