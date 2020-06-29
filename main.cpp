@@ -238,7 +238,7 @@ int main()
     Test_inorderTraversal();
 #endif
 
-#if 1
+#if 0
 //#100
     Test_isSameTree();
 #endif
@@ -286,6 +286,11 @@ int main()
 #if 0
 //#240
     Test_search2dMatrixii();
+#endif
+
+#if 1
+//#279
+    Test_numSquares();
 #endif
 
 #if 0

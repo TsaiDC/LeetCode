@@ -89,6 +89,8 @@ void Test_NumIslands();
 void Test_KthSmallestElement();
 //240
 void Test_search2dMatrixii();
+//279
+void Test_numSquares();
 //300
 void Test_lengthOfLIS();
 //321
