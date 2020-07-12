@@ -61,9 +61,39 @@ public:
         return 0;        
     }
 
+    void dumpArray(int idx, vector<int>& cntPerfectSquares)
+    {    
+        printf("i: %02d -> ", idx);
+        for(int i=0; i<cntPerfectSquares.size(); ++i)
+        {
+            if(cntPerfectSquares[i] == INT_MAX) {
+                printf("MMM ");
+            }
+            else {            
+                printf("%3d ", cntPerfectSquares[i]);
+            }
+        }
+        printf("\n");
+    }
+
     //Ref:
     //https://leetcode.com/problems/perfect-squares/discuss/71488/Summary-of-4-different-solutions-(BFS-DP-static-DP-and-mathematics)
     //1.Dynamic Programming
+/*
+               0   1   2   3   4   5   6   7   8   9  10  11  12
+    i: 01 ->   0   1 MMM MMM MMM MMM MMM MMM MMM MMM MMM MMM MMM
+    i: 02 ->   0   1   2 MMM MMM MMM MMM MMM MMM MMM MMM MMM MMM
+    i: 03 ->   0   1   2   3 MMM MMM MMM MMM MMM MMM MMM MMM MMM
+    i: 04 ->   0   1   2   3   1 MMM MMM MMM MMM MMM MMM MMM MMM
+    i: 05 ->   0   1   2   3   1   2 MMM MMM MMM MMM MMM MMM MMM
+    i: 06 ->   0   1   2   3   1   2   3 MMM MMM MMM MMM MMM MMM
+    i: 07 ->   0   1   2   3   1   2   3   4 MMM MMM MMM MMM MMM
+    i: 08 ->   0   1   2   3   1   2   3   4   2 MMM MMM MMM MMM
+    i: 09 ->   0   1   2   3   1   2   3   4   2   1 MMM MMM MMM
+    i: 10 ->   0   1   2   3   1   2   3   4   2   1   2 MMM MMM
+    i: 11 ->   0   1   2   3   1   2   3   4   2   1   2   3 MMM
+    i: 12 ->   0   1   2   3   1   2   3   4   2   1   2   3   3
+*/
     int numSquares1(int n)
     {
         if (n <= 0)
@@ -84,11 +114,12 @@ public:
                 cntPerfectSquares[i] = 
                     min(cntPerfectSquares[i], cntPerfectSquares[i - j*j] + 1);
             }
+            dumpArray(i, cntPerfectSquares);
         }
         
         return cntPerfectSquares.back();
     }
-    
+#if 0
     //2.Static Dynamic Programming
     int numSquares2(int n)
     {
@@ -101,25 +132,25 @@ public:
         // which sum to i. Since cntPerfectSquares is a static vector, if 
         // cntPerfectSquares.size() > n, we have already calculated the result 
         // during previous function calls and we can just return the result now.
-        static vector<int> cntPerfectSquares({0});
+        static vector<int> cntPerfectSquares2;
         
         // While cntPerfectSquares.size() <= n, we need to incrementally 
         // calculate the next result until we get the result for n.
-        while (cntPerfectSquares.size() <= n)
+        while (cntPerfectSquares2.size() <= n)
         {
-            int m = cntPerfectSquares.size();
+            int m = cntPerfectSquares2.size();
             int cntSquares = INT_MAX;
             for (int i = 1; i*i <= m; i++)
             {
-                cntSquares = min(cntSquares, cntPerfectSquares[m - i*i] + 1);
+                cntSquares = min(cntSquares, cntPerfectSquares2[m - i*i] + 1);
             }
             
-            cntPerfectSquares.push_back(cntSquares);
+            cntPerfectSquares2.push_back(cntSquares);
         }
         
-        return cntPerfectSquares[n];
+        return cntPerfectSquares2[n];
     }
-    
+
     //3.Mathematical Solution
     // Based on Lagrange's Four Square theorem, there 
     // are only 4 possible results: 1, 2, 3, 4.
@@ -155,7 +186,7 @@ public:
         
         return 3;  
     }
-    
+
     //4.Breadth-First Search
     int numSquares4(int n) 
     {
@@ -240,6 +271,7 @@ public:
         
         return 0;
     }
+#endif
 };
 
 void Test_numSquares()
@@ -248,6 +280,7 @@ void Test_numSquares()
     Solution *solution = new Solution();
     int ans;
     ans = solution->numSquares1(12);
+//    ans = solution->numSquares2(12);
     LOGD("Ans: %d\n", ans);
     delete solution;
 }
