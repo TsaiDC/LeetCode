@@ -288,9 +288,14 @@ int main()
     Test_search2dMatrixii();
 #endif
 
-#if 1
+#if 0
 //#279
     Test_numSquares();
+#endif
+
+#if 1
+//#287
+    Test_findDuplicate();
 #endif
 
 #if 0

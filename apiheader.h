@@ -91,6 +91,8 @@ void Test_KthSmallestElement();
 void Test_search2dMatrixii();
 //279
 void Test_numSquares();
+//287
+void Test_findDuplicate();
 //300
 void Test_lengthOfLIS();
 //321
