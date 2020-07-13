@@ -265,7 +265,7 @@ void Test_NumIslands()
     char arr2[] = {'0','1','0','0'};
     char arr3[] = {'0','0','1','1'};
     char arr4[] = {'0','0','0','1'};
-    char n = sizeof(arr1)/sizeof(arr1[0]);
+    int n = sizeof(arr1)/sizeof(arr1[0]);
     vector<char> input1(arr1, arr1+n);
     vector<char> input2(arr2, arr2+n);
     vector<char> input3(arr3, arr3+n);
