@@ -44,11 +44,33 @@ Your algorithm should run in O(n2) complexity.
 class Solution {
 public:
     int lengthOfLIS(vector<int>& nums) {
-        return 0;
+        vector<int> stack;
+        for(int i=0; i<nums.size(); ++i)
+        {
+            if(stack.empty()) {
+                stack.push_back(nums[i]);
+            }
+            else {
+                while(!stack.empty() && nums[i]<=stack.back()) {
+                    stack.pop_back();
+                }
+                stack.push_back(nums[i]);
+            }
+        }
+        return stack.size();
     }
 };
 
 void Test_lengthOfLIS()
 {
     LOGD("%s\n", __TIME__);
+
+//    int arr1[] = {10,9,2,5,3,7,101,18};
+    int arr1[] = {1,3,6,7,9,4,10,5,6};
+    int n = sizeof(arr1)/sizeof(arr1[0]);
+    vector<int> numbs(arr1, arr1+n);
+    Solution *solution = new Solution();
+    int ans = solution->lengthOfLIS(numbs);
+    LOGD("Ans: %d\n", ans);
+    delete solution;
 }

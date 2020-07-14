@@ -263,7 +263,7 @@ int main()
     Test_copyRandomList();
 #endif
 
-#if 1
+#if 0
 //#142
     Test_detectCycle();
 #endif
@@ -303,7 +303,7 @@ int main()
     Test_findDuplicate();
 #endif
 
-#if 0
+#if 1
 //#300
     Test_lengthOfLIS();
 #endif
