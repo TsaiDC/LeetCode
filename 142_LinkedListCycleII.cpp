@@ -86,31 +86,90 @@ struct ListNode {
 class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
-        return NULL;
+        ListNode *pSlow = head;
+        ListNode *pFast = NULL;
+
+        if(!pSlow)
+            return NULL;
+        
+        if(pSlow->next != NULL) {
+            pFast = pSlow->next->next;
+        }
+
+        while(pSlow != pFast)
+        {
+            if(!pSlow || !pFast) {
+                break;
+            }
+
+            pSlow = pSlow->next;
+
+            if(pFast->next) {
+                pFast = pFast->next->next;
+            }
+            else {
+                pFast = NULL;
+            }
+        }
+        return pFast;
     }
 };
+
+vector<ListNode*> items;
+ListNode *getList()
+{
+#if 1
+    int arr1[] = {-21,10,17,8,4,26,5,35,33,-7,-16,27,-12,6,29,-12,5,9,20,14,14,2,13,-24,21,23,-21,5};
+    int pos = 24;
+#endif
+#if 0
+    int arr1[] = {3,2,0,-4};
+    int pos = 1;
+#endif
+
+    int n = sizeof(arr1)/sizeof(arr1[0]);    
+    ListNode* p;
+    
+    for(int i=0; i<n; ++i)
+    {
+        p = new ListNode(arr1[i]);
+        items.push_back(p);
+    }
+    
+    for(int i=0; i<items.size()-1; ++i)
+    {
+        items[i]->next = items[i+1];        
+    }
+    items[items.size()-1]->next = items[pos];
+
+    p = items[0];
+    int count = 0;
+    while(count < n+1) {
+        LOGD("%2d, %d\n", count, p->val);        
+        p=p->next;
+        count++;
+    }    
+
+    return items[0];
+}
 
 void Test_detectCycle()
 {
     LOGD("%s\n", __TIME__);
-    int ans;
-//    int arr1[] = {1,3,4,2,2};
-//    int arr1[] = {3,1,3,4,2};
-//    int arr1[] = {1,2,2,3,4};
-//    int arr1[] = {1,1,3,4};
-    // int arr1[] = {2,5,9,6,9,3,8,9,7,1};
-    // int n = sizeof(arr1)/sizeof(arr1[0]);
-    // vector<int> numbs(arr1, arr1+n);
     Solution *solution = new Solution();
-    // ans = solution->findDuplicate(numbs);
-    // LOGD("Ans: %d\n",ans);
-/*
-    ans = solution->findDuplicate2(numbs);
-    LOGD("Ans2: %d\n",ans);
-    ans = solution->findDuplicate3(numbs);
-    LOGD("Ans3: %d\n",ans);
-*/
-    // ans = solution->findDuplicate0(numbs);
-    // LOGD("Ans0: %d\n",ans);    
+    ListNode *p1 = getList();
+
+    ListNode *pAns = solution->detectCycle(p1);
+    if(pAns) {
+        LOGD("Ans, idx val = %d\n", pAns->val);
+    }
+    else {
+        LOGD("Ans: NULL, No circle\n");
+    }
+    
     delete solution;
+    for(int i=0;i<items.size(); ++i)
+    {
+        delete items[i];
+    }
 }
