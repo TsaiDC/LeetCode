@@ -79,6 +79,8 @@ void Test_isSameTree();
 void Test_flatten();
 //138
 void Test_copyRandomList();
+//142
+void Test_detectCycle();
 //149
 void Test_sortList();
 //198

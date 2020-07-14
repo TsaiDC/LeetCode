@@ -263,6 +263,11 @@ int main()
     Test_copyRandomList();
 #endif
 
+#if 1
+//#142
+    Test_detectCycle();
+#endif
+
 #if 0
 //#149
     Test_sortList();
@@ -293,7 +298,7 @@ int main()
     Test_numSquares();
 #endif
 
-#if 1
+#if 0
 //#287
     Test_findDuplicate();
 #endif
