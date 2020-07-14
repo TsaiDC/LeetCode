@@ -74,6 +74,7 @@ public:
                 fast = nums[fast];
                 slow = nums[slow];
             }
+            LOGD("F: %d, S: %d\n", fast, slow);
             return slow;
         }
         return -1;
@@ -112,6 +113,34 @@ public:
         }
         return low;
     }
+    
+    int findDuplicate0(vector<int>& nums)
+    {
+        int slow = 0;
+        int fast = 0;
+        if(!nums.empty()) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+            while(slow != fast)
+            {
+                LOGD("S: %d, F: %d\n", slow, fast);
+                slow = nums[slow];
+                fast = nums[nums[fast]];
+            }
+            LOGD("S: %d, F: %d\n", slow, fast);
+            
+            fast = 0;
+            while (fast != slow)
+            {
+                LOGD("-S: %d, F: %d\n", slow, fast);
+                fast = nums[fast];
+                slow = nums[slow];
+            }
+            LOGD("-S: %d, F: %d\n", slow, fast);
+            return slow;
+        }
+        return -1;
+    }
 };
 
 void Test_findDuplicate()
@@ -119,16 +148,22 @@ void Test_findDuplicate()
     LOGD("%s\n", __TIME__);
     int ans;
 //    int arr1[] = {1,3,4,2,2};
-    int arr1[] = {1,2,2,3,4};
+//    int arr1[] = {3,1,3,4,2};
+//    int arr1[] = {1,2,2,3,4};
 //    int arr1[] = {1,1,3,4};
+    int arr1[] = {2,5,9,6,9,3,8,9,7,1};
     int n = sizeof(arr1)/sizeof(arr1[0]);
     vector<int> numbs(arr1, arr1+n);
     Solution *solution = new Solution();
     ans = solution->findDuplicate(numbs);
     LOGD("Ans: %d\n",ans);
+/*
     ans = solution->findDuplicate2(numbs);
     LOGD("Ans2: %d\n",ans);
     ans = solution->findDuplicate3(numbs);
     LOGD("Ans3: %d\n",ans);
+*/
+    ans = solution->findDuplicate0(numbs);
+    LOGD("Ans0: %d\n",ans);    
     delete solution;
 }
