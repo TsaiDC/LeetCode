@@ -87,30 +87,33 @@ class Solution {
 public:
     ListNode *detectCycle(ListNode *head) {
         ListNode *pSlow = head;
-        ListNode *pFast = NULL;
+        ListNode *pFast = head;
 
-        if(!pSlow)
-            return NULL;
-        
-        if(pSlow->next != NULL) {
-            pFast = pSlow->next->next;
-        }
-
-        while(pSlow != pFast)
+        while(pSlow && pFast)
         {
-            if(!pSlow || !pFast) {
-                break;
-            }
-
+            LOGD("S: %d, F: %d\n", pSlow->val, pFast->val);
             pSlow = pSlow->next;
-
             if(pFast->next) {
                 pFast = pFast->next->next;
             }
             else {
-                pFast = NULL;
+                return NULL;
             }
+            if(pSlow==pFast) break;
         }
+        if(!pSlow || !pFast) {
+            return NULL;
+        }
+        LOGD("S: %d, F: %d\n", pSlow->val, pFast->val);
+        
+        pSlow=head;
+        while(pSlow!=pFast)
+        {
+            LOGD("-S: %d, F: %d\n", pSlow->val, pFast->val);
+            pSlow=pSlow->next;
+            pFast=pFast->next;
+        }
+        LOGD("-S: %d, F: %d\n", pSlow->val, pFast->val);
         return pFast;
     }
 };
@@ -118,7 +121,7 @@ public:
 vector<ListNode*> items;
 ListNode *getList()
 {
-#if 1
+#if 0
     int arr1[] = {-21,10,17,8,4,26,5,35,33,-7,-16,27,-12,6,29,-12,5,9,20,14,14,2,13,-24,21,23,-21,5};
     int pos = 24;
 #endif
@@ -126,6 +129,15 @@ ListNode *getList()
     int arr1[] = {3,2,0,-4};
     int pos = 1;
 #endif
+#if 0
+    int arr1[] = {1,1,0,-4};
+    int pos = 1;
+#endif
+#if 1
+    int arr1[] = {1,2};
+    int pos = -1;
+#endif
+
 
     int n = sizeof(arr1)/sizeof(arr1[0]);    
     ListNode* p;
@@ -140,12 +152,12 @@ ListNode *getList()
     {
         items[i]->next = items[i+1];        
     }
-    items[items.size()-1]->next = items[pos];
+    items[items.size()-1]->next = pos>=0 ? items[pos] : NULL;
 
     p = items[0];
     int count = 0;
-    while(count < n+1) {
-        LOGD("%2d, %d\n", count, p->val);        
+    while(count < n+1 && p) {
+        LOGD("%2d, %3d\n", count, p->val);        
         p=p->next;
         count++;
     }    
@@ -166,7 +178,7 @@ void Test_detectCycle()
     else {
         LOGD("Ans: NULL, No circle\n");
     }
-    
+
     delete solution;
     for(int i=0;i<items.size(); ++i)
     {
