@@ -253,6 +253,11 @@ int main()
     Test_isValidBST();
 #endif
 
+#if 1
+//#102
+    Test_levelOrdere();
+#endif
+
 #if 0
 //#114
     Test_flatten();
@@ -303,7 +308,7 @@ int main()
     Test_findDuplicate();
 #endif
 
-#if 1
+#if 0
 //#300
     Test_lengthOfLIS();
 #endif
