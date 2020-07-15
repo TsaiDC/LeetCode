@@ -75,15 +75,64 @@ struct TreeNode {
 
 class Solution {
 public:
-    vector<vector<int>> levelOrder(TreeNode* root) {
-        vector<vector<int>> ans;
+    vector< vector<int> > levelOrder(TreeNode* root) {    
+        vector< vector<int> > ans;
+        vector<int> rowNums;
+        queue<TreeNode*> Nodes;
+        queue<TreeNode*> rowNodes;
+        TreeNode *pNode;
+        if(!root) return ans;
+        rowNodes.push(root);
+        while(!rowNodes.empty())
+        {
+            rowNums.clear();
+
+            while(!rowNodes.empty())
+            {
+                pNode = rowNodes.front();
+                rowNodes.pop();
+                if(pNode){
+                    rowNums.push_back(pNode->val);
+                    Nodes.push(pNode);
+                }                
+            }
+            ans.push_back(rowNums);
+
+            while(!Nodes.empty())
+            {
+                pNode = Nodes.front();
+                Nodes.pop();
+                if(pNode->left){
+                    rowNodes.push(pNode->left);
+                }
+                if(pNode->right){
+                    rowNodes.push(pNode->right);
+                }                
+            }
+        }
         return ans;
     }
 };
 
+TreeNode* getTree()
+{
+    TreeNode *pRoot = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+    return pRoot;
+}
+
 void Test_levelOrdere()
 {
     LOGD("%s\n", __TIME__);
+    TreeNode *pRoot = getTree();
     Solution *solution = new Solution();
+    vector< vector<int> > ans = solution->levelOrder(pRoot);
+    for(int i=0; i<ans.size(); ++i)
+    {
+        for(int j=0; j<ans[i].size(); ++j)
+        {
+            printf("%d ", ans[i][j]);
+        }
+        printf("\n");
+    }
     delete solution;
 }
