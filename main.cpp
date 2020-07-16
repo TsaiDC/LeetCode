@@ -173,6 +173,11 @@ int main()
     Test_removeNthFromEnd();
 #endif
 
+#if 1
+//#22
+    Test_generateParenthesis();
+#endif;
+
 #if 0
 //#31
     Test_nextPermutation();
@@ -288,7 +293,7 @@ int main()
     Test_NumIslands();
 #endif
 
-#if 1
+#if 0
 //#215
     Test_findKthLargest();
 #endif
