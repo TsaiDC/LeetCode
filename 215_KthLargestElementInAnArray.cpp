@@ -49,6 +49,87 @@ You may assume k is always valid, 1 <= k <= array's length.
 class Solution {
 public:
     int findKthLargest(vector<int>& nums, int k) {
+//        return getKthByQueue(nums, k);        
+
+        int idx = 0;
+        int start = 0;
+        int end = nums.size()-1;
+#if 1
+        LOGD("K: %2d\n", k);
+        LOGD("I: %2d, ", idx);
+        for(int i=0; i<nums.size(); ++i)
+        {
+            if(i%10==0) printf(" | ");
+            printf("%d ", nums[i]);
+        }
+        printf("\n");
+#endif
+        while(1) {
+            LOGD("Start: %d, End: %d\n", start, end);
+            idx = getIdxAndSort(nums, start, end);
+#if 1
+            LOGD("O: %2d, ", idx);
+            for(int i=0; i<nums.size(); ++i)
+            {
+                printf("%d ", nums[i]);
+            }
+            printf("\n");
+#endif
+            if(idx == k-1) {
+                break;
+            }
+            
+            if(idx<k-1) {
+                start = idx+1;
+            }
+            else if(idx>k-1) {
+                end = idx-1;
+            }
+        }
+
+        return nums[idx];
+    }
+    
+    int getIdxAndSort(vector<int>& nums, int start, int end)
+    {
+        int i = start;
+        int j = end-1;
+        int p = end;
+        int tmp;
+        LOGD("P[%d]: %d\n", p, nums[p]);
+     
+        if(start==end) return end;
+        if((end-start)==1) {
+            if(nums[end]>nums[start]) {
+                tmp = nums[end];
+                nums[end] = nums[start];
+                nums[start] = tmp;
+                return start;
+            }
+            else {
+                return end;
+            }
+        }
+        
+        while(i<j)
+        {
+            while(nums[i]>=nums[p] && i<=j)++i;
+            while(nums[j]<nums[p] && j>=i)--j;
+            if(j>=0 && j>i) {
+                LOGD("Swap i: %d, j: %d\n", i, j);
+                tmp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = tmp;
+            }
+        }
+        LOGD("Swap i: %d, p: %d\n", i, p);
+        tmp = nums[p];
+        nums[p] = nums[i];
+        nums[i] = tmp;        
+        return i;
+    }
+#if 0
+    int getKthByQueue(vector<int>& nums, int k) {
         if(nums.empty()) return 0;
 
         int retVal;
@@ -99,12 +180,13 @@ public:
         }
         return idx;
     }
+#endif
 };
 
 void Test_findKthLargest()
 {
     // int arr1[] = {3,2,1,5,6,4};
-    // int k = 6;
+    // int k = 2;
     int arr1[] = {3,2,3,1,2,4,5,5,6};
     int k = 4;
     // int arr1[] = {-1,2,0};
