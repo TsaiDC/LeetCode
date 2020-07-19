@@ -44,13 +44,35 @@ For example, given n = 3, a solution set is:
 */
 class Solution {
 public:
+    //Ref Solution
     vector<string> generateParenthesis(int n) {
+        vector<string> ans;
+        backtrack(ans, "", 0, 0, n);
+        return ans;
+    }
+    
+    void backtrack(vector<string>&list, string str, int open, int close, int max)
+    {
+        if(str.length() == max*2) {
+            list.push_back(str);
+            return;
+        }
+        if(open<max) {
+            backtrack(list, str+"(", open+1, close, max);
+        }
+        if(close < open) {
+            backtrack(list, str+")", open, close+1, max);
+        }        
+    }
+
+    vector<string> generateParenthesis1(int n) {
         vector<string> ans;
         if(n==0) return ans;
         ans.push_back("()");
         if(n==1) return ans;
 
         string str;
+        size_t ptr;
         while(!ans.empty())
         {
             str = ans.back();
@@ -64,11 +86,31 @@ public:
                 tmp+="_";                
             }
             LOGD("Tmp: %s(%d)\n", tmp.c_str(), tmp.length());
-            size_t ptr = tmp.find_first_of("_");
-            if(ptr != string::npos) {                
-                tmp.replace(ptr, 1, "_(_");
-                LOGD("Tmp: %s(%d), ptr: %d\n", tmp.c_str(), tmp.length(), ptr);
-            }
+            
+            int count = 3;
+            do {
+                ptr = tmp.find_first_of("_");
+                if(ptr == string::npos) {
+                    LOGE("Tmp: %s(%d), Not Exist\n", tmp.c_str(), tmp.length());
+                    break;
+                }
+                if(ptr != string::npos) {
+                    tmp.replace(ptr, 1, "_(_");
+                    LOGD("Tmp: %s(%d), ptr: %d\n", tmp.c_str(), tmp.length(), ptr);
+                }
+                ptr = tmp.find_first_of("_");
+                if(ptr != string::npos) {                
+                    tmp.replace(ptr, 1, ")");
+                    LOGD("Tmp: %s(%d), ptr: %d\n", tmp.c_str(), tmp.length(), ptr);
+                }
+                if(isGood(tmp)) {
+                    LOGD("Tmp: %s(%d), ptr: %d\n", tmp.c_str(), tmp.length(), ptr);
+                }
+                else {
+                    tmp.replace(ptr, 1, "X");
+                    LOGD("Tmp: %s(%d), ptr: %d\n", tmp.c_str(), tmp.length(), ptr);
+                }
+            }while(1 && --count>0);
         }
                 
         return ans;
@@ -77,12 +119,16 @@ public:
     bool isGood(string str)
     {
         vector<char> stack;
+        if(str.at(0) == ')') {
+            return false;
+        }
+
         for(int i=0; i<str.length(); ++i)
         {
             if(str.at(i) == '(') {
                 stack.push_back('(');
             }
-            else {
+            else if(str.at(i) == ')') {
                 if(stack.empty()) {
                     return false;
                 }
