@@ -173,7 +173,7 @@ int main()
     Test_removeNthFromEnd();
 #endif
 
-#if 1
+#if 0
 //#22
     Test_generateParenthesis();
 #endif;
@@ -281,6 +281,11 @@ int main()
 #if 0
 //#149
     Test_sortList();
+#endif
+
+#if 1
+//#162
+    Test_findPeakElement();
 #endif
 
 #if 0

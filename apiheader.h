@@ -87,6 +87,8 @@ void Test_copyRandomList();
 void Test_detectCycle();
 //149
 void Test_sortList();
+//162
+void Test_findPeakElement();
 //198
 void Test_rob();
 //200
