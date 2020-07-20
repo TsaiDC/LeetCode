@@ -56,11 +56,34 @@ The two tuples are:
 class Solution {
 public:
     int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+#if 0
         map<string, int> mapComb;
         getComb(A, B, C, D, mapComb);
         return mapComb.size();
+#else
+        return getNumByFor(A, B, C, D);
+#endif
     }
     
+    int getNumByFor(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        int count = 0;
+        for(int i=0;i<A.size(); ++i)
+        {
+            for(int j=0; j<B.size(); ++j)
+            {
+                for(int k=0; k<C.size(); ++k)
+                {
+                    for(int w=0; w<D.size(); ++w)
+                    {
+                        if(A[i] + B[j] + C[k] + D[w] == 0){
+                            count++;
+                        }
+                    }
+                }
+            }
+        }        
+        return count;
+    }
     void getComb(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D, map<string, int>& mapComb) {
         int a, b, c, d;
         if(A.empty()) return;
