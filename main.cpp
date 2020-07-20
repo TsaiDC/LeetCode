@@ -176,7 +176,7 @@ int main()
 #if 0
 //#22
     Test_generateParenthesis();
-#endif;
+#endif
 
 #if 0
 //#31
@@ -283,7 +283,7 @@ int main()
     Test_sortList();
 #endif
 
-#if 1
+#if 0
 //#162
     Test_findPeakElement();
 #endif
@@ -356,6 +356,11 @@ int main()
 #if 0
 //#451
     Test_SortCharactersByFrequency();
+#endif
+
+#if 1
+//#454
+    Test_fourSumCount();
 #endif
 
 #if 0

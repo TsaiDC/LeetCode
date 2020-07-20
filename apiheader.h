@@ -117,6 +117,8 @@ void Test_InsertDeleteGetRandom();
 void Test_removeKdigits();
 //451
 void Test_SortCharactersByFrequency();
+//454
+void Test_fourSumCount();
 //474
 void Test_OnesAndZeros();
 //477
