@@ -54,16 +54,85 @@ Explanation: Your function can return either index number 1 where the peak eleme
 Follow up: Your solution should be in logarithmic complexity.
 */
 
+#include<climits>
+
 class Solution {
 public:
     int findPeakElement(vector<int>& nums) {
+        return helper(nums,0,nums.size()-1);
+    }
+
+    int helper(vector<int>& num,int start,int end){
+        if(start == end){
+            return start;
+        }else if(start+1 == end){
+            if(num[start] > num[end]) return start;
+            return end;
+        }else{
+            
+            int m = (start+end)/2;
+            
+            if(num[m] > num[m-1] && num[m] > num[m+1]){
+
+                return m;
+
+            }else if(num[m-1] > num[m] && num[m] > num[m+1]){
+
+                return helper(num,start,m-1);
+
+            }else{
+
+                return helper(num,m+1,end);
+
+            }            
+        }
+    }
+    
+    int findPeakElement1(vector<int>& nums) {
         
+        if(nums.size() == 2) {
+            return nums[0] > nums[1] ? 0 : 1;
+        }
+        
+        int left;
+        int right;
+        for(int i=1; i<nums.size()-1; i++)
+        {
+            if(nums[i] - nums[i-1] > 0){ left = 1;}
+            if(nums[i] - nums[i-1] == 0){ left = 0;}
+            if(nums[i] - nums[i-1] < 0){ left = -1;}
+            
+            if(nums[i+1] - nums[i] > 0){ right = 1;}
+            if(nums[i+1] - nums[i] == 0){ right = 0;}
+            if(nums[i+1] - nums[i] < 0){ right = -1;}
+            
+            if(left == 1 && right == -1){
+                return i;
+            }
+        }
+        
+        int idx = -1;
+        int val = INT_MIN;
+        for(int i=0; i<nums.size(); i++)
+        {
+            if(nums[i] >= val) {
+                val = nums[i];
+                idx = i;
+            }
+        }
+        return idx;
     }
 };
 
 void Test_findPeakElement()
 {
     LOGD("%s\n", __TIME__);
+    int arr1[] = {-31,-59,-94,13,-44,54,83,-68,40,72,0,29,-16,88,27,-23,59,11,15,37,-11,-2,-37,-21,-81,-32,-46,93,-98,75,24,1,70,-49,-15,-57,-79,-41,64,-52,97,-92,63,3,-42,-10,-6,18,-71,21};
+    int n = sizeof(arr1)/sizeof(arr1[0]);       
+    vector<int> numbs(arr1, arr1+n);
+    
     Solution *solution = new Solution();
+    int ans = solution->findPeakElement(numbs);
+    LOGD("Ans: %d\n", ans);    
     delete solution;
 }
