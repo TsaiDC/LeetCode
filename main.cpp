@@ -298,6 +298,11 @@ int main()
     Test_NumIslands();
 #endif
 
+#if 1
+//#210
+    Test_findOrder();
+#endif
+
 #if 0
 //#215
     Test_findKthLargest();
@@ -358,7 +363,7 @@ int main()
     Test_SortCharactersByFrequency();
 #endif
 
-#if 1
+#if 0
 //#454
     Test_fourSumCount();
 #endif
