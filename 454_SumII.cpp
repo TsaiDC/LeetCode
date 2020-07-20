@@ -56,15 +56,68 @@ The two tuples are:
 class Solution {
 public:
     int fourSumCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
-#if 0
-        map<string, int> mapComb;
-        getComb(A, B, C, D, mapComb);
-        return mapComb.size();
-#else
-        return getNumByFor(A, B, C, D);
-#endif
+        //Solution 1
+        // map<string, int> mapComb;
+        // getComb(A, B, C, D, mapComb);
+        // return mapComb.size();
+        
+        //Solution 2
+        // return getNumByFor(A, B, C, D);
+        
+        //Solution 3
+        return getCount(A, B, C, D);
+
     }
     
+    int getCount(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
+        map<int, int>::iterator iter;
+        map<int, int>::iterator iter2;
+        map<int, int> map1;
+        map<int, int> map2;
+        
+        int sum;
+        for(int i=0; i<A.size(); ++i) {
+            for(int j=0; j<B.size(); ++j) {
+                sum = A[i] + B[j];
+                iter = map1.find(sum);
+                if(iter == map1.end()) {
+                    map1.insert(pair<int, int>(sum, 1));
+                }
+                else {
+                    iter->second+=1;
+                }
+            }
+        }
+
+        for(int i=0; i<C.size(); ++i) {
+            for(int j=0; j<D.size(); ++j) {
+                sum = C[i] + D[j];
+                iter = map2.find(sum);
+                if(iter == map2.end()) {
+                    map2.insert(pair<int, int>(sum, 1));
+                }
+                else {
+                    iter->second+=1;
+                }
+            }
+        }
+        
+        int count = 0;
+        int akey, aval, bkey, bval;
+        for(iter = map1.begin(); iter != map1.end(); iter++) {                    
+            akey = iter->first;
+            aval = iter->second;
+            bkey = 0-akey;
+            iter2 = map2.find(bkey);
+            if(iter2 != map2.end()) {
+                bval = iter2->second;
+                count += aval*bval;
+            }
+            
+        }
+        
+        return count;
+    }
     int getNumByFor(vector<int>& A, vector<int>& B, vector<int>& C, vector<int>& D) {
         int count = 0;
         for(int i=0;i<A.size(); ++i)
