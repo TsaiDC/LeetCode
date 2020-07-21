@@ -208,6 +208,10 @@ int main()
     Test_permuteUnique();
 #endif
 
+#if 1
+//#56
+    Test_merge();
+#endif
 #if 0
 //#61
     Test_rotateRight();
@@ -298,7 +302,7 @@ int main()
     Test_NumIslands();
 #endif
 
-#if 1
+#if 0
 //#210
     Test_findOrder();
 #endif

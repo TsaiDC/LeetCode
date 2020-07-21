@@ -57,6 +57,8 @@ void Test_countAndSay();
 void Test_permute();
 //47
 void Test_permuteUnique();
+//56
+void Test_merge();
 //61
 void Test_rotateRight();
 //62
