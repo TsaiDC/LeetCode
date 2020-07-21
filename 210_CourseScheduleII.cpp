@@ -61,107 +61,122 @@ Explanation: There are a total of 4 courses to take. To take course 3 you should
 class Solution {
 public:
     vector<int> findOrder(int numCourses, vector< vector<int> >& prerequisites) {
+        return findOrder_My(numCourses, prerequisites);
+    }
+
+    vector<int> findOrder_My(int numCourses, vector< vector<int> >& prerequisites) {
         LOGD("N: %d, Size: %d\n", numCourses, prerequisites.size());
         vector<int> ans;
-        int *sum = new int[numCourses];
-        int **map = new int*[numCourses];
-
+        int *checked = new int[numCourses];        
+        vector< vector<int> >map(numCourses);
         for(int i=0; i<numCourses; ++i)
-            sum[i]=0;
-        
-        for(int i=0; i<numCourses; ++i)
-            map[i] = new int[numCourses];
-
-        for(int i=0; i<numCourses; ++i){
-            for(int j=0; j<numCourses; ++j){
-                map[i][j] = 0;
-            }
-        }
+            checked[i]=0;
 
         int x, y;
         for(int i=0; i<prerequisites.size(); ++i)
         {
             x = prerequisites[i][0];
             y = prerequisites[i][1];
-            LOGD("[%d, %d]\n", x, y);
-            map[x][y] = 1;
-            sum[y] += 1;
+            LOGD("[%d, %d]\n", x, y);                        
+            map[x].push_back(y);
         }
-
-        printf("====\n");
-        for(int i=0; i<numCourses; ++i)
+#if 0
+        printf("Map:\n");
+        for(int i=0; i<map.size(); ++i)
         {
-            for(int j=0; j<numCourses; ++j)
+            printf("%d: ", i);
+            for(int j=0; j<map[i].size(); ++j)
             {
                 printf("%d ", map[i][j]);
             }
             printf("\n");
         }
         printf("\n");
-
-        printf("Sum: ");
-        for(int i=0; i<numCourses; ++i)
+#endif
+        for(int i=0; i<map.size(); ++i)
         {
-            printf("%d ", sum[i]);
-        }
-        printf("\n");
-
-        //Symetic check
-        for(int i=0; i<numCourses; ++i)
-        {
-            for(int j=i; j<numCourses; ++j)
-            {
-                if(map[i][j] == 1 && map[j][i]==1) {
-                    LOGE("Fail (%d, %d)\n", i, j);
-                    return ans;
-                }             
-            }         
-        }
-        
-        while(ans.size() < numCourses)
-        {
-            int max_idx = 0;
-            for(int i=0; i<numCourses; ++i)
-            {
-                if(sum[i] > sum[max_idx]) max_idx = i;
+            if(map[i].empty()) {
+                ans.push_back(i);
+                checked[i] = 1;
+                LOGD("Push: %d\n", i);
             }
-            ans.push_back(max_idx);
-            sum[max_idx] = -1;
         }
-
-        for(int i=0; i<numCourses; ++i)
-            delete [] map[i];
         
-        delete [] map;
-        delete [] sum;
+        bool isContinue, isHit;
+        int idx = 0;
+        vector<int>row;
+        do{
+            isContinue = false;
+            for(int i=0; i<map.size(); ++i)
+            {                
+                if(checked[i] == 1) continue;
+                
+                row = map[i];
+                isHit = true;
+                for(int j=0; j<row.size(); ++j)
+                {
+                    idx = row[j];
+                    LOGD("i: %d, idx: %d \n", i, idx);
+                    if(checked[idx]==0) {
+                        isHit = false;
+                        break;
+                    }
+                }
+                LOGD("Check: %d, isHit: %d\n", i, isHit);
+                if(isHit) {
+                    ans.push_back(i);
+                    checked[i] = 1;
+                    isContinue = true;
+                    LOGD("Push: %d\n", i);
+                }
+            }
+        }while(isContinue);        
+        delete [] checked;
+        if(ans.size() != numCourses) ans.clear();
         return ans;
     }
 };
 
 void Test_findOrder()
 {
-    int arr1[] = {1,0};
-    int arr2[] = {2,0};
-    int arr3[] = {3,1};
-    int arr4[] = {3,2};
-    int k = 4;
+    // int arr1[] = {1,0};
+    // int arr2[] = {2,0};
+    // int arr3[] = {3,1};
+    // int arr4[] = {3,2};
+    // int k = 4;
+
+    // int n = sizeof(arr1)/sizeof(arr1[0]);
+    // vector<int> num1(arr1, arr1+n);
+    // vector<int> num2(arr2, arr2+n);
+    // vector<int> num3(arr3, arr3+n);
+    // vector<int> num4(arr4, arr4+n);
+
+    // vector< vector<int> >prerequisites;
+    // prerequisites.push_back(num1);
+    // prerequisites.push_back(num2);
+    // prerequisites.push_back(num3);
+    // prerequisites.push_back(num4);
+
+    int arr1[] = {0,1};
+    int arr2[] = {0,2};
+    int arr3[] = {1,2};
+    int k = 3;
 
     int n = sizeof(arr1)/sizeof(arr1[0]);
     vector<int> num1(arr1, arr1+n);
     vector<int> num2(arr2, arr2+n);
     vector<int> num3(arr3, arr3+n);
-    vector<int> num4(arr4, arr4+n);
 
     vector< vector<int> >prerequisites;
     prerequisites.push_back(num1);
     prerequisites.push_back(num2);
     prerequisites.push_back(num3);
-    prerequisites.push_back(num4);
-
+        
     LOGD("%s\n", __TIME__);
     Solution *solution = new Solution();
     vector<int> ans = solution->findOrder(k, prerequisites);
     
+    LOGD("Ans Size: %d\n", ans.size());
     for(int i=0; i<ans.size(); ++i)
     {
         LOGD("Ans: %d\n", ans[i]);
