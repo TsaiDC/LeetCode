@@ -57,7 +57,7 @@ Explanation: There are a total of 4 courses to take. To take course 3 you should
              So one correct course order is [0,1,2,3]. Another correct ordering is [0,2,1,3] .
 
 */
-
+#if 0 //My Solution
 class Solution {
 public:
     vector<int> findOrder(int numCourses, vector< vector<int> >& prerequisites) {
@@ -136,6 +136,139 @@ public:
         return ans;
     }
 };
+#endif
+
+//BFS
+#if 1
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector< vector<int> >& prerequisites) {
+        graph g = buildGraph(numCourses, prerequisites);
+        vector<int> degrees = computeIndegrees(g);
+        vector<int> order;
+        vector<int> row;
+        int v;
+        
+        for (int i = 0; i < numCourses; i++) {
+            int j = 0;
+            for (; j < numCourses; j++) {
+                if (!degrees[j]) {
+                    order.push_back(j);
+                    break;
+                }
+            }
+            if (j == numCourses) {
+                return {};
+            }
+            degrees[j]--;
+            row = g[j];
+            for(int x=0; x<row.size(); ++x)
+            {
+                v = row[x];
+                degrees[v]--;
+            }
+        }        
+        return order;
+    }
+private:
+    typedef vector< vector<int> > graph;
+    
+    graph buildGraph(int numCourses, vector< vector<int> >& prerequisites) {
+        graph g(numCourses);
+        int first, second;
+        for(int i=0; i<prerequisites.size(); ++i)
+        {
+            first = prerequisites[i][0];
+            second = prerequisites[i][1];
+            g[second].push_back(first);
+        }        
+#if 1
+        printf("Graph: \n");
+        for(int i=0; i<g.size(); ++i)
+        {
+            printf("%d: ", i);
+            for(int j=0; j<g[i].size(); ++j)
+            {
+                printf("%d ", g[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n");
+#endif
+        return g;
+    }
+    
+    vector<int> computeIndegrees(graph& g) {
+        vector<int> degrees(g.size(), 0);
+        vector<int> adj;
+        int v;
+
+        for(int i=0; i<g.size(); ++i)
+        {
+            adj = g[i];
+            for(int j=0; j<adj.size(); ++j) {
+                v = adj[j];
+                degrees[v]++;
+            }
+        }
+#if 1
+        printf("Degrees: \n");
+        for(int i=0; i<degrees.size(); ++i)
+        {
+            printf("%d ", degrees[i]);
+        }
+        printf("\n");
+#endif
+        return degrees;
+    }
+};
+#endif //BFS
+
+#if 0 //DFS
+class Solution {
+public:
+    vector<int> findOrder(int numCourses, vector< pair<int, int> >& prerequisites) {
+        graph g = buildGraph(numCourses, prerequisites);
+        vector<int> order;
+        vector<bool> todo(numCourses, false), done(numCourses, false);
+        for (int i = 0; i < numCourses; i++) {
+            if (!done[i] && !acyclic(g, todo, done, i, order)) {
+                return {};
+            }
+        }
+        reverse(order.begin(), order.end());
+        return order;
+    }
+private:
+    typedef vector< vector<int> > graph;
+    
+    graph buildGraph(int numCourses, vector< pair<int, int> >& prerequisites) {
+        graph g(numCourses);
+        for (auto p : prerequisites) {
+            g[p.second].push_back(p.first);
+        }
+        return g;
+    }
+    
+    bool acyclic(graph& g, vector<bool>& todo, vector<bool>& done, int node, vector<int>& order) {
+        if (todo[node]) {
+            return false;
+        }
+        if (done[node]) {
+            return true;
+        }
+        todo[node] = done[node] = true;
+        for (int neigh : g[node]) {
+            if (!acyclic(g, todo, done, neigh, order)) {
+                return false;
+            }
+        }
+        order.push_back(node);
+        todo[node] = false;
+        return true;
+    }
+};
+#endif //DFS
 
 void Test_findOrder()
 {
@@ -144,13 +277,11 @@ void Test_findOrder()
     // int arr3[] = {3,1};
     // int arr4[] = {3,2};
     // int k = 4;
-
     // int n = sizeof(arr1)/sizeof(arr1[0]);
     // vector<int> num1(arr1, arr1+n);
     // vector<int> num2(arr2, arr2+n);
     // vector<int> num3(arr3, arr3+n);
     // vector<int> num4(arr4, arr4+n);
-
     // vector< vector<int> >prerequisites;
     // prerequisites.push_back(num1);
     // prerequisites.push_back(num2);
@@ -161,18 +292,30 @@ void Test_findOrder()
     int arr2[] = {0,2};
     int arr3[] = {1,2};
     int k = 3;
-
     int n = sizeof(arr1)/sizeof(arr1[0]);
     vector<int> num1(arr1, arr1+n);
     vector<int> num2(arr2, arr2+n);
     vector<int> num3(arr3, arr3+n);
-
     vector< vector<int> >prerequisites;
     prerequisites.push_back(num1);
     prerequisites.push_back(num2);
     prerequisites.push_back(num3);
-        
+
     LOGD("%s\n", __TIME__);
+    
+#if 1
+    LOGD("Map:\n");
+    for(int i=0; i<prerequisites.size(); ++i)
+    {
+        printf("%d: ", i);
+        for(int j=0; j<prerequisites[i].size(); ++j)
+        {
+            printf("%d ", prerequisites[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+#endif
     Solution *solution = new Solution();
     vector<int> ans = solution->findOrder(k, prerequisites);
     
