@@ -67,7 +67,7 @@ public:
     vector<int> findOrder_My(int numCourses, vector< vector<int> >& prerequisites) {
         LOGD("N: %d, Size: %d\n", numCourses, prerequisites.size());
         vector<int> ans;
-        int *checked = new int[numCourses];        
+        int *checked = new int[numCourses];
         vector< vector<int> >map(numCourses);
         for(int i=0; i<numCourses; ++i)
             checked[i]=0;
