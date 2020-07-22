@@ -208,7 +208,7 @@ int main()
     Test_permuteUnique();
 #endif
 
-#if 1
+#if 0
 //#56
     Test_merge();
 #endif
@@ -345,6 +345,11 @@ int main()
 #if 0
 //#338
     Test_countBits();
+#endif
+
+#if 1
+//#347
+    Test_topKFrequent();
 #endif
 
 #if 0

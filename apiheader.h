@@ -113,6 +113,8 @@ void Test_lengthOfLIS();
 void Test_maxNumber();
 //338
 void Test_countBits();
+//347
+void Test_topKFrequent();
 //350
 void Test_IntersectionOfTwoArrays();
 //380
