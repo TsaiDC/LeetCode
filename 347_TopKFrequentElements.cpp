@@ -64,13 +64,13 @@ public:
             ++mapCount[nums[i]];
             LOGD("Insert [%d = %d]\n", nums[i], mapCount[nums[i]]);
         }
-        
-        vector< vector<int> > buckets(nums.size() + 1); 
-        for(iter = mapCount.begin(); iter != mapCount.end(); iter++) {            
+
+        vector< vector<int> > buckets(nums.size() + 1);
+        for(iter = mapCount.begin(); iter != mapCount.end(); iter++) {
             buckets[iter->second].push_back(iter->first);
             LOGD("Bucket[%d] add: %d]\n", iter->second, iter->first);
         }
-        
+
         vector<int> ans;
         for (int i = buckets.size() - 1; i >= 0 && ans.size() < k; --i) {
             for(int j=0; j<buckets[i].size(); ++j) {
@@ -91,14 +91,14 @@ void Test_topKFrequent()
     int k = 2;
     int n = sizeof(arr1)/sizeof(arr1[0]);
     vector<int> num1(arr1, arr1+n);
-    
+
     Solution *solution = new Solution();
     vector<int> ans = solution->topKFrequent(num1, k);
-    
+
     for(int i=0;i<ans.size(); ++i)
     {
         LOGD("Ans: %d\n", ans[i]);
     }
-    
+
     delete solution;
 }
