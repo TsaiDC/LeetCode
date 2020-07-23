@@ -30,7 +30,7 @@ using namespace std;
 https://leetcode.com/problems/kth-largest-element-in-an-array/
 215. Kth Largest Element in an Array
 
-Find the kth largest element in an unsorted array. 
+Find the kth largest element in an unsorted array.
 Note that it is the kth largest element in the sorted order, not the kth distinct element.
 
 Example 1:
@@ -76,7 +76,7 @@ public:
             if(idx == k-1) {
                 break;
             }
-            
+
             if(idx<k-1) {
                 start = idx+1;
             }
@@ -87,7 +87,7 @@ public:
 
         return nums[idx];
     }
-    
+
     int getIdxAndSort(vector<int>& nums, int start, int end)
     {
         int i = start;
@@ -111,7 +111,7 @@ public:
 //                for(int x=0;x<nums.size(); ++x) { printf("%d ", nums[x]); } printf("(%d, %d)\n", i, j);
             }
         }
-        
+
         if(nums[i]>nums[p]) ++i;
         LOGD("Swap i: %d, p: %d\n", i, p);
         tmp = nums[i];
@@ -136,7 +136,7 @@ public:
         for(int i=0; i<k; ++i) {
             pArray[i] = nums[i];
         }
-        
+
         int idx = findMinIdx(pArray, k);
         for(int i=k; i<nums.size(); ++i)
         {
@@ -176,7 +176,7 @@ void Test_findKthLargest()
     int n = sizeof(arr1)/sizeof(arr1[0]);
     vector<int> numbs(arr1, arr1+n);
     vector<int> numbs0(arr1, arr1+n);
-    
+
     LOGD("%s\n", __TIME__);
     Solution *solution = new Solution();
     int ans;
