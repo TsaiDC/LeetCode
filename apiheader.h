@@ -117,6 +117,8 @@ void Test_countBits();
 void Test_topKFrequent();
 //350
 void Test_IntersectionOfTwoArrays();
+//378
+void Test_kthSmallest();
 //380
 void Test_InsertDeleteGetRandom();
 //402

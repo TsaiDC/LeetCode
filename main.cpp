@@ -347,7 +347,7 @@ int main()
     Test_countBits();
 #endif
 
-#if 1
+#if 0
 //#347
     Test_topKFrequent();
 #endif
@@ -355,6 +355,11 @@ int main()
 #if 0
 //#350
     Test_IntersectionOfTwoArrays();
+#endif
+
+#if 1
+//#378
+    Test_kthSmallest();
 #endif
 
 #if 0
