@@ -302,6 +302,11 @@ int main()
     Test_NumIslands();
 #endif
 
+#if 1
+//#207
+    Test_canFinish();
+#endif
+
 #if 0
 //#210
     Test_findOrder();
@@ -357,7 +362,7 @@ int main()
     Test_IntersectionOfTwoArrays();
 #endif
 
-#if 1
+#if 0
 //#378
     Test_kthSmallest();
 #endif
