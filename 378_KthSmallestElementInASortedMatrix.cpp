@@ -8,6 +8,7 @@
 #include <map>
 #include <math.h>
 #include <time.h>
+#include <algorithm>
 
 #include "apiheader.h"
 
@@ -109,6 +110,26 @@ public:
 #endif
 };
 
+int TestBound () {
+  int myints[] = {10,20,30,30,20,10,10,20};
+  std::vector<int> v(myints,myints+8);           // 10 20 30 30 20 10 10 20
+  std::sort (v.begin(), v.end());                // 10 10 10 20 20 20 30 30
+  
+  for(int a:v) {
+      LOGD("Array: %d\n", a);
+  }
+
+  std::vector<int>::iterator low,up;
+  low=std::lower_bound (v.begin(), v.end(), 5); //
+  up= std::upper_bound (v.begin(), v.end(), 5); //
+
+  LOGD("Begin: %d, End: %d, Low: %d, Up: %d\n", *v.begin(), *v.end(), *low, *up);
+  std::cout << "lower_bound at position " << (low- v.begin()) << '\n';
+  std::cout << "upper_bound at position " << (up - v.begin()) << '\n';
+
+  return 0;
+}
+
 void Test_kthSmallest()
 {
     LOGD("%s\n", __TIME__);
@@ -130,4 +151,6 @@ void Test_kthSmallest()
     int ans = solution->kthSmallest(input, k);
     LOGD("Ans: %d\n", ans);
     delete solution;
+    
+    TestBound ();
 }
