@@ -153,6 +153,7 @@ public:
             int j = 0;
             for (; j < numCourses; j++) {
                 if (!degrees[j]) {
+                    LOGD("Push: %d\n", j);
                     order.push_back(j);
                     break;
                 }

@@ -83,6 +83,8 @@ void Test_isSameTree();
 void Test_levelOrdere();
 //114
 void Test_flatten();
+//137
+void Test_singleNumber();
 //138
 void Test_copyRandomList();
 //142

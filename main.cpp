@@ -272,6 +272,11 @@ int main()
     Test_flatten();
 #endif
 
+#if 1
+//#137
+    Test_singleNumber();
+#endif
+
 #if 0
 //#138
     Test_copyRandomList();
@@ -302,7 +307,7 @@ int main()
     Test_NumIslands();
 #endif
 
-#if 1
+#if 0
 //#207
     Test_canFinish();
 #endif
