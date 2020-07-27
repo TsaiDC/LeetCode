@@ -17,15 +17,6 @@ using namespace std;
 #define RED  "\033[0;32;31m"
 #define CYAN "\033[0;36m"
 
-#define DEBUG 1
-#if DEBUG
-#define LOGD(...) {printf(CYAN "[D] %s(%d): " NONE, __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
-#define LOGE(...) {printf(RED "[E] %s(%d): " NONE, __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
-#else
-#define LOGD(...)
-#define LOGE(...)
-#endif
-
 /*
 https://leetcode.com/problems/course-schedule/
 207. Course Schedule
@@ -54,14 +45,20 @@ Explanation: There are a total of 2 courses to take.
 
 */
 
-#if 0 //My Solution
+#define DEBUG 1
+#if DEBUG
+#define LOGD(...) {printf(CYAN "[D] %s(%d): " NONE, __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
+#define LOGE(...) {printf(RED "[E] %s(%d): " NONE, __FUNCTION__, __LINE__);printf( __VA_ARGS__);}
+#else
+#define LOGD(...)
+#define LOGE(...)
+#endif
 class Solution {
 public:
-    vector<int> findOrder(int numCourses, vector< vector<int> >& prerequisites) {
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
         return findOrder_My(numCourses, prerequisites);
     }
-
-    vector<int> findOrder_My(int numCourses, vector< vector<int> >& prerequisites) {
+    bool findOrder_My(int numCourses, vector< vector<int> >& prerequisites) {
         LOGD("N: %d, Size: %d\n", numCourses, prerequisites.size());
         vector<int> ans;
         int *checked = new int[numCourses];
@@ -129,16 +126,7 @@ public:
             }
         }while(isContinue);        
         delete [] checked;
-        if(ans.size() != numCourses) ans.clear();
-        return ans;
-    }
-};
-#endif
-
-class Solution {
-public:
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        return true;   
+        return ans.size() == numCourses ? true : false;        
     }
 };
 
