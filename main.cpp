@@ -15,13 +15,13 @@ void c_recur(int k, int n, int m, vector<int> list, bool isInit)
         printf("[DBG] %s(%d) %s : idx: %d\n", __FUNCTION__, __LINE__, __TIME__, k-1);
         list.push_back(k-1);
     }
-    
+
     for (int i=k; i<=(m-n) && n>0; ++i)
     {
         printf("[DBG] %s(%d) %s : i: %d\n", __FUNCTION__, __LINE__, __TIME__, i);
         c_recur(i+1, n-1, m, list, false);
     }
-    
+
     if (n==0 && !isInit) {
         for(int i=0; i<list.size(); ++i)
         {
@@ -34,7 +34,7 @@ void c_recur(int k, int n, int m, vector<int> list, bool isInit)
 void revertStr(char *str)
 {
     char c = *str;
-    if(c=='\0'){        
+    if(c=='\0'){
         return;
     }
     revertStr(++str);
@@ -44,7 +44,7 @@ void revertStr(char *str)
 void localTest()
 {
     const char *str = "abcdefg";
-    printf("[DBG] %s(%d) %s : str: %s\n", __FUNCTION__, __LINE__, __TIME__, str);    
+    printf("[DBG] %s(%d) %s : str: %s\n", __FUNCTION__, __LINE__, __TIME__, str);
     revertStr((char*)str);
 }
 
@@ -100,7 +100,7 @@ int main()
 #endif
 
 #if 0
-    Test_addTwoNumbers();    
+    Test_addTwoNumbers();
 #endif
 
 #if 0
@@ -227,6 +227,11 @@ int main()
     Test_minPathSum();
 #endif
 
+#if 1
+//#69
+    Test_mySqrt();
+#endif
+
 #if 0
 //#72
     Test_minDistance();
@@ -248,11 +253,6 @@ int main()
 #endif
 
 #if 0
-//#100
-    Test_isSameTree();
-#endif
-
-#if 0
 //#96
     Test_numTrees();
 #endif
@@ -260,6 +260,11 @@ int main()
 #if 0
 //#98
     Test_isValidBST();
+#endif
+
+#if 0
+//#100
+    Test_isSameTree();
 #endif
 
 #if 0
@@ -272,7 +277,7 @@ int main()
     Test_flatten();
 #endif
 
-#if 1
+#if 0
 //#137
     Test_singleNumber();
 #endif

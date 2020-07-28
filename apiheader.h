@@ -65,6 +65,8 @@ void Test_rotateRight();
 void Test_uniquePaths();
 //64
 void Test_minPathSum();
+//69
+void Test_mySqrt();
 //72
 void Test_minDistance();
 //78
