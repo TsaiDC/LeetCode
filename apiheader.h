@@ -51,6 +51,8 @@ void Test_nextPermutation();
 void Test_SearchInRotatedSortedArray();
 //34
 void Test_searchRange();
+//35
+void Test_searchInsert();
 //38
 void Test_countAndSay();
 //46

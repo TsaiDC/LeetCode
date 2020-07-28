@@ -193,6 +193,11 @@ int main()
     Test_searchRange();
 #endif
 
+#if 1
+//#35
+    Test_searchInsert();
+#endif
+
 #if 0
 //#38
     Test_countAndSay();
@@ -227,7 +232,7 @@ int main()
     Test_minPathSum();
 #endif
 
-#if 1
+#if 0
 //#69
     Test_mySqrt();
 #endif
