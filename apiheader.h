@@ -43,6 +43,8 @@ void Test_letterCombinations();
 void Test_fourSum();
 //19
 void Test_removeNthFromEnd();
+//20
+void Test_isValid();
 //22
 void Test_generateParenthesis();
 //31

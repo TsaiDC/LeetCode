@@ -173,6 +173,11 @@ int main()
     Test_removeNthFromEnd();
 #endif
 
+#if 1
+//#20
+    Test_isValid();
+#endif
+
 #if 0
 //#22
     Test_generateParenthesis();
@@ -193,7 +198,7 @@ int main()
     Test_searchRange();
 #endif
 
-#if 1
+#if 0
 //#35
     Test_searchInsert();
 #endif
