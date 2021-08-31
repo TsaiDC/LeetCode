@@ -73,6 +73,8 @@ void Test_minPathSum();
 void Test_mySqrt();
 //72
 void Test_minDistance();
+//77
+void Test_combine();
 //78
 void Test_Subsets();
 //86

@@ -247,6 +247,11 @@ int main()
     Test_minDistance();
 #endif
 
+#if 1
+//#77
+    Test_combine();
+#endif
+
 #if 0
 //#78
     Test_Subsets();
