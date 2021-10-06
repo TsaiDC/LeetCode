@@ -173,7 +173,7 @@ int main()
     Test_removeNthFromEnd();
 #endif
 
-#if 1
+#if 0
 //#20
     Test_isValid();
 #endif
@@ -181,6 +181,11 @@ int main()
 #if 0
 //#22
     Test_generateParenthesis();
+#endif
+
+#if 1
+//#24
+    Test_swapPairs();
 #endif
 
 #if 0
@@ -247,7 +252,7 @@ int main()
     Test_minDistance();
 #endif
 
-#if 1
+#if 0
 //#77
     Test_combine();
 #endif

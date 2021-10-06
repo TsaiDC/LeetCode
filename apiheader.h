@@ -47,6 +47,8 @@ void Test_removeNthFromEnd();
 void Test_isValid();
 //22
 void Test_generateParenthesis();
+//24
+void Test_swapPairs();
 //31
 void Test_nextPermutation();
 //33
