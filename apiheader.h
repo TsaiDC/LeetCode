@@ -82,6 +82,8 @@ void Test_combine();
 void Test_Subsets();
 //86
 void Test_partition();
+//88
+void Test_merge88();
 //94
 void Test_inorderTraversal();
 //96

@@ -272,6 +272,11 @@ int main()
     Test_partition();
 #endif
 
+#if 1
+//#88
+    Test_merge88();
+#endif
+
 #if 0
 //#94
     Test_inorderTraversal();
@@ -327,7 +332,7 @@ int main()
     Test_findPeakElement();
 #endif
 
-#if 1
+#if 0
 //#167
     Test_twoSum();
 #endif
