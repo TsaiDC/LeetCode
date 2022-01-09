@@ -198,7 +198,7 @@ int main()
     Test_nextPermutation();
 #endif
 
-#if 1
+#if 0
 //#33
     Test_SearchInRotatedSortedArray();
 #endif
@@ -410,6 +410,11 @@ int main()
 #if 0
 //#402
     Test_removeKdigits();
+#endif
+
+#if 1
+//#435
+    Test_eraseOverlapIntervals();
 #endif
 
 #if 0

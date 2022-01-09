@@ -138,6 +138,8 @@ void Test_kthSmallest();
 void Test_InsertDeleteGetRandom();
 //402
 void Test_removeKdigits();
+//435
+void Test_eraseOverlapIntervals();
 //451
 void Test_SortCharactersByFrequency();
 //454
