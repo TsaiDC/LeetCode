@@ -104,6 +104,11 @@ int main()
 #endif
 
 #if 0
+//#0
+    Test_Amazon();
+#endif
+
+#if 0
 //#3
     Test_lengthOfLongestSubstring();
 #endif
@@ -183,7 +188,7 @@ int main()
     Test_generateParenthesis();
 #endif
 
-#if 1
+#if 0
 //#24
     Test_swapPairs();
 #endif
@@ -193,7 +198,7 @@ int main()
     Test_nextPermutation();
 #endif
 
-#if 0
+#if 1
 //#33
     Test_SearchInRotatedSortedArray();
 #endif

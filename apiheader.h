@@ -28,7 +28,8 @@ void Test_RecursiveCombi();
 void Test_sorting();
 void Test_sortingList();
 
-
+//00
+void Test_Amazon();
 //11
 void Test_maxArea();
 //12
