@@ -6,6 +6,7 @@
 #include <string.h>
 #include <vector>
 #include <map>
+#include <climits>
 
 #include "apiheader.h"
 
@@ -160,13 +161,56 @@ int search2(vector<int>& nums, int target) {
     
 }
 
+int search3(vector<int>& nums, int target) {
+    int start, end , mid;
+    start = 0;
+    end = nums.size()-1;
+    
+    while(start < end) 
+    {        
+        mid = start + (end-start)/2;
+/*
+        //增加部分
+        int tmp = (nums[mid] < nums[0]) == (target < nums[0])
+               ? nums[mid]   如果在同一部，?用原值 
+               : target < nums[0] ? INT_MIN : INT_MAX; 否?根据情?引入-inf或inf
+*/
+        int tmp;
+        if((nums[mid] < nums[0]) == (target < nums[0])){
+            tmp = nums[mid];
+        }
+        else {
+            if(target < nums[0]) {
+                tmp = INT_MIN;
+            }
+            else {
+                tmp = INT_MAX;
+            }
+        }
+
+        LOGD("%d <-> %d <-> %d\n", start, mid, end);
+
+        if(tmp<target) {
+            start = mid+1;
+        }
+        else if(tmp>target) {
+            end = mid;
+        }
+        else {
+            return mid;
+        }
+    }
+    return nums[start] == target ? start : -1;
+}
+
 void Test_SearchInRotatedSortedArray()
 {
     LOGD("%s\n", __TIME__);
 //    int arr[] = {4,5,6,7,0,1,2};
-    int arr[] = {6,7,0,1,2, 4, 5};
+//    int arr[] = {6,7,0,1,2, 4, 5};
 //    int arr[] = {0, 1, 2, 4, 5, 6, 7};
-    int target = 7;
+    int arr[] = {1};
+    int target = 1;
     int n = sizeof(arr)/sizeof(arr[0]);
     
     printf("Target: %d, Input: ", target);
@@ -177,7 +221,8 @@ void Test_SearchInRotatedSortedArray()
     printf("\n");
     vector<int> input(arr, arr+n);
 //    search(input, target);
-    int idx = search2(input, target);
+//    int idx = search2(input, target);
+    int idx = search3(input, target);
     LOGD("Ans: %d\n", idx);
 
     
