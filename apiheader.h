@@ -104,6 +104,8 @@ void Test_detectCycle();
 void Test_sortList();
 //162
 void Test_findPeakElement();
+//167
+void Test_twoSum();
 //198
 void Test_rob();
 //200

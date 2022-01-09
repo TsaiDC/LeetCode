@@ -327,6 +327,11 @@ int main()
     Test_findPeakElement();
 #endif
 
+#if 1
+//#167
+    Test_twoSum();
+#endif
+
 #if 0
 //#198
     Test_rob();
@@ -412,7 +417,7 @@ int main()
     Test_removeKdigits();
 #endif
 
-#if 1
+#if 0
 //#435
     Test_eraseOverlapIntervals();
 #endif
