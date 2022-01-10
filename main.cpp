@@ -257,6 +257,11 @@ int main()
     Test_minDistance();
 #endif
 
+#if 1
+//#76
+    Test_minWindow();
+#endif
+
 #if 0
 //#77
     Test_combine();
@@ -272,7 +277,7 @@ int main()
     Test_partition();
 #endif
 
-#if 1
+#if 0
 //#88
     Test_merge88();
 #endif

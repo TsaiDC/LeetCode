@@ -76,6 +76,8 @@ void Test_minPathSum();
 void Test_mySqrt();
 //72
 void Test_minDistance();
+//76
+void Test_minWindow();
 //77
 void Test_combine();
 //78
