@@ -71,14 +71,54 @@ s and t consist of uppercase and lowercase English letters.
 
 class Solution {
 public:
-    string minWindow(string s, string t) {
+    string minWindow(string s, string t) {        
+        int *flagT = new int[t.size()];
+        int start_s = 0;
+       
+/*
+        //1. 檢查S第一個字元存在 t
+        if S[0] 存在t, t count-1, 定義 left 的 idx
+           S[1] 存在t, S[1] != S[0], t count-1
+        一路檢查到t count = 0, 定義right 的idx, stop
+        一路檢查到s 走完,
         
+        //2. 檢查S第二個字元存在 t
+        //3. 重複上述
+*/
+
+        while(start_s < s.size()) {
+            int tCount = t.size();
+            int idx_left=-1, idx_right=-1;        
+            for(int i=0; i<tCount; ++i) {
+                flagT[i] = true;
+            }
+            for(int i = start_s; i<s.size(); ++i) {
+                for(int j = 0; j<t.size(); ++j) {
+                    if(s.at(i) == t.at(j)) {                    
+                        if(flagT[j]) {
+                            if(idx_left < 0) idx_left = i;
+                            flagT[j] = false;
+                            --tCount;
+                            if(tCount == 0)  idx_right = i;
+                        }
+                    }
+                }
+            }                
+            LOGD("Start: %d, Count: %d, L(%d) R(%d)\n", start_s, tCount, idx_left, idx_right);
+            ++start_s;
+        }
+        delete [] flagT;
+        return "";
     }
 };
 
 void Test_minWindow()
 {
-    LOGD("%s\n", __TIME__);    
+    LOGD("%s\n", __TIME__);
+    string s = "ADOBECODEBANC";
+    string t = "ABC";
     Solution *solution = new Solution();
+    string ans = solution->minWindow(s, t);   
     delete solution;
+    LOGD("Ans: %s\n", ans.c_str());
 }
