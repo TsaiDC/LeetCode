@@ -49,6 +49,7 @@ Output:
 ]
 */
 
+#if 0
 static void display(int idx, int i, vector<int>& nums)
 {
     printf("idx: %d, i: %d -> ", idx, i);
@@ -120,6 +121,7 @@ vector< vector<int> > permute(vector<int>& nums) {
     return result;
 }
 
+
 void Test_permute()
 {
     LOGD("%s\n", __TIME__);
@@ -134,4 +136,49 @@ void Test_permute()
     vector<int> input(arr, arr+n);
     permute(input);    
     LOGD("Done \n");
+}
+#endif
+
+class Solution {
+public:
+    vector< vector<int> > permute(vector<int>& nums) {
+        vector< vector<int> > ans;
+        Solution::getDive(nums, 0, ans);
+        return ans;
+    }
+    static void getDive(vector<int> &nums, int level, vector< vector<int> > &ans)
+    {
+        if(level == nums.size()-1) {
+            ans.push_back(nums);
+            return;
+        }
+        
+        for(int i=level; i<nums.size(); ++i)
+        {            
+            swap(nums, i, level);
+            getDive(nums, level+1, ans);
+            swap(nums, i, level);        
+        }
+    }
+    
+    static void swap(vector<int> &nums, int x, int y)
+    {        
+        int tmp = nums[x];
+        nums[x] = nums[y];
+        nums[y] = tmp;
+    }
+};
+
+void Test_permute()
+{
+    LOGD("%s\n", __TIME__);
+    vector< vector<int> > ans;
+    int arr[] = {1,2,3};
+    int n = sizeof(arr)/sizeof(arr[0]);
+    vector<int> input(arr, arr+n);
+    
+    Solution *solution = new Solution();
+    ans = solution->permute(input);
+
+    delete solution;
 }
