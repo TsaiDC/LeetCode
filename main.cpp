@@ -262,7 +262,7 @@ int main()
     Test_minWindow();
 #endif
 
-#if 1
+#if 0
 //#77
     Test_combine();
 #endif
@@ -460,6 +460,11 @@ int main()
 #if 0
 //#621
     Test_TaskScheduler();
+#endif
+
+#if 1
+//#695
+    Test_maxAreaOfIsland();
 #endif
 
 #if 0
