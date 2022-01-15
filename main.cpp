@@ -218,7 +218,7 @@ int main()
     Test_countAndSay();
 #endif
 
-#if 1
+#if 0
 //#46
     Test_permute();
 #endif
@@ -262,7 +262,7 @@ int main()
     Test_minWindow();
 #endif
 
-#if 0
+#if 1
 //#77
     Test_combine();
 #endif

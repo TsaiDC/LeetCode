@@ -64,6 +64,13 @@ Constraints:
 
 */
 
+#if 0
+
+/*
+Runtime: 11 ms, faster than 92.37% of C++ online submissions for Combinations.
+Memory Usage: 8.9 MB, less than 92.41% of C++ online submissions for Combinations.
+*/
+
 class Solution {
 public:
     vector< vector<int> > combine(int n, int k) {
@@ -96,13 +103,56 @@ public:
         }
     }
 };
+#endif
+
+
+/*
+Runtime: 32 ms, faster than 48.08% of C++ online submissions for Combinations.
+Memory Usage: 9.1 MB, less than 65.12% of C++ online submissions for Combinations.
+*/
+class Solution {
+public:
+    vector< vector<int> > combine(int n, int k) {
+        vector< vector<int> > result;
+        vector<int> ans;
+        Solution::_combine(0, n, k, ans, result);
+        return result;
+    }
+
+    static void _combine(int pos, int n, int k, vector<int> &ans, vector< vector<int> > &result)
+    {
+        if(ans.size()==k) {
+            result.push_back(ans);
+            return;
+        }
+
+        // 0 1 2 3,  n:4 k:3
+        for(int i=pos; i<n; ++i)
+        {
+            ans.push_back(i+1);
+            _combine(i+1, n, k, ans, result);
+            ans.pop_back();
+        }
+    }
+};
+
 
 void Test_combine()
 {
     LOGD("%s\n", __TIME__);    
     Solution *solution = new Solution();
-    solution->combine(4, 3);
-//    vector<int>row(3);
-//    solution->_combine(4, 3, row);
+    vector< vector<int> > ans;
+    ans = solution->combine(4, 4);
+
     delete solution;
+
+    LOGD("-- ANS --\n");
+    for(int i=0; i<ans.size(); ++i)
+    {
+        for(int j=0; j<ans[0].size(); ++j)
+        {
+            printf("%d ", ans[i][j]);
+        }
+        printf("\n");
+    }
 }
