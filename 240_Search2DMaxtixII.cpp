@@ -107,7 +107,7 @@ bool searchMatrix(vector< vector<int> >& matrix, int target) {
 }
 #endif
 
-#if 1
+#if 0
 bool searchMatrix(vector< vector<int> >& matrix, int target) {
     
     if(matrix.size()<=0 || matrix[0].size() <= 0){return false;}
@@ -130,6 +130,33 @@ bool searchMatrix(vector< vector<int> >& matrix, int target) {
 }  
 #endif
 
+#if 1
+//Practice, 2022/1/22
+//Runtime: 96 ms, faster than 83.23% of C++ online submissions for Search a 2D Matrix II.
+//Memory Usage: 14.8 MB, less than 89.16% of C++ online submissions for Search a 2D Matrix II.
+bool searchMatrix(vector< vector<int> >& matrix, int target) {
+    int m = matrix.size();
+    if(m==0) return false;
+    
+    int n = matrix[0].size();
+    int i=0, j=n-1;
+    
+    while(i < m && j>=0) {
+        if(matrix[i][j] == target) {
+            return true;
+        }
+        else if(matrix[i][j]>target) {
+            --j;
+        }
+        else {
+            ++i;
+        }
+    }
+    
+    return false;
+}
+#endif
+
 void Test_search2dMatrixii()
 {
     LOGD("%s\n", __TIME__);
@@ -147,12 +174,12 @@ void Test_search2dMatrixii()
     vector<int> input5(arr5, arr5+n);
     vector< vector<int> > input;
 
-    input.push_back(input1);
-    input.push_back(input2);
-    input.push_back(input3);
-    input.push_back(input4);
-    input.push_back(input5);
+//    input.push_back(input1);
+//    input.push_back(input2);
+//    input.push_back(input3);
+//    input.push_back(input4);
+//    input.push_back(input5);
 
-    bool b = searchMatrix(input, 12);
+    bool b = searchMatrix(input, 28);
     LOGD("Result: %d\n", b);
 }

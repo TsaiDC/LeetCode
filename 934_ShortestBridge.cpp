@@ -167,4 +167,10 @@ void Test_shortestBridge()
     int ans = solution->shortestBridge(grid);
     LOGD("Ans: %d\n", ans);
     delete solution;
+    
+    LOGD("======================\n");
+    for(const int & i : input4)
+    {
+        LOGD("%d\n", i);
+    }
 }

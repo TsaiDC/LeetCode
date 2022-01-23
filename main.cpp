@@ -372,7 +372,7 @@ int main()
     Test_KthSmallestElement();
 #endif
 
-#if 0
+#if 1
 //#240
     Test_search2dMatrixii();
 #endif
@@ -467,7 +467,7 @@ int main()
     Test_maxAreaOfIsland();
 #endif
 
-#if 1
+#if 0
 //#934
     Test_shortestBridge();
 #endif
