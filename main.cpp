@@ -462,9 +462,14 @@ int main()
     Test_TaskScheduler();
 #endif
 
-#if 1
+#if 0
 //#695
     Test_maxAreaOfIsland();
+#endif
+
+#if 1
+//#934
+    Test_shortestBridge();
 #endif
 
 #if 0

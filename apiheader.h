@@ -159,7 +159,9 @@ void Test_NextGreaterElmentII();
 //621
 void Test_TaskScheduler();
 //695
-void Test_maxAreaOfIsland(); 
+void Test_maxAreaOfIsland();
+//934
+void Test_shortestBridge(); 
 //1091
 void Test_shortestPathBinaryMatrix();
 #endif
