@@ -122,6 +122,8 @@ void Test_findOrder();
 void Test_findKthLargest();
 //230
 void Test_KthSmallestElement();
+//232
+void Test_MyQueue();
 //240
 void Test_search2dMatrixii();
 //279
