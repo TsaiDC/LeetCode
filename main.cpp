@@ -367,12 +367,17 @@ int main()
     Test_findKthLargest();
 #endif
 
+#if 1
+//#226
+    Test_invertTree();
+#endif
+
 #if 0
 //#230
     Test_KthSmallestElement();
 #endif
 
-#if 1
+#if 0
 //#232
     Test_MyQueue();
 #endif

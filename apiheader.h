@@ -120,6 +120,8 @@ void Test_canFinish();
 void Test_findOrder();
 //215
 void Test_findKthLargest();
+//226
+void Test_invertTree();
 //230
 void Test_KthSmallestElement();
 //232
