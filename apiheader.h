@@ -160,6 +160,8 @@ void Test_OnesAndZeros();
 void Test_totalHammingDistance();
 //503
 void Test_NextGreaterElmentII();
+//605
+void Test_canPlaceFlowers();
 //621
 void Test_TaskScheduler();
 //695

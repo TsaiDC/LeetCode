@@ -367,7 +367,7 @@ int main()
     Test_findKthLargest();
 #endif
 
-#if 1
+#if 0
 //#226
     Test_invertTree();
 #endif
@@ -465,6 +465,11 @@ int main()
 #if 0
 //#503
     Test_NextGreaterElmentII();
+#endif
+
+#if 1
+//#605
+    Test_canPlaceFlowers();
 #endif
 
 #if 0
