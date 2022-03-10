@@ -332,6 +332,11 @@ int main()
     Test_sortList();
 #endif
 
+#if 1
+//#150
+    Test_GG_evalRPN();
+#endif
+
 #if 0
 //#162
     Test_findPeakElement();
@@ -467,7 +472,7 @@ int main()
     Test_NextGreaterElmentII();
 #endif
 
-#if 1
+#if 0
 //#605
     Test_canPlaceFlowers();
 #endif
