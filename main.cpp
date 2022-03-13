@@ -452,6 +452,11 @@ int main()
     Test_removeKdigits();
 #endif
 
+#if 1
+//#418
+    Test_GG_wordsTyping();
+#endif
+
 #if 0
 //#435
     Test_eraseOverlapIntervals();
@@ -507,7 +512,7 @@ int main()
     Test_shortestPathBinaryMatrix();
 #endif
 
-#if 1
+#if 0
 //#2128
     Test_GG_removeOnes();
 #endif

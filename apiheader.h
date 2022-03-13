@@ -154,6 +154,8 @@ void Test_kthSmallest();
 void Test_InsertDeleteGetRandom();
 //402
 void Test_removeKdigits();
+//418
+void Test_GG_wordsTyping();
 //435
 void Test_eraseOverlapIntervals();
 //451
