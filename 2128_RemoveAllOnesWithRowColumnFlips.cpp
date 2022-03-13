@@ -89,12 +89,26 @@ void Test_GG_removeOnes()
 /*
 
 */
-class Solution {
+//Ref Solution
+class Solution {    
 public:
-    bool removeOnes(vector<vector<int>>& grid) {
-        return false;
+    bool removeOnes(vector<vector<int>>& matrix) {
+        int rSize = matrix.size();
+        int cSize = matrix[0].size();
+
+        for (int r = 1; r < rSize; r++) {
+            bool isFlip = matrix[r][0] != matrix[0][0];
+            for (int c = 1; c < cSize; c++) {
+                if ((isFlip && matrix[r][c] == matrix[0][c]) || (!isFlip && matrix[r][c] != matrix[0][c])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
     }
 };
+
 void Test_GG_removeOnes()
 {
     LOGD("[CPP] %s\n", __TIME__);    
