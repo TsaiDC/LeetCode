@@ -144,6 +144,8 @@ void Test_countBits();
 void Test_topKFrequent();
 //350
 void Test_IntersectionOfTwoArrays();
+//366
+void Test_GG_findLeaves();
 //378
 void Test_kthSmallest();
 //380

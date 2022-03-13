@@ -332,7 +332,7 @@ int main()
     Test_sortList();
 #endif
 
-#if 1
+#if 0
 //#150
     Test_GG_evalRPN();
 #endif
@@ -425,6 +425,11 @@ int main()
 #if 0
 //#350
     Test_IntersectionOfTwoArrays();
+#endif
+
+#if 1
+//#366
+    Test_GG_findLeaves();
 #endif
 
 #if 0
