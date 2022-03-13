@@ -428,6 +428,11 @@ int main()
 #endif
 
 #if 1
+//#359
+    Test_GG_shouldPrintMessage();
+#endif
+
+#if 0
 //#366
     Test_GG_findLeaves();
 #endif
