@@ -178,6 +178,8 @@ void Test_maxAreaOfIsland();
 void Test_shortestBridge(); 
 //1091
 void Test_shortestPathBinaryMatrix();
+//1554
+void Test_GG_differByOne();
 //2128
 void Test_GG_removeOnes();
 #endif

@@ -452,7 +452,7 @@ int main()
     Test_removeKdigits();
 #endif
 
-#if 1
+#if 0
 //#418
     Test_GG_wordsTyping();
 #endif
@@ -510,6 +510,11 @@ int main()
 #if 0
 //#1091
     Test_shortestPathBinaryMatrix();
+#endif
+
+#if 1
+//#1554
+    Test_GG_differByOne();
 #endif
 
 #if 0
