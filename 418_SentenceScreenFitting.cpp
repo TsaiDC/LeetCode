@@ -104,14 +104,87 @@ void Test_GG_wordsTyping()
 class Solution {
 public:
     int wordsTyping(vector<string>& sentence, int rows, int cols) {
-        return 0;
+        int i=0;
+        int idx;
+        int itemCount = sentence.size();
+        int strLen;
+        int rowSpace = cols;
+        int rowCount = 0;
+        while(rowCount < rows) {
+            idx = i% itemCount;
+            ++i;
+            strLen = sentence[idx].length();            
+            if(strLen > cols) return 0;                        
+            
+            if(strLen < rowSpace) {
+                rowSpace = rowSpace - strLen - 1;
+                LOGD("[%d] Str[%d]: %s, rowSpace: %d,\n", rowCount, idx, sentence[idx].c_str(), rowSpace);
+                if(rowSpace == 0) {
+                    rowSpace = cols;
+                    ++rowCount;
+                }
+            }
+            else if(strLen == rowSpace) {
+                LOGD("[%d] Str[%d]: %s, rowSpace: %d,\n", rowCount, idx, sentence[idx].c_str(), rowSpace);                
+                rowSpace = cols;
+                ++rowCount;
+            }
+            else { //if(strLen > rowSpace)                
+                ++rowCount;
+                if(rowCount >= rows) {
+                    --i;
+                    break;
+                }
+                rowSpace = cols - strLen - 1;
+                LOGD("[%d] Str[%d]: %s, rowSpace: %d,\n", rowCount, idx, sentence[idx].c_str(), rowSpace);
+                if(rowSpace == 0) {
+                    rowSpace = cols;
+                    ++rowCount;
+                }
+            }                       
+        }
+        LOGD("i: %d, itemCount: %d\n", i, itemCount);
+        return i/itemCount;
     }
 };
 
+#if 0
+//Ref Solution
+class Solution {
+public:
+	int wordsTyping(String[] sentence, int rows, int cols)
+		string s = string.Join(" ", sentence) + " ";
+		int len = s.Length, count = 0;
+		int[] dp = new int[len];
+		for (int i = 1; i < len; ++i)
+		{
+			dp[i] = s[i] == ' ' ? 1 : dp[i - 1] - 1;
+		}
+		for (int i = 0; i < rows; ++i)
+		{
+			count += cols;
+			count += dp[count % len];
+		}
+		return count / len;
+	}
+};
+#endif
+
 void Test_GG_wordsTyping()
 {
-    LOGD("[CPP] %s\n", __TIME__);    
+    LOGD("[CPP] %s\n", __TIME__);
+    int rows = 3, cols = 6;
+    string str[] = {"a", "bcd", "e"};
+//    int rows = 2, cols = 8;
+//    string str[] = {"hello","world"};
+//    int rows = 1, cols = 10;
+//    string str[] = {"hello","leetcode"};
+    
+    int n = sizeof(str)/sizeof(str[0]);
+    vector<string> input1(str, str+n);
     Solution *solution = new Solution();
+    int b = solution->wordsTyping(input1, rows, cols);
+    LOGD("Ans: %d\n", b);
     delete solution;
 }
 
