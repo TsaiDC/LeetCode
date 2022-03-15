@@ -138,6 +138,8 @@ void Test_numSquares();
 void Test_findDuplicate();
 //300
 void Test_lengthOfLIS();
+//314
+void Test_FB_verticalOrder();
 //321
 void Test_maxNumber();
 //338

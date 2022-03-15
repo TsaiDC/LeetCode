@@ -392,7 +392,7 @@ int main()
     Test_search2dMatrixii();
 #endif
 
-#if 1
+#if 0
 //#249
     Test_FB_groupStrings();
 #endif
@@ -410,6 +410,11 @@ int main()
 #if 0
 //#300
     Test_lengthOfLIS();
+#endif
+
+#if 1
+//#314
+    Test_FB_verticalOrder();
 #endif
 
 #if 0
