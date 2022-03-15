@@ -392,6 +392,11 @@ int main()
     Test_search2dMatrixii();
 #endif
 
+#if 1
+//#249
+    Test_FB_groupStrings();
+#endif
+
 #if 0
 //#279
     Test_numSquares();
@@ -512,7 +517,7 @@ int main()
     Test_shortestPathBinaryMatrix();
 #endif
 
-#if 1
+#if 0
 //#1554
     Test_GG_differByOne();
 #endif
