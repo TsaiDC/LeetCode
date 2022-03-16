@@ -412,7 +412,7 @@ int main()
     Test_lengthOfLIS();
 #endif
 
-#if 1
+#if 0
 //#314
     Test_FB_verticalOrder();
 #endif
@@ -425,6 +425,11 @@ int main()
 #if 0
 //#338
     Test_countBits();
+#endif
+
+#if 1
+//#339
+    Test_FB_depthSum();
 #endif
 
 #if 0

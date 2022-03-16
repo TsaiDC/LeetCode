@@ -144,6 +144,8 @@ void Test_FB_verticalOrder();
 void Test_maxNumber();
 //338
 void Test_countBits();
+//339
+void Test_FB_depthSum();
 //347
 void Test_topKFrequent();
 //350
