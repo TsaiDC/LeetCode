@@ -427,9 +427,14 @@ int main()
     Test_countBits();
 #endif
 
-#if 1
+#if 0
 //#339
     Test_FB_depthSum();
+#endif
+
+#if 1
+//#346
+    Test_FB_MovingAverage();
 #endif
 
 #if 0

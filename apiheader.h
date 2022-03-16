@@ -146,6 +146,8 @@ void Test_maxNumber();
 void Test_countBits();
 //339
 void Test_FB_depthSum();
+//346
+void Test_FB_MovingAverage();
 //347
 void Test_topKFrequent();
 //350
