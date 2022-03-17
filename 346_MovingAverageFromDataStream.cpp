@@ -6,6 +6,7 @@
 #include <string.h>
 #include <vector>
 #include <stack>
+#include <queue>
 #include <map>
 
 #include "apiheader.h"
@@ -98,17 +99,38 @@ void Test_FB_MovingAverage()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Runtime: 25 ms, faster than 70.14% of C++ online submissions for Moving Average from Data Stream.
+Memory Usage: 14 MB, less than 55.74% of C++ online submissions for Moving Average from Data Stream.
 */
 class MovingAverage {
 public:
     MovingAverage(int size) {
-        
+        mCount = 0;
+        mTotal = 0;
+        mSize = size;        
     }
     
     double next(int val) {
-        return 0;
+        double ans = 0;
+        if(mCount == mSize) {            
+            mTotal = mTotal + val - mQ.front();            
+            mQ.pop();
+            mQ.push(val);
+            ans = mTotal/mSize;            
+        }
+        else {
+            mQ.push(val);
+            ++mCount;
+            mTotal = mTotal + (double)val;
+            ans = mTotal/mCount;            
+        }
+        return ans;
     }
+private:
+    int mSize;
+    int mCount;
+    double mTotal;
+    queue<int> mQ;
 };
 
 /**
@@ -120,11 +142,16 @@ public:
 void Test_FB_MovingAverage()
 {
     LOGD("[CPP] %s\n", __TIME__);
+    double ans;
     MovingAverage *movingAverage = new MovingAverage(3);
-    movingAverage->next(1); // return 1.0 = 1 / 1
-    movingAverage->next(10); // return 5.5 = (1 + 10) / 2
-    movingAverage->next(3); // return 4.66667 = (1 + 10 + 3) / 3
-    movingAverage->next(5); // return 6.0 = (10 + 3 + 5) / 3
+    ans = movingAverage->next(1); // return 1.0 = 1 / 1
+    LOGD("Ans: %f\n", ans);
+    ans = movingAverage->next(10); // return 5.5 = (1 + 10) / 2
+    LOGD("Ans: %f\n", ans);
+    ans = movingAverage->next(3); // return 4.66667 = (1 + 10 + 3) / 3
+    LOGD("Ans: %f\n", ans);
+    ans = movingAverage->next(5); // return 6.0 = (10 + 3 + 5) / 3
+    LOGD("Ans: %f\n", ans);
     delete movingAverage;
 }
 
