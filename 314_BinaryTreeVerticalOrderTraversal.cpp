@@ -120,13 +120,38 @@ struct TreeNode {
 class Solution {
 public:
     vector< vector<int> > verticalOrder(TreeNode* root) {
+        vector< vector<int> > ans;
+        map<int, vector<int> > xmap;
+        preOrder(root, 0, xmap);
+        return ans;
+    }
+    
+    void preOrder(TreeNode* root, int col, map<int, vector<int> >xmap) {
+        if(!root) return;
         
+        map<int, vector<int> >::iterator iter;
+        iter = xmap.find(col);
+        if(iter != xmap.end()){
+            iter->second.push_back(root->val);
+            LOGD("Col: %d, Val: %d\n",  col, root->val);
+        }
+        else {
+            vector<int> cols;
+            cols.push_back(root->val);
+            xmap[col] = cols;
+            LOGD("Col: %d, Val: %d\n",  col, root->val);
+        }
+      
+        preOrder(root->left, col-1, xmap);
+        preOrder(root->right, col+1, xmap);
     }
 };
 void Test_FB_verticalOrder()
 {
     LOGD("[CPP] %s\n", __TIME__);
+    TreeNode *pRoot = new TreeNode(1, new TreeNode(2, new TreeNode(4), new TreeNode(5)), new TreeNode(3, new TreeNode(6), new TreeNode(7)));
     Solution *solution = new Solution();
+    solution->verticalOrder(pRoot);
     delete solution;
 }
 

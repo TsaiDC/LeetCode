@@ -412,7 +412,7 @@ int main()
     Test_lengthOfLIS();
 #endif
 
-#if 0
+#if 1
 //#314
     Test_FB_verticalOrder();
 #endif
@@ -432,7 +432,7 @@ int main()
     Test_FB_depthSum();
 #endif
 
-#if 1
+#if 0
 //#346
     Test_FB_MovingAverage();
 #endif
