@@ -477,7 +477,7 @@ int main()
     Test_GG_wordsTyping();
 #endif
 
-#if 1
+#if 0
 //#426
     Test_FB_treeToDoublyList();
 #endif
@@ -525,6 +525,11 @@ int main()
 #if 0
 //#695
     Test_maxAreaOfIsland();
+#endif
+
+#if 1
+//#708
+    Test_FB_insert();
 #endif
 
 #if 0

@@ -184,6 +184,8 @@ void Test_canPlaceFlowers();
 void Test_TaskScheduler();
 //695
 void Test_maxAreaOfIsland();
+//708
+void Test_FB_insert();
 //934
 void Test_shortestBridge(); 
 //1091
