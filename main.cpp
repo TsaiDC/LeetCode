@@ -412,7 +412,7 @@ int main()
     Test_lengthOfLIS();
 #endif
 
-#if 1
+#if 0
 //#314
     Test_FB_verticalOrder();
 #endif
@@ -475,6 +475,11 @@ int main()
 #if 0
 //#418
     Test_GG_wordsTyping();
+#endif
+
+#if 1
+//#426
+    Test_FB_treeToDoublyList();
 #endif
 
 #if 0
