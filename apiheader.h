@@ -192,6 +192,8 @@ void Test_shortestBridge();
 void Test_shortestPathBinaryMatrix();
 //1554
 void Test_GG_differByOne();
+//1570
+void Test_FB_dotProduct();
 //2128
 void Test_GG_removeOnes();
 #endif

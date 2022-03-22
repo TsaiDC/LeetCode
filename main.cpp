@@ -527,7 +527,7 @@ int main()
     Test_maxAreaOfIsland();
 #endif
 
-#if 1
+#if 0
 //#708
     Test_FB_insert();
 #endif
@@ -545,6 +545,11 @@ int main()
 #if 0
 //#1554
     Test_GG_differByOne();
+#endif
+
+#if 1
+//#1570
+    Test_FB_dotProduct();
 #endif
 
 #if 0
