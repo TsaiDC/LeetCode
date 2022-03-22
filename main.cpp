@@ -547,9 +547,14 @@ int main()
     Test_GG_differByOne();
 #endif
 
-#if 1
+#if 0
 //#1570
     Test_FB_dotProduct();
+#endif
+
+#if 1
+//#1650
+    Test_FB_lowestCommonAncestor();
 #endif
 
 #if 0

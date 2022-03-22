@@ -194,6 +194,8 @@ void Test_shortestPathBinaryMatrix();
 void Test_GG_differByOne();
 //1570
 void Test_FB_dotProduct();
+//1650
+void Test_FB_lowestCommonAncestor();
 //2128
 void Test_GG_removeOnes();
 #endif
