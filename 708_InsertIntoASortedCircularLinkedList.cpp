@@ -129,17 +129,75 @@ public:
     }
 };
 
-
 class Solution {
 public:
     Node* insert(Node* head, int insertVal) {
-        return NULL;
+        if(!head) {
+            LOGD("Val: %d\n", insertVal);
+            Node* newNode = new Node(insertVal, NULL);
+            newNode->next = newNode;
+            return newNode;
+        }
+        LOGD("->Val: %d\n", insertVal);
+        Node* pTmp = head;
+        Node* pNode = new Node(insertVal);
+                
+        while (1) {
+            //Min Case
+            if (pTmp->val > insertVal) {                
+                if(pTmp->next == head) {
+                    LOGD("Min Case\n");
+                    pTmp->next = pNode;
+                    pNode->next = head;
+                    break;
+                }
+            }
+            //Max Case
+            if (pTmp->val <= insertVal) {
+                if(pTmp->next == head) {
+                    LOGD("Max Case\n");
+                    pTmp->next = pNode;
+                    pNode->next = head;
+                    break;
+                }
+            }
+            //Normal Case
+            if (pTmp->val < insertVal && pTmp->next->val >= insertVal) {
+                LOGD("Normal Case\n");
+                pTmp->next = pNode;
+                pNode->next = pTmp->next;
+                break;
+            }
+            pTmp = pTmp->next;
+        }
+
+        return head;
     }
 };
+
 void Test_FB_insert()
 {
     LOGD("[CPP] %s\n", __TIME__);    
-    Solution *solution = new Solution();    
+    Solution *solution = new Solution();
+    Node *pHead = NULL;
+    pHead = solution->insert(pHead, 3);
+    pHead = solution->insert(pHead, 4);
+    pHead = solution->insert(pHead, 1);
+    pHead = solution->insert(pHead, 2);
+//    pHead->next = new Node(4, new Node(1, pHead));
+    Node *pTmp = pHead;
+    for(int i=0; i<4; ++i) {
+        LOGD("+ %d\n", pTmp->val);
+        pTmp = pTmp->next;
+    }
+/*
+    pTmp = solution->insert(pHead, 2);
+
+    for(int i=0; i<4; ++i) {
+        LOGD("- %d\n", pTmp->val);
+        pTmp = pTmp->next;
+    }    
+*/    
     delete solution;
 }
 
