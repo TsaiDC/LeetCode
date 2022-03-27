@@ -196,6 +196,8 @@ void Test_GG_differByOne();
 void Test_FB_dotProduct();
 //1650
 void Test_FB_lowestCommonAncestor();
+//1762
+void Test_FB_findBuildings();
 //2128
 void Test_GG_removeOnes();
 #endif

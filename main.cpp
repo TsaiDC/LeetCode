@@ -552,9 +552,14 @@ int main()
     Test_FB_dotProduct();
 #endif
 
-#if 1
+#if 0
 //#1650
     Test_FB_lowestCommonAncestor();
+#endif
+
+#if 1
+//#1762
+    Test_FB_findBuildings();
 #endif
 
 #if 0
