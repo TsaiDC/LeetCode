@@ -7,6 +7,7 @@
 #include <vector>
 #include <stack>
 #include <map>
+#include <unordered_set>
 
 #include "apiheader.h"
 
@@ -114,7 +115,9 @@ void Test_FB_lowestCommonAncestor()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Ref Ans
+Runtime: 18 ms, faster than 55.68% of C++ online submissions for Lowest Common Ancestor of a Binary Tree III.
+Memory Usage: 11.6 MB, less than 11.90% of C++ online submissions for Lowest Common Ancestor of a Binary Tree III.
 */
 
 // Definition for a Node.
@@ -129,7 +132,16 @@ public:
 class Solution {
 public:
     Node* lowestCommonAncestor(Node* p, Node * q) {
-        
+        unordered_set<Node*> ancs;
+        while (p != NULL) {
+            ancs.insert(p);
+            p = p->parent;
+        }
+        while (true) {
+            if (ancs.count(q) > 0) return q;
+            q = q->parent;
+        }
+        return NULL;
     }
 };
 
