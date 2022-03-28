@@ -198,6 +198,8 @@ void Test_FB_dotProduct();
 void Test_FB_lowestCommonAncestor();
 //1762
 void Test_FB_findBuildings();
+//1891
+void Test_FB_maxLength();
 //2128
 void Test_GG_removeOnes();
 #endif
