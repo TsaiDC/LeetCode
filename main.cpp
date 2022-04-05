@@ -337,6 +337,11 @@ int main()
     Test_GG_evalRPN();
 #endif
 
+#if 1
+//#158
+    Test_GG_read();
+#endif
+
 #if 0
 //#162
     Test_findPeakElement();
@@ -562,7 +567,7 @@ int main()
     Test_FB_findBuildings();
 #endif
 
-#if 1
+#if 0
 //#1891
     Test_FB_maxLength();
 #endif
