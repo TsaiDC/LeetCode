@@ -337,7 +337,7 @@ int main()
     Test_GG_evalRPN();
 #endif
 
-#if 1
+#if 0
 //#158
     Test_GG_read();
 #endif
@@ -415,6 +415,11 @@ int main()
 #if 0
 //#300
     Test_lengthOfLIS();
+#endif
+
+#if 1
+//#302
+    Test_GG_minArea();
 #endif
 
 #if 0

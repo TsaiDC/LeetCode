@@ -140,6 +140,8 @@ void Test_numSquares();
 void Test_findDuplicate();
 //300
 void Test_lengthOfLIS();
+//302
+void Test_GG_minArea();
 //314
 void Test_FB_verticalOrder();
 //321
