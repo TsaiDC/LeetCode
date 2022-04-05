@@ -9,6 +9,7 @@
 #include <map>
 #include <unordered_set>
 #include <algorithm>
+#include <climits>
 
 #include "apiheader.h"
 
@@ -109,20 +110,105 @@ void Test_FB_maxLength()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Runtime: 176 ms, faster than 93.94% of C++ online submissions for Cutting Ribbons.
+Memory Usage: 92.4 MB, less than 91.04% of C++ online submissions for Cutting Ribbons.
 */
+
 class Solution {
 public:
     int maxLength(vector<int>& ribbons, int k) {
         
+        int low = 1; // min possible ribbon size      
+        int high = INT_MIN; // max possible ribbon size       
+        for (auto x : ribbons) {
+            high = max(high, x);
+        }
+        
+        int count = 0; // how many ribbons of size mid could we cut?
+        int mid = 0; // current ribbon size
+        while (low <= high) {
+            mid = low + (high-low)/2;
+            count = 0;
+            
+            // get how many ribbons we can get of size mid
+            for (auto x: ribbons) {
+                count += x/mid;
+            }
+            
+            if (count < k) { // mid was too big, so lower the range
+                high = mid - 1;
+            } else { // we were able to make K cuts of size mid but let's see if we can get a bigger cut size
+                low = mid + 1;
+            }
+        }
+        
+        if (high < 0) return 0;
+        return high;
     }
 };
 
+#if 0
+/*
+Time Limit Exceeded
+*/
+class Solution {
+public:
+    int maxLength(vector<int>& ribbons, int k) {
+        int avg = 0;
+        for(int i:ribbons) {
+            avg += i;
+        }
+        avg = avg/k;
+        
+        int count = 0;
+        int lastAvg = 0;
+        int tmp;
+        while(avg>0) {
+            for(int i:ribbons) {
+                count += i/avg;                
+            }
+            if(count < k) {
+                count = 0;
+                tmp = avg;                
+                avg = avg - (avg-lastAvg)/2;
+                lastAvg = tmp;
+            }
+            else if(count > k) {
+                count = 0;
+                tmp = avg;
+                avg = avg + (lastAvg-avg)/2;
+                lastAvg = tmp;
+            }
+            else {
+                break;
+            }
+        }
+        return avg;
+    }
+};
+#endif
+
 void Test_FB_maxLength()
 {
-    LOGD("[CPP] %s\n", __TIME__);    
-    Solution *solution = new Solution();    
+    LOGD("[CPP] %s\n", __TIME__);
+//    int aa[] = {9,7,5};
+//    int k = 3;
+
+//    int aa[] = {7,5,9};
+//    int k = 4;
+
+//    int aa[] = {5, 7, 9};
+//    int k = 22;
+
+    int aa[] = {100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,1,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000,100000};
+    int k = 49;
+    
+    int len = sizeof(aa)/sizeof(aa[0]);
+    vector<int> input(aa, aa+len);
+    Solution *solution = new Solution();
+    int ans = solution->maxLength(input, k);    
     delete solution;
+    LOGD("Ans: %d\n", ans);
 }
 
 #endif //_CPPVERSION_
