@@ -138,6 +138,8 @@ void Test_FB_groupStrings();
 void Test_numSquares();
 //287
 void Test_findDuplicate();
+//299
+void Test_GG_getHint();
 //300
 void Test_lengthOfLIS();
 //302

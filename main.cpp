@@ -412,12 +412,17 @@ int main()
     Test_findDuplicate();
 #endif
 
+#if 1
+//#299
+    Test_GG_getHint();
+#endif
+
 #if 0
 //#300
     Test_lengthOfLIS();
 #endif
 
-#if 1
+#if 0
 //#302
     Test_GG_minArea();
 #endif
