@@ -55,7 +55,7 @@ Explanation: There are a total of 2 courses to take.
 #endif
 class Solution {
 public:
-    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+    bool canFinish(int numCourses, vector< vector<int> >& prerequisites) {
         return findOrder_My(numCourses, prerequisites);
     }
     bool findOrder_My(int numCourses, vector< vector<int> >& prerequisites) {

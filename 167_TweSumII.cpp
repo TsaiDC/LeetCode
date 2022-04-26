@@ -84,7 +84,8 @@ public:
             else if(sum < target) head++;
             else tail--;
         }
-        return vector<int>{head+1, tail+1};
+        vector<int>ret(head+1, tail+1);
+        return ret;
     }
 };
 
@@ -92,7 +93,9 @@ void Test_twoSum()
 {
     LOGD("%s\n", __TIME__);
     
-    vector<int> input = vector<int> {2, 7, 11, 15};
+//    vector<int> input = vector<int> (2, 7, 11, 15);
+    int val[] = {2, 7, 11, 15};
+    vector<int> input(val, val+4) ;
     Solution *solution = new Solution();    
     vector<int> ans = solution->twoSum(input, 9);
     delete solution;

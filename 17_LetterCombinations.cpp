@@ -52,7 +52,8 @@ vector<string> letterCombinations(string digits) {
     vector<string>ret;
     
     if(leng == 0) {
-        return {};
+//        return {};
+        return vector<string>();
     }
     LOGD("Str: %s, Leng: %d, str: %c, total: %d\n", digits.c_str(), leng, digits.at(0), total);
     

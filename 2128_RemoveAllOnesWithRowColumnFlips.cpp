@@ -92,7 +92,7 @@ void Test_GG_removeOnes()
 //Ref Solution
 class Solution {    
 public:
-    bool removeOnes(vector<vector<int>>& matrix) {
+    bool removeOnes(vector< vector<int> >& matrix) {
         int rSize = matrix.size();
         int cSize = matrix[0].size();
 

@@ -98,7 +98,7 @@ void Test_GG_minArea()
 */
 class Solution {
 public:
-    int minArea(vector<vector<char>>& image, int x, int y) {
+    int minArea(vector< vector<char> >& image, int x, int y) {
         
     }
 };

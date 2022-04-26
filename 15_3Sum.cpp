@@ -55,7 +55,7 @@ vector< vector<int> > threeSum3(vector<int>& nums) {
     vector< vector<int> > retVector;
     vector<int>row;
     if(nums.size()<3) {
-        return {};
+        return retVector;
     }
     int leng = nums.size();
 
@@ -131,17 +131,19 @@ vector< vector<int> > threeSum3(vector<int>& nums) {
         }
     }
     if(retVector.size() == 0) {
-        return {};
+//        return {};
+        return retVector;
     }
     
     return retVector;
 }
 
 vector< vector<int> > threeSum2(vector<int>& nums) {
-    if(nums.size()<3) {
-        return {};
-    }
     vector< vector<int> > retVector;
+    if(nums.size()<3) {
+//        return {};
+        return retVector;
+    }
     vector<int>row;
     map<int, int> mMap;
     map<int, int>::iterator iter;
@@ -196,7 +198,8 @@ vector< vector<int> > threeSum2(vector<int>& nums) {
     }
 
     if(retVector.size() == 0) {
-        return {};
+//        return {};
+        return retVector;
     }
 
     return retVector;

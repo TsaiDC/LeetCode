@@ -159,7 +159,8 @@ public:
                 }
             }
             if (j == numCourses) {
-                return {};
+//                return {};
+                return vector<int>();
             }
             degrees[j]--;
             row = g[j];

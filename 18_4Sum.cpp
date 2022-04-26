@@ -54,10 +54,11 @@ A solution set is:
 */
 
 vector< vector<int> > fourSum(vector<int>& nums, int target) {
-    if(nums.size()<4) {
-        return {};
-    }
     vector< vector<int> > retVector;
+    if(nums.size()<4) {
+//        return {};
+        return retVector;
+    }
     vector<int>row;
     map<int, int> mMap;
     map<int, int>::iterator iter;
@@ -133,7 +134,8 @@ vector< vector<int> > fourSum(vector<int>& nums, int target) {
     }
 
     if(retVector.size() == 0) {
-        return {};
+//        return {};
+        return retVector;
     }
 
     return retVector;

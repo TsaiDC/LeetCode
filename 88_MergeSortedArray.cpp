@@ -128,9 +128,11 @@ public:
 void Test_merge88()
 {
     LOGD("%s\n", __TIME__);
-    
-    vector<int> nums1 = vector<int> {1, 2, 3, 0, 0, 0};
-    vector<int> nums2 = vector<int> {2, 5, 6};
+    int val1[] = {1, 2, 3, 0, 0, 0};
+    int val2[] = {2,5,6};
+ 
+    vector<int> nums1(val1, val1+6);
+    vector<int> nums2(val2, val2+3) ;
     int m = 3, n = 3;
     Solution *solution = new Solution();    
     solution->merge1(nums1, m, nums2, n);
