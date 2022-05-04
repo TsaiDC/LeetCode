@@ -412,7 +412,7 @@ int main()
     Test_findDuplicate();
 #endif
 
-#if 1
+#if 0
 //#299
     Test_GG_getHint();
 #endif
@@ -480,6 +480,11 @@ int main()
 #if 0
 //#380
     Test_InsertDeleteGetRandom();
+#endif
+
+#if 1
+//#394
+    Test_GG_decodeString();
 #endif
 
 #if 0

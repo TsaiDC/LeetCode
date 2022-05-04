@@ -166,6 +166,8 @@ void Test_GG_findLeaves();
 void Test_kthSmallest();
 //380
 void Test_InsertDeleteGetRandom();
+//394
+void Test_GG_decodeString();
 //402
 void Test_removeKdigits();
 //418
