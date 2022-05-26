@@ -228,6 +228,11 @@ int main()
     Test_permuteUnique();
 #endif
 
+#if 1
+//#49
+    Test_AM_groupAnagrams();
+#endif
+
 #if 0
 //#56
     Test_merge();
@@ -482,7 +487,7 @@ int main()
     Test_InsertDeleteGetRandom();
 #endif
 
-#if 1
+#if 0
 //#394
     Test_GG_decodeString();
 #endif
