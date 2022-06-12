@@ -96,14 +96,40 @@ void Test_AM_groupAnagrams()
 class Solution {
 public:
     vector< vector<string> > groupAnagrams(vector<string>& strs) {
-        
+        vector< vector<string> > ans;
+        for(string s: strs) {
+            LOGD("Show: %s\n", s.c_str());
+            int letterCount[26] = {0};
+            for(int i=0; i<s.length(); ++i) {
+                letterCount[s.at(i) - 'a']++;
+            }
+            
+            string key;
+            string dig;
+            LOGD("+++ %s: \n", s.c_str());
+            for(int i: letterCount) {
+                 printf("%d", i);
+                 dig = std::to_string(i);
+                 key += dig;
+                 key += "#";
+            }
+            printf("\n");
+            LOGD("--- %s: key: %s\n", s.c_str(), key.c_str());            
+        }
+
+        return ans;
     }
 };
 
 void Test_AM_groupAnagrams()
 {
     LOGD("[CPP] %s\n", __TIME__);
+    string arr1[] = {"eat","tea","tan","ate","nat","bat"};
+    int n1 = sizeof(arr1)/sizeof(arr1[0]);
+    vector<string> input1(arr1, arr1+n1);
+    
     Solution *solution = new Solution();
+    solution->groupAnagrams(input1);
     delete solution;    
 }
 
