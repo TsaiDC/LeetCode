@@ -153,6 +153,11 @@ int main()
     Test_intToRoman();
 #endif
 
+#if 1
+//#13
+    Test_AM_romanToInt();
+#endif
+
 #if 0
 //#15
     Test_threeSum();
@@ -228,7 +233,7 @@ int main()
     Test_permuteUnique();
 #endif
 
-#if 1
+#if 0
 //#49
     Test_AM_groupAnagrams();
 #endif
