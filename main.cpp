@@ -153,7 +153,7 @@ int main()
     Test_intToRoman();
 #endif
 
-#if 1
+#if 0
 //#13
     Test_AM_romanToInt();
 #endif
@@ -411,6 +411,11 @@ int main()
 //#249
     Test_FB_groupStrings();
 #endif
+
+#if 1
+//#253
+    Test_AM_minMeetingRooms();
+#endif;
 
 #if 0
 //#279
