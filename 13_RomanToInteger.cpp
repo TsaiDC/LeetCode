@@ -114,13 +114,58 @@ void Test_AM_romanToInt()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Runtime: 64 ms, faster than 5.21% of C++ online submissions for Roman to Integer.
+Memory Usage: 12.7 MB, less than 5.09% of C++ online submissions for Roman to Integer.
 */
 
 class Solution {
 public:
     int romanToInt(string s) {
-        return 0;
+        int ans = 0;
+        unordered_map<string, int> map;
+        unordered_map<string, int>::iterator it;
+        map.insert(std::make_pair("I",  1));
+        map.insert(std::make_pair("IV", 4));
+        map.insert(std::make_pair("V",  5));
+        map.insert(std::make_pair("IX", 9));
+        map.insert(std::make_pair("X",  10));
+        map.insert(std::make_pair("XL", 40));
+        map.insert(std::make_pair("L",  50));
+        map.insert(std::make_pair("XC", 90));
+        map.insert(std::make_pair("C",  100));
+        map.insert(std::make_pair("CD", 400));
+        map.insert(std::make_pair("D",  500));
+        map.insert(std::make_pair("CM", 900));
+        map.insert(std::make_pair("M",  1000));
+        
+        string str1, str2;
+        for(int i=0; i<s.length(); ++i)
+        {
+            str1 = s.substr(i,1);
+            if(i == s.length()-1) {
+                str2 = str1 + "#";
+            }
+            else {
+                str2 = s.substr(i,2);
+            }
+            
+            if((it = map.find(str2)) != map.end()) {
+//                LOGD("S: %s (%d)\n", str2.c_str(), it->second);
+                ++i;
+                ans += it->second;
+            }
+            else {
+                if((it = map.find(str1)) != map.end()) {
+//                    LOGD("S: %s (%d)\n", str1.c_str(), it->second);
+                    ans += it->second;
+                }
+                else {
+                    //TODO
+                }
+            }
+        }
+        
+        return ans;
     }
 };
 
@@ -128,9 +173,12 @@ void Test_AM_romanToInt()
 {
     LOGD("[CPP] %s\n", __TIME__);
 
-    string S = "VV";
+    int ans;
+//    string S = "LVIII";  //58
+    string S = "MCMXCIV";  //1994
     Solution *solution = new Solution();
-    solution->romanToInt(S);
+    ans = solution->romanToInt(S);
+    LOGD("S: %s -> %d\n", S.c_str(), ans);
     delete solution;    
 }
 
