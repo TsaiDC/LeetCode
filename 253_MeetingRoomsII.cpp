@@ -82,10 +82,27 @@ void Test_AM_minMeetingRooms()
 
 */
 
+//Time Limit Exceeded
 class Solution {
 public:
-    int minMeetingRooms(vector<vector<int>>& intervals) {
-        return 0;
+    int minMeetingRooms(vector< vector<int> >& intervals) {
+    
+        int count = 0;
+        int ans = 0;
+        for(int i=0; i<intervals.size(); ++i) {
+            count = 0;
+            for(int j=0; j<intervals.size(); ++j) {
+                if(i == j) continue;
+                if(intervals[j][0] <= intervals[i][0] &&
+                   intervals[i][0] < intervals[j][1]) {
+//                       LOGD("Overlap (%d, %d) -> (%d, %d)\n", intervals[i][0], intervals[i][1], intervals[j][0], intervals[j][1]);
+                       ++count;
+                }
+            }
+//            LOGD("Overlap (%d, %d) : %d\n", intervals[i][0], intervals[i][1], count);
+            if(count > ans) ans = count;
+        }
+        return ans+1;
     }
 };
 
@@ -93,8 +110,28 @@ void Test_AM_minMeetingRooms()
 {
     LOGD("[CPP] %s\n", __TIME__);
 
+    //[[0,30],[5,10],[15,20]]
+    vector< vector<int> >input;
+    vector<int>v1;
+    v1.push_back(0);
+    v1.push_back(30);
+    input.push_back(v1);
+
+    vector<int>v2;
+    v2.push_back(5);
+    v2.push_back(10);
+    input.push_back(v2);
+    
+    vector<int>v3;
+    v3.push_back(15);
+    v3.push_back(20);
+    input.push_back(v3);
+    
+    
     Solution *solution = new Solution();    
-    delete solution;    
+    int ans = solution->minMeetingRooms(input);
+    delete solution;
+    LOGD("Ans: %d\n", ans);
 }
 
 #endif// _CPPVERSION_
