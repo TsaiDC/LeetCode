@@ -5,7 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <vector>
-#include <map>
+#include <queue>
+#include <algorithm>
 #include <unordered_map>
 
 #include "apiheader.h"
@@ -35,6 +36,9 @@ using namespace std;
 // https://shengyu7697.github.io/std-unordered_map/
 // https://www.sczyh30.com/posts/C-C/cpp-stl-hashmap/
 //
+// Priority Queue
+// https://yuihuang.com/cpp-stl-priority-queue/
+//
 
 /*
 https://leetcode.com/problems/meeting-rooms-ii/
@@ -53,8 +57,8 @@ Output: 1
 
 Constraints:
 
-1 <= intervals.length <= 104
-0 <= starti < endi <= 106
+1 <= intervals.length <= 10^4
+0 <= starti < endi <= 10^6
 
 */
 
@@ -83,7 +87,7 @@ void Test_AM_minMeetingRooms()
 */
 
 //Time Limit Exceeded
-class Solution {
+class Solution1 {
 public:
     int minMeetingRooms(vector< vector<int> >& intervals) {
     
@@ -105,6 +109,45 @@ public:
         return ans+1;
     }
 };
+
+/*
+Runtime: 116 ms, faster than 7.62% of C++ online submissions for Meeting Rooms II.
+Memory Usage: 27.8 MB, less than 5.10% of C++ online submissions for Meeting Rooms II.
+*/
+
+bool startTimeCompare(vector<int>a, vector<int>b) {
+    return a[0]<b[0];
+}
+
+class Solution {
+public:
+    int minMeetingRooms(vector< vector<int> >& intervals) {
+        //1 Sort by start time
+        sort(intervals.begin(), intervals.end(), startTimeCompare);
+        
+        //2 Check the top of min heap, Store the end time of meeting.
+        //  The top of Q is the meeting which end time close to the current time
+        priority_queue<int, vector<int>, greater<int> >pq;
+        
+        for(int i=0; i<intervals.size(); ++i){
+            if(pq.empty()){
+                pq.push(intervals[i][1]);
+                continue;
+            }
+            
+            int top = pq.top();
+            if(top <= intervals[i][0]) {
+                pq.pop();
+                pq.push(intervals[i][1]);
+            }
+            else {
+                pq.push(intervals[i][1]);
+            }
+        }
+        return pq.size();
+    }
+};
+
 
 void Test_AM_minMeetingRooms()
 {

@@ -415,7 +415,7 @@ int main()
 #if 1
 //#253
     Test_AM_minMeetingRooms();
-#endif;
+#endif
 
 #if 0
 //#279
