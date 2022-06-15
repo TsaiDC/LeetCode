@@ -282,6 +282,11 @@ int main()
     Test_Subsets();
 #endif
 
+#if 1
+//#79
+    Test_AM_exist();
+#endif
+
 #if 0
 //#86
     Test_partition();
@@ -412,7 +417,7 @@ int main()
     Test_FB_groupStrings();
 #endif
 
-#if 1
+#if 0
 //#253
     Test_AM_minMeetingRooms();
 #endif

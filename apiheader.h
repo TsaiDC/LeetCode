@@ -86,6 +86,8 @@ void Test_minWindow();
 void Test_combine();
 //78
 void Test_Subsets();
+//79
+void Test_AM_exist();
 //86
 void Test_partition();
 //88
