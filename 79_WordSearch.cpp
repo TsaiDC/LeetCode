@@ -103,7 +103,7 @@ typedef struct xpair_t{
     xpair_t(int a, int b, int c):i(a),j(b), ptr(c){}
 }xpair;
 
-class Solution {
+class Solution1 {
 public:
     bool exist(vector< vector<char> >& board, string word) {
         queue<xpair>TraceQueue;
@@ -154,15 +154,125 @@ public:
     }
 };
 
+/*
+Time Limit Exceeded
+*/
+class Solution {
+public:
+/*
+    string dump(vector< vector<char> >& board, int i, int j) {
+//        LOGD("+++++++++++ (%d, %d)\n", i, j);
+        string udlr;
+        //up
+        if(i-1>=0) {
+//            LOGD("up: %c\n", board[i-1][j]);
+            udlr += board[i-1][j];
+        }
+        else {
+//            LOGD("up: @\n");
+            udlr += "@";
+        }            
+        //down
+        if(i+1<board.size()) {
+//            LOGD("down: %c\n", board[i+1][j]);
+            udlr += board[i+1][j];
+        }
+        else {
+            udlr += "@";
+        }
+
+        //left
+        if(j-1>=0) {
+//            LOGD("left: %c\n", board[i][j-1]);
+            udlr += board[i][j-1];
+        }
+        else {
+//            LOGD("left: @\n");
+            udlr += "@";
+        }
+
+        //right
+        if(j+1<board[i].size()) {
+//            LOGD("right: %c\n", board[i][j+1]);
+            udlr += board[i][j+1];
+        }
+        else {
+//            LOGD("right: @\n");
+            udlr += "@";
+        }
+//        LOGD("-------\n");
+        return udlr;
+    }
+*/
+    void dfs(vector< vector<char> >& board, int i, int j, int idx, string word, bool &hit) {
+        if(hit){ LOGD("\n"); return;}
+        if(i<0 || j<0) { LOGD("\n"); return; }
+        if(i>=board.size() || j>=board[i].size()){ LOGD("\n");  return;}
+                
+        if(idx == word.length()){
+            LOGD("Hit\n");
+            hit = true; 
+            return;
+        }
+//        LOGD("dfs - (%d, %d), IDX: %d (%c), udlr: %s\n", i, j, idx, word.at(idx), dump(board, i,j).c_str());
+        LOGD("dfs - (%d, %d), IDX: %d (%c)\n", i, j, idx, word.at(idx));
+        vector< vector<char> >newBoard =  board;
+        
+        //up
+        if(i-1 >=0 && board[i-1][j] == word.at(idx)) {
+            LOGD("(%d, %d), idx: %d (%c), up\n", i, j, idx, word.at(idx));
+            newBoard[i-1][j] = '#';
+            dfs(newBoard, i-1, j, idx+1, word, hit);
+            newBoard[i-1][j] = board[i-1][j];
+        }
+        //down
+        if(i+1 < board.size() && board[i+1][j] == word.at(idx)) {
+            LOGD("(%d, %d), idx: %d (%c), down\n", i, j, idx, word.at(idx));
+            newBoard[i+1][j] = '#';
+            dfs(newBoard, i+1, j, idx+1, word, hit);
+            newBoard[i+1][j] = board[i+1][j];
+        }
+        //left
+        if(j-1 >=0 && board[i][j-1] == word.at(idx)) {
+            LOGD("(%d, %d)->(%d, %d), idx: %d (%c), left\n", i, j, i, j-1, idx, word.at(idx));            
+            newBoard[i][j-1] = '#';
+            dfs(newBoard, i, j-1, idx+1, word, hit);
+            newBoard[i][j-1] = board[i][j-1];
+        }
+        //right
+        if(j+1 < board[i].size() && board[i][j+1] == word.at(idx)) {
+            LOGD("(%d, %d), idx: %d (%c), right\n", i, j, idx, word.at(idx));
+            newBoard[i][j+1] = '#';
+            dfs(newBoard, i, j+1, idx+1, word, hit);
+            newBoard[i][j+1] = board[i][j+1];
+        }
+    }
+    bool exist(vector< vector<char> >& board, string word) {
+        LOGD("String: %s\n", word.c_str());
+        bool ret = false;        
+        for(int i=0; i<board.size(); ++i) {
+            for(int j=0; j<board[i].size(); ++j) {
+                if(board[i][j] == word.at(0)) {                    
+                    board[i][j] = '#';
+                    dfs(board, i, j, 1, word, ret);
+                    board[i][j] = word.at(0);
+                }
+                if(ret) return ret;
+            }
+        }
+        return false;
+    }    
+};
+
 
 void Test_AM_exist()
 {
     LOGD("[CPP] %s\n", __TIME__);
 
-#if 1
-//    string word = "ABCCED";
-//    string word = "SEE";
-    string word = "ABCB";
+#if 0
+    string word = "ABCCED"; //true
+//    string word = "SEE"; //true
+//    string word = "ABCB"; //false
     int n;
 
     char arr1[] = {'A','B','C','E'};
@@ -209,7 +319,90 @@ void Test_AM_exist()
 //["A","D","E","E"]
 //"ABCESEEEFS"
 
-#endif    
+    string word = "ABCESEEEFS"; //true
+    int n;
+
+    char arr1[] = {'A','B','C','E'};
+    n = sizeof(arr1)/sizeof(arr1[0]);
+    vector<char> num1(arr1, arr1+n);
+
+    char arr2[] = {'S','F','E','S'};
+    n = sizeof(arr2)/sizeof(arr2[0]);
+    vector<char> num2(arr2, arr2+n);
+
+    char arr3[] = {'A','D','E','E'};
+    n = sizeof(arr3)/sizeof(arr3[0]);
+    vector<char> num3(arr3, arr3+n);
+
+    vector< vector<char> >board;
+    board.push_back(num1);
+    board.push_back(num2);
+    board.push_back(num3);
+
+#endif
+
+#if 0
+//[["a","a"]]
+//"aaa"
+
+    string word = "aaa"; //true
+    int n;
+
+    char arr1[] = {'a','a'};
+    n = sizeof(arr1)/sizeof(arr1[0]);
+    vector<char> num1(arr1, arr1+n);
+
+    vector< vector<char> >board;
+    board.push_back(num1);
+#endif
+
+#if 1
+//["A","A","A","A","A","A"],
+//["A","A","A","A","A","A"],
+//["A","A","A","A","A","A"],
+//["A","A","A","A","A","A"],
+//["A","A","A","A","A","A"],
+//["A","A","A","A","A","A"]]
+//"AAAAAAAAAAAAAAB"
+
+    string word = "AAAAAAAAAAAAAAB"; //true
+    int n;
+
+    char arr1[] = {'A','A','A','A','A','A'};
+    n = sizeof(arr1)/sizeof(arr1[0]);
+    vector<char> num1(arr1, arr1+n);
+
+    char arr2[] = {'A','A','A','A','A','A'};
+    n = sizeof(arr2)/sizeof(arr2[0]);
+    vector<char> num2(arr2, arr2+n);
+
+    char arr3[] = {'A','A','A','A','A','A'};
+    n = sizeof(arr3)/sizeof(arr3[0]);
+    vector<char> num3(arr3, arr3+n);
+
+
+    char arr4[] = {'A','A','A','A','A','A'};
+    n = sizeof(arr4)/sizeof(arr4[0]);
+    vector<char> num4(arr4, arr4+n);
+
+
+    char arr5[] = {'A','A','A','A','A','A'};
+    n = sizeof(arr5)/sizeof(arr5[0]);
+    vector<char> num5(arr5, arr5+n);
+
+    char arr6[] = {'A','A','A','A','A','A'};
+    n = sizeof(arr6)/sizeof(arr6[0]);
+    vector<char> num6(arr6, arr6+n);
+
+    vector< vector<char> >board;
+    board.push_back(num1);
+    board.push_back(num2);
+    board.push_back(num3);
+    board.push_back(num4);
+    board.push_back(num5);
+    board.push_back(num6);
+#endif
+
     Solution *solution = new Solution();    
     bool b = solution->exist(board, word);    
     delete solution;
