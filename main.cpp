@@ -282,7 +282,7 @@ int main()
     Test_Subsets();
 #endif
 
-#if 1
+#if 0
 //#79
     Test_AM_exist();
 #endif
@@ -340,6 +340,11 @@ int main()
 #if 0
 //#142
     Test_detectCycle();
+#endif
+
+#if 1
+//#146
+    Test_AM_LRUCache();
 #endif
 
 #if 0

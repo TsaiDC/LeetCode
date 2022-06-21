@@ -110,6 +110,8 @@ void Test_singleNumber();
 void Test_copyRandomList();
 //142
 void Test_detectCycle();
+//146
+void Test_AM_LRUCache();
 //149
 void Test_sortList();
 //150
