@@ -7,6 +7,7 @@
 #include <vector>
 #include <queue>
 #include <map>
+#include <unordered_map>
 
 #include "apiheader.h"
 
@@ -30,6 +31,10 @@ using namespace std;
 //
 // MAP Ref:
 // https://mropengate.blogspot.com/2015/12/cc-map-stl.html
+//
+// Unorder Map:
+// https://shengyu7697.github.io/std-unordered_map/
+// https://www.sczyh30.com/posts/C-C/cpp-stl-hashmap/
 //
 
 /*
@@ -131,16 +136,74 @@ void Test_AM_LRUCache()
 
 class LRUCache {
 public:
+    unordered_map<int, int>dataMap; //Key,  Value
+    unordered_map<int, int>timeMap; //Time, Key
+    unordered_map<int, int>KeyTimeMap; //Key, Time    
+    priority_queue<int, vector<int>, greater<int> >pq; //Time    
+    int mSize;
+    int utcIdx;
+
     LRUCache(int capacity) {
-        
+        mSize = capacity;
+        utcIdx = 0;
     }
     
     int get(int key) {
-        return 0;
+        LOGD("Get Key: %d\n", key);
+        for (const auto& n : dataMap) {
+            std::cout << "Key: " << n.first << ", Value: " << n.second << "\n";
+        }
+        unordered_map<int, int>::iterator iterData;
+        unordered_map<int, int>::iterator iterKeyTime;
+        if((iterData = dataMap.find(key)) != dataMap.end()) {
+            iterKeyTime = KeyTimeMap.find(key);
+            timeMap[iterKeyTime->second] = utcIdx;
+            KeyTimeMap[key] = utcIdx;
+            utcIdx++;
+            return iterData->second;
+        }        
+        return -1;
     }
     
     void put(int key, int value) {
+        unordered_map<int, int>::iterator iterData;
+        unordered_map<int, int>::iterator iterTime;
+        unordered_map<int, int>::iterator iterKeyTime;        
         
+        //Get UTC
+        int utc = utcIdx;
+        utcIdx++;
+        if(dataMap.size()<mSize) {
+            dataMap[key] = value;
+            timeMap[utc] = key;
+            KeyTimeMap[key] = utc;
+            pq.push(utc);
+            return;
+        }
+        
+        //Remove the oldest slot        
+        if((iterData = dataMap.find(key)) == dataMap.end()) {
+            int oldUtc;
+            while(!pq.empty()){            
+                oldUtc = pq.top();
+                pq.pop();
+            
+                //Remove the slot
+                iterTime = timeMap.find(oldUtc);            
+                if((iterData = dataMap.find(iterTime->second)) != dataMap.end()) {
+                    dataMap.erase(iterData);
+                    timeMap.erase(iterTime);
+                    break;
+                }
+                timeMap.erase(iterTime);
+            }
+        }
+        
+        //Insert the key & value
+        dataMap[key] = value;
+        timeMap[utc] = key;
+        KeyTimeMap[key] = utc;
+        pq.push(utc);
     }
 };
 
@@ -155,8 +218,23 @@ void Test_AM_LRUCache()
 {
     LOGD("[CPP] %s\n", __TIME__);
 
-    LRUCache *lrucache = new LRUCache(2);    
-    delete lrucache;
+    int val;
+    LRUCache *lRUCache = new LRUCache(2);
+    lRUCache->put(1, 1); // cache is {1=1}
+    lRUCache->put(2, 2); // cache is {1=1, 2=2}
+    val = lRUCache->get(1);    // return 1
+    LOGD("Exp: 1, Val: %d\n", val);
+    lRUCache->put(3, 3); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}
+    lRUCache->get(2);    // returns -1 (not found)
+    LOGD("Exp: -1, Val: %d\n", val);       
+    lRUCache->put(4, 4); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}
+    lRUCache->get(1);    // return -1 (not found)
+    LOGD("Exp: -1, Val: %d\n", val);
+    lRUCache->get(3);    // return 3
+    LOGD("Exp: 3, Val: %d\n", val);
+    lRUCache->get(4);    // return 4    
+    LOGD("Exp: 4, Val: %d\n", val);
+    delete lRUCache;
 }
 
 #endif// _CPPVERSION_
