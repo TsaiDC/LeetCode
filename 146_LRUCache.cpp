@@ -133,7 +133,7 @@ void Test_AM_LRUCache()
 /*
 
 */
-
+#if 0 //NG
 class LRUCache {
 public:
     unordered_map<int, int>dataMap; //Key,  Value
@@ -207,6 +207,109 @@ public:
     }
 };
 
+#endif //NG
+
+/*
+Ref Solution:  Double Linked list + hashmap
+Runtime: 736 ms, faster than 26.41% of C++ online submissions for LRU Cache.
+Memory Usage: 165.2 MB, less than 71.09% of C++ online submissions for LRU Cache.
+*/
+typedef struct DLinkNode_T{
+    int key;
+    int value;
+    struct DLinkNode_T* prev;
+    struct DLinkNode_T* next;
+    DLinkNode_T():prev(NULL), next(NULL){}
+    DLinkNode_T(int k, int v): key(k), value(v), prev(NULL), next(NULL) {}
+}DLinkNode;
+
+class LRUCache {
+private:
+    DLinkNode* head;
+    DLinkNode* tail;
+    int mSize;
+    int mCapacity;
+    unordered_map<int, DLinkNode*> umap;
+    
+    void addNode(DLinkNode* node) {
+        node->prev = head;
+        node->next = head->next;
+        
+        head->next->prev = node;
+        head->next = node;
+    }
+    
+    void removeNode(DLinkNode* node) {
+        DLinkNode* prev = node->prev;
+        DLinkNode* next = node->next;
+        
+        prev->next = next;
+        next->prev = prev;
+    }
+    
+    void moveToHead(DLinkNode* node) {
+        removeNode(node);
+        addNode(node);
+    }
+    
+    DLinkNode* popTail() {
+        DLinkNode* res = tail->prev;
+        removeNode(res);
+        return res;
+    }
+    
+public:
+    ~LRUCache() {
+        delete head;
+        delete tail;
+    }
+    
+    LRUCache(int capacity) {
+        mSize = 0;
+        mCapacity = capacity;
+        head = new DLinkNode();
+        tail = new DLinkNode();
+        head->next = tail;
+        tail->prev = head;        
+    }
+    
+    int get(int key) {
+        unordered_map<int, DLinkNode*>::iterator it;
+        if((it = umap.find(key)) != umap.end()) {
+            DLinkNode* node = it->second;
+            moveToHead(node);
+            return node->value;
+        }
+        
+        return -1;
+    }
+    
+    void put(int key, int value) {
+        DLinkNode* node;
+        unordered_map<int, DLinkNode*>::iterator it;
+        
+        if((it = umap.find(key)) != umap.end()) {
+            DLinkNode* node = it->second;
+            node->value = value;
+            moveToHead(node);
+        }
+        else {
+            DLinkNode* newNode = new DLinkNode(key,value);
+            umap[key] = newNode;
+            addNode(newNode);
+            ++mSize;
+            
+            if(mSize > mCapacity) {
+                DLinkNode* oldTail = popTail();
+                it = umap.find(oldTail->key);
+                umap.erase(it);
+                --mSize;
+                delete oldTail;
+            }
+        }
+    }
+
+};
 /**
  * Your LRUCache object will be instantiated and called as such:
  * LRUCache* obj = new LRUCache(capacity);
@@ -225,14 +328,14 @@ void Test_AM_LRUCache()
     val = lRUCache->get(1);    // return 1
     LOGD("Exp: 1, Val: %d\n", val);
     lRUCache->put(3, 3); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}
-    lRUCache->get(2);    // returns -1 (not found)
+    val = lRUCache->get(2);    // returns -1 (not found)
     LOGD("Exp: -1, Val: %d\n", val);       
     lRUCache->put(4, 4); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}
-    lRUCache->get(1);    // return -1 (not found)
+    val = lRUCache->get(1);    // return -1 (not found)
     LOGD("Exp: -1, Val: %d\n", val);
-    lRUCache->get(3);    // return 3
+    val = lRUCache->get(3);    // return 3
     LOGD("Exp: 3, Val: %d\n", val);
-    lRUCache->get(4);    // return 4    
+    val = lRUCache->get(4);    // return 4    
     LOGD("Exp: 4, Val: %d\n", val);
     delete lRUCache;
 }
