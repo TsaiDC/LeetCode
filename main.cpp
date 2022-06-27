@@ -342,7 +342,7 @@ int main()
     Test_detectCycle();
 #endif
 
-#if 1
+#if 0
 //#146
     Test_AM_LRUCache();
 #endif
@@ -610,6 +610,11 @@ int main()
 #if 0
 //#1891
     Test_FB_maxLength();
+#endif
+
+#if 1
+//#2104
+    Test_AM_subArrayRanges();
 #endif
 
 #if 0
