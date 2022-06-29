@@ -7,6 +7,7 @@
 #include <vector>
 #include <queue>
 #include <map>
+#include <stack>
 #include <unordered_map>
 
 #include "apiheader.h"
@@ -107,20 +108,110 @@ void Test_AM_subArrayRanges()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Ref Solution.
+Runtime: 48 ms, faster than 57.40% of C++ online submissions for Sum of Subarray Ranges.
+Memory Usage: 11.4 MB, less than 24.40% of C++ online submissions for Sum of Subarray Ranges.
 */
 class Solution {
 public:
     long long subArrayRanges(vector<int>& nums) {
-        return 0;        
+        int n = nums.size();
+        long long ret = 0;
+        stack<int>Stack;
+  
+        vector<int>nextSmaller(n,n);
+        for(int i=0; i<n; ++i) {
+            while(!Stack.empty() && nums[Stack.top()] >= nums[i])
+            {
+                nextSmaller[Stack.top()] = i;
+                Stack.pop();
+            }
+            Stack.push(i);
+        }
+        
+        while(!Stack.empty()) Stack.pop();
+        vector<int>preSmaller(n, -1);
+        for(int i=n-1; i>=0; --i) {
+            while(!Stack.empty() && nums[Stack.top()] > nums[i])
+            {
+                preSmaller[Stack.top()] = i;
+                Stack.pop();
+            }
+            Stack.push(i);
+        }
+        
+        while(!Stack.empty()) Stack.pop();
+        vector<int>nextGreater(n, n);
+        for(int i=0; i<n; ++i) {
+            while(!Stack.empty() && nums[Stack.top()] <= nums[i])
+            {
+                nextGreater[Stack.top()] = i;
+                Stack.pop();
+            }
+            Stack.push(i);
+        }
+
+        while(!Stack.empty()) Stack.pop();
+        vector<int>preGreater(n, -1);
+        for(int i=n-1; i>=0; --i) {
+            while(!Stack.empty() && nums[Stack.top()] < nums[i])
+            {
+                preGreater[Stack.top()] = i;
+                Stack.pop();
+            }
+            Stack.push(i);
+        }        
+#if 0
+        printf("NextSmaller: ");
+        for(int i: nextSmaller) {
+            printf(" %d,", i);
+        }
+        printf("\n");
+        
+        printf("PreSmaller: ");
+        for(int i: preSmaller) {
+            printf(" %d,", i);
+        }
+        printf("\n");
+
+        printf("nextGreater: ");
+        for(int i: nextGreater) {
+            printf(" %d,", i);
+        }
+        printf("\n");
+        
+        printf("preGreater: ");
+        for(int i: preGreater) {
+            printf(" %d,", i);
+        }
+        printf("\n");      
+#endif
+        for(int i=0; i<n; ++i) {
+            int l = preGreater[i];
+            int r = nextGreater[i];
+            ret += (long long)nums[i]*(i-l)*(r-i);
+        }
+        for(int i=0; i<n; ++i) {
+            int l = preSmaller[i];
+            int r = nextSmaller[i];
+            ret -= (long long)nums[i]*(i-l)*(r-i);
+        }
+
+        return ret;
     }
 };
 
 void Test_AM_subArrayRanges()
 {
     LOGD("[CPP] %s\n", __TIME__);
+//    int arr1[] = {1,2,3};
+    int arr1[] = {1,3,3};
+    int n1 = sizeof(arr1)/sizeof(arr1[0]);
+    vector<int> input1(arr1, arr1+n1);
     Solution *solution = new Solution();
+    long long ans = solution->subArrayRanges(input1);
     delete solution;
+    LOGD("And: %lld\n", ans);
 }
 
 #endif// _CPPVERSION_
