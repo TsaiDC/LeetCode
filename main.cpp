@@ -582,6 +582,11 @@ int main()
     Test_shortestBridge();
 #endif
 
+#if 1
+//#973
+    Test_AM_kClosest();
+#endif
+
 #if 0
 //#1091
     Test_shortestPathBinaryMatrix();
@@ -612,7 +617,7 @@ int main()
     Test_FB_maxLength();
 #endif
 
-#if 1
+#if 0
 //#2104
     Test_AM_subArrayRanges();
 #endif

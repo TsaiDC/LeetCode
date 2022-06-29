@@ -205,7 +205,9 @@ void Test_maxAreaOfIsland();
 //708
 void Test_FB_insert();
 //934
-void Test_shortestBridge(); 
+void Test_shortestBridge();
+//973
+void Test_AM_kClosest();
 //1091
 void Test_shortestPathBinaryMatrix();
 //1554
