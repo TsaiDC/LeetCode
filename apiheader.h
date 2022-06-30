@@ -204,6 +204,8 @@ void Test_TaskScheduler();
 void Test_maxAreaOfIsland();
 //708
 void Test_FB_insert();
+//863
+void Test_AM_distanceK();
 //934
 void Test_shortestBridge();
 //973

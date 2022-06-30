@@ -577,12 +577,17 @@ int main()
     Test_FB_insert();
 #endif
 
+#if 1
+//#863
+    Test_AM_distanceK();
+#endif
+
 #if 0
 //#934
     Test_shortestBridge();
 #endif
 
-#if 1
+#if 0
 //#973
     Test_AM_kClosest();
 #endif
