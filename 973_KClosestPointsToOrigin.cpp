@@ -102,18 +102,57 @@ void Test_AM_kClosest()
 class Solution {
 public:
     vector< vector<int> > kClosest(vector< vector<int> >& points, int k) {
+        vector< vector<int> >ans;
+        int left = 0, right = points.size()-1, idx;
+        idx = getSortK(points, left, right-1, right);
+        LOGD("idx: %d\n", idx);
+        return ans;
+    }
+    
+    int getSortK(vector< vector<int> >& point, int i, int j, int k) {                
+        long long lengthK = getLength(point[k][0], point[k][1]);
         
+        while(i<j) {
+            while(getLength(point[i][0], point[i][1]) < lengthK && i<j) ++i;
+            while(getLength(point[j][0], point[j][1]) > lengthK && i<j) --j;
+            //Swap(i, k)
+            int x = point[i][0];
+            int y = point[i][1];
+            point[i][0] = point[k][0];
+            point[i][1] = point[k][1];
+            point[i][0] = x;
+            point[i][1] = y;
+        }
+        return i;
+    }
+    
+    long long getLength(int x, int y) {
+        return x*x+y*y;
     }
 };
 
 void Test_AM_kClosest()
 {
     LOGD("[CPP] %s\n", __TIME__);
-//    int arr1[] = {1,2,3};
-    int arr1[] = {1,3,3};
+    vector< vector<int> > ans;
+//    [[3,3],[5,-1],[-2,4]], k = 2
+    int arr1[] = {3,3};
     int n1 = sizeof(arr1)/sizeof(arr1[0]);
     vector<int> input1(arr1, arr1+n1);
-    Solution *solution = new Solution();    
+    int arr2[] = {5,-1};
+    int n2 = sizeof(arr2)/sizeof(arr2[0]);
+    vector<int> input2(arr2, arr2+n2);
+    int arr3[] = {-2,4};
+    int n3 = sizeof(arr3)/sizeof(arr3[0]);
+    vector<int> input3(arr3, arr3+n3);
+
+    vector< vector<int> > input;
+    input.push_back(input1);
+    input.push_back(input2);
+    input.push_back(input3);
+    
+    Solution *solution = new Solution();
+    ans = solution->kClosest(input, 2);
     delete solution;
 }
 
