@@ -212,6 +212,8 @@ void Test_shortestBridge();
 void Test_AM_kClosest();
 //1091
 void Test_shortestPathBinaryMatrix();
+//1268
+void Test_AM_suggestedProducts();
 //1554
 void Test_GG_differByOne();
 //1570

@@ -577,7 +577,7 @@ int main()
     Test_FB_insert();
 #endif
 
-#if 1
+#if 0
 //#863
     Test_AM_distanceK();
 #endif
@@ -595,6 +595,11 @@ int main()
 #if 0
 //#1091
     Test_shortestPathBinaryMatrix();
+#endif
+
+#if 1
+//#1268
+    Test_AM_suggestedProducts();
 #endif
 
 #if 0
