@@ -557,7 +557,7 @@ int main()
     Test_NextGreaterElmentII();
 #endif
 
-#if 1
+#if 0
 //#545
     Test_AM_boundaryOfBinaryTree();
 #endif
@@ -600,6 +600,11 @@ int main()
 #if 0
 //#1091
     Test_shortestPathBinaryMatrix();
+#endif
+
+#if 1
+//#1152
+    Test_AM_mostVisitedPattern();
 #endif
 
 #if 0
