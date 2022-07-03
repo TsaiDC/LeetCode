@@ -196,6 +196,8 @@ void Test_OnesAndZeros();
 void Test_totalHammingDistance();
 //503
 void Test_NextGreaterElmentII();
+//545
+void Test_AM_boundaryOfBinaryTree();
 //605
 void Test_canPlaceFlowers();
 //621
