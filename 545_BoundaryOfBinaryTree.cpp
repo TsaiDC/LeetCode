@@ -135,7 +135,9 @@ void Test_AM_boundaryOfBinaryTree()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Self Solution
+Runtime: 22 ms, faster than 19.98% of C++ online submissions for Boundary of Binary Tree.
+Memory Usage: 22.6 MB, less than 7.49% of C++ online submissions for Boundary of Binary Tree.
 */
 
 //Definition for a binary tree node. 
@@ -152,16 +154,85 @@ class Solution {
 public:
     vector<int> boundaryOfBinaryTree(TreeNode* root) {
         vector<int> ret;
+        vector<int>left;
+        vector<int>leaves;
+        stack<int>right;
+        unordered_map<TreeNode*,  int>map;
+
+        if(!root) return ret;
+
+        ret.push_back(root->val);
+        map[root] = 1;
+
         //Find left most
+        TreeNode* pLeft = root->left;
+        while (pLeft) {
+//            LOGD("Left: %d\n", pLeft->val);
+            map[pLeft] = 1;
+            left.push_back(pLeft->val);
+            pLeft = pLeft->left != NULL ? pLeft->left : pLeft->right;
+        }
+
         //Find leaves
+        TreeNode* pLeaf = root;
+        findLeaf(pLeaf, leaves, map);
+        
         //Find right most
+        TreeNode* pRight = root->right;
+        while (pRight) {
+            if(map.find(pRight)==map.end()) {
+//                LOGD("Right: %d\n", pRight->val);
+                map[pRight] = 1;
+                right.push(pRight->val);
+            }
+            pRight = pRight->right != NULL ? pRight->right : pRight->left;
+        }
+        
+        for(auto & p : left)
+            ret.push_back(p);
+        for(auto & p : leaves)
+            ret.push_back(p);
+        while(!right.empty()) {
+            ret.push_back(right.top());
+            right.pop();
+        }
+        
         return ret;
+    }
+    
+    void findLeaf(TreeNode* root, vector<int>& leaves, unordered_map<TreeNode*,int>& map) {
+        if(!root) return;        
+        if(root->left == NULL && root->right == NULL) {
+            if(map.find(root)==map.end()) {
+//                LOGD("Leaf: %d \n", root->val);
+                map[root] = 1;
+                leaves.push_back(root->val);
+            }
+        }
+        findLeaf(root->left, leaves, map);
+        findLeaf(root->right,leaves, map);
+    }
+    
+    void preOrder(TreeNode* root) {
+        if(!root) return;
+//        LOGD("%d \n", root->val);
+        preOrder(root->left);
+        preOrder(root->right);
     }
 };
 
 void Test_AM_boundaryOfBinaryTree()
 {
     LOGD("[CPP] %s\n", __TIME__);
+#if 0
+//Example 1
+    TreeNode* node3 = new TreeNode(3);
+    TreeNode* node4 = new TreeNode(4);
+    TreeNode* node2 = new TreeNode(2, node3, node4);
+    TreeNode* node1 = new TreeNode(1, NULL, node2);
+#endif
+
+#if 0
 //Example 2
     TreeNode* node4 = new TreeNode(4);
     TreeNode* node7 = new TreeNode(7);
@@ -173,11 +244,21 @@ void Test_AM_boundaryOfBinaryTree()
     TreeNode* node2 = new TreeNode(2, node4, node5);
     TreeNode* node3 = new TreeNode(3, node6, NULL);
     TreeNode* node1 = new TreeNode(1, node2, node3);
-    
+#endif
+
+#if 1
+    TreeNode* node1 = new TreeNode(1);
+#endif
+
     vector<int> ans;
     Solution *solution = new Solution();
+//    solution->preOrder(node1);
     ans = solution->boundaryOfBinaryTree(node1);
     delete solution;
+    
+    for(auto& p:ans) {
+        LOGD("Ans: %d\n", p);
+    }
 }
 
 #endif// _CPPVERSION_
