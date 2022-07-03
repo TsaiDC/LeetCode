@@ -112,21 +112,100 @@ void Test_AM_suggestedProducts()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Ref Solution, Trie
+Runtime: 1375 ms, faster than 7.82% of C++ online submissions for Search Suggestions System.
+Memory Usage: 590.2 MB, less than 5.45% of C++ online submissions for Search Suggestions System.
 */
+
+class TrieNode {
+public:
+    TrieNode* letter[26];
+    bool isEnd;
+    TrieNode(): isEnd(false) {        
+        for(int i=0; i<26; ++i) {
+            letter[i] = NULL;
+        }
+    }
+};
 
 class Solution {
 public:
+    TrieNode* pRoot = NULL;
     vector< vector<string> > suggestedProducts(vector<string>& products, string searchWord) {
+        vector< vector<string> > rets;        
+        pRoot = new TrieNode();
+        createTire(products, searchWord);
         
+        TrieNode* pPtr = pRoot;
+        string pre;
+        for(int i=0; i<searchWord.size(); ++i) {
+            char ch = searchWord[i];
+            if(pPtr->letter[ch - 'a'] == NULL) {
+                for(int j=i; j<searchWord.size(); ++j) {
+                    rets.push_back({});
+                }
+                break;
+            }
+            
+            string str;
+            vector< string > ret;
+            pPtr = pPtr->letter[ch - 'a'];
+            pre.push_back(ch);
+            dfs(pPtr, str, ret);
+
+            for(int j=0; j<ret.size(); ++j) {
+                ret[j] = pre + ret[j];
+            }
+            rets.push_back(ret);
+        }
+
+        return rets;
+    }
+
+    void createTire(vector<string>& products, string searchWord) {        
+        for(string str : products) {
+            TrieNode* pPtr = pRoot;
+            for(char ch : str) {                 
+                 if(pPtr->letter[ch - 'a'] == NULL) {
+                      pPtr->letter[ch - 'a'] = new TrieNode();
+                 }
+                 pPtr = pPtr->letter[ch - 'a'];
+            }
+            pPtr->isEnd = true;
+        }
+    }
+
+    void dfs(TrieNode* pRoot, string str, vector<string>& ret) {
+        if(ret.size() == 3) return; 
+        if(pRoot->isEnd) ret.push_back(str);
+        
+        for(int i=0; i<26; ++i) {
+            if(pRoot->letter[i] == NULL) continue;
+            str.push_back('a'+i);
+            dfs(pRoot->letter[i], str, ret);
+            str.pop_back();
+        }
     }
 };
 
 void Test_AM_suggestedProducts()
 {
-    LOGD("[CPP] %s\n", __TIME__);    
-    Solution *solution = new Solution();    
+    LOGD("[CPP] %s\n", __TIME__);
+    string searchWord = "mouse";
+    string arr1[] = {"mobile","mouse","moneypot","monitor","mousepad"};
+    int n1 = sizeof(arr1)/sizeof(arr1[0]);
+    vector<string> input1(arr1, arr1+n1);    
+    
+    vector< vector<string> > ans;
+    Solution *solution = new Solution();
+    ans = solution->suggestedProducts(input1, searchWord);
     delete solution;
+    
+    for(int i=0;i<ans.size(); ++i) {
+        for(int j=0; j<ans[i].size(); ++j) {
+            LOGD("(%d, %d) Ans: %s\n", i, j, ans[i][j].c_str());
+        }
+    }
 }
 
 #endif// _CPPVERSION_
