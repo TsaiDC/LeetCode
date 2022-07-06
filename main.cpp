@@ -582,6 +582,11 @@ int main()
     Test_FB_insert();
 #endif
 
+#if 1
+//#735
+    Test_AM_asteroidCollision();
+#endif
+
 #if 0
 //#863
     Test_AM_distanceK();
@@ -602,7 +607,7 @@ int main()
     Test_shortestPathBinaryMatrix();
 #endif
 
-#if 1
+#if 0
 //#1152
     Test_AM_mostVisitedPattern();
 #endif

@@ -85,7 +85,7 @@ public:
     }
     
     vector<string> mostVisitedPattern(vector<string>& username, vector<int>& timestamp, vector<string>& website) {
-        unordered_map<string, map<int, string>> users;
+        unordered_map<string, map<int, string> > users;
         // user name: <timestamp, website>
         unordered_map<string, int> visited;
         // count the time of visiting 3-sequence websites 

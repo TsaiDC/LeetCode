@@ -206,6 +206,8 @@ void Test_TaskScheduler();
 void Test_maxAreaOfIsland();
 //708
 void Test_FB_insert();
+//735
+void Test_AM_asteroidCollision();
 //863
 void Test_AM_distanceK();
 //934

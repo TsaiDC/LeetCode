@@ -132,7 +132,8 @@ class Solution {
 public:
     TrieNode* pRoot = NULL;
     vector< vector<string> > suggestedProducts(vector<string>& products, string searchWord) {
-        vector< vector<string> > rets;        
+        vector< vector<string> > rets;
+        vector<string> empty;
         pRoot = new TrieNode();
         createTire(products, searchWord);
         
@@ -142,7 +143,7 @@ public:
             char ch = searchWord[i];
             if(pPtr->letter[ch - 'a'] == NULL) {
                 for(int j=i; j<searchWord.size(); ++j) {
-                    rets.push_back({});
+                    rets.push_back(empty);
                 }
                 break;
             }
