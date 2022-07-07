@@ -582,7 +582,7 @@ int main()
     Test_FB_insert();
 #endif
 
-#if 1
+#if 0
 //#735
     Test_AM_asteroidCollision();
 #endif
@@ -615,6 +615,11 @@ int main()
 #if 0
 //#1268
     Test_AM_suggestedProducts();
+#endif
+
+#if 1
+//#1291
+    Test_AM_sequentialDigits();
 #endif
 
 #if 0
