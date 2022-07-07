@@ -8,6 +8,7 @@
 #include <queue>
 #include <map>
 #include <stack>
+#include <cstdlib> 
 #include <unordered_map>
 
 #include "apiheader.h"
@@ -101,21 +102,70 @@ void Test_AM_TEST()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Self Solution, Stack
+Runtime: 20 ms, faster than 59.32% of C++ online submissions for Asteroid Collision.
+Memory Usage: 17.5 MB, less than 85.05% of C++ online submissions for Asteroid Collision.
 */
 
 class Solution {
 public:
     vector<int> asteroidCollision(vector<int>& asteroids) {
-        
+        vector<int> ret;
+        bool isStore = false;
+        for(auto & a : asteroids) {            
+            if(ret.empty()) {
+                ret.push_back(a);
+                continue;
+            }
+            if((ret.back() < 0 && a<0) ||
+               (ret.back() > 0 && a>0) ||
+               (ret.back() < 0 && a>0)) {
+                ret.push_back(a);
+                continue;
+            }
+
+            //Only handle +,- (Go Right and Go Left)
+            isStore = false;
+            while(!ret.empty() && ret.back() > 0 && a < 0) {
+                if(ret.back() + a == 0) {                    
+                    isStore = false;
+                    ret.pop_back();
+                    break;
+                }
+                else if(ret.back() + a < 0) {
+                    ret.pop_back();
+                    isStore = true;
+                }
+                else {
+                    isStore = false;
+                    break;
+                }                    
+            }
+            if(isStore) {
+                ret.push_back(a);
+            }
+        }
+        return ret;
     }
 };
 
 void Test_AM_asteroidCollision()
 {
+    int arr1[] = {5,-5};
+//    int arr1[] = {5,10,-5};
+//    int arr1[] = {-2,-1,1,2};    //[-2,-1,1,2]
+    int n1 = sizeof(arr1)/sizeof(arr1[0]);
+    vector<int> input1(arr1, arr1+n1);
+
+    vector<int> ans;
     LOGD("[CPP] %s\n", __TIME__);
     Solution *solution = new Solution();
+    ans = solution->asteroidCollision(input1);
     delete solution;
+    
+    for(auto &a : ans) {
+        LOGD("Ans: %d\n", a);
+    }
 }
 
 #endif// _CPPVERSION_
