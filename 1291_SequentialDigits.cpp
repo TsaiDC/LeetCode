@@ -91,20 +91,51 @@ void Test_AM_sequentialDigits()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Ref. Self-Solution
+Runtime: 0 ms, faster than 100.00% of C++ online submissions for Sequential Digits.
+Memory Usage: 6.2 MB, less than 72.96% of C++ online submissions for Sequential Digits.
 */
 class Solution {
 public:
     vector<int> sequentialDigits(int low, int high) {
+        vector<int>ret;
+        int prefix = 12;
+        int data = prefix;
+        int add = 11;
         
+        while(data <= high) {
+            if(data%10 == 9) {
+                LOGD("%d\n", data);
+                if(data>= low && data<=high) {
+                    ret.push_back(data);
+                }
+                prefix = prefix%10 + 1 + prefix*10;
+                data = prefix;
+                add = add*10 + 1;
+                continue;
+            }
+            LOGD("%d\n", data);
+            if(data>= low && data<=high) {
+                ret.push_back(data);
+             }            
+            data +=add;
+        }
+        
+        return ret;
     }
 };
 
 void Test_AM_sequentialDigits()
 {
+    vector<int> ans;
     LOGD("[CPP] %s\n", __TIME__);
     Solution *solution = new Solution();
+    ans = solution->sequentialDigits(89, 234);
     delete solution;
+    
+    for(auto &a: ans) {
+        LOGD("ANS: %d\n", a);
+    }
 }
 
 #endif// _CPPVERSION_
