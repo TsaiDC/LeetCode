@@ -208,6 +208,8 @@ void Test_maxAreaOfIsland();
 void Test_FB_insert();
 //735
 void Test_AM_asteroidCollision();
+//767
+void Test_AM_reorganizeString();
 //863
 void Test_AM_distanceK();
 //934

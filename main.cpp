@@ -587,6 +587,11 @@ int main()
     Test_AM_asteroidCollision();
 #endif
 
+#if 1
+//#767
+    Test_AM_reorganizeString();
+#endif
+
 #if 0
 //#863
     Test_AM_distanceK();
@@ -617,7 +622,7 @@ int main()
     Test_AM_suggestedProducts();
 #endif
 
-#if 1
+#if 0
 //#1291
     Test_AM_sequentialDigits();
 #endif
