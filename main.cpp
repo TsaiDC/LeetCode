@@ -108,6 +108,11 @@ int main()
     Test_Amazon();
 #endif
 
+#if 1
+//#1
+    Test_AM_twoSum();
+#endif
+
 #if 0
 //#3
     Test_lengthOfLongestSubstring();
@@ -587,7 +592,7 @@ int main()
     Test_AM_asteroidCollision();
 #endif
 
-#if 1
+#if 0
 //#767
     Test_AM_reorganizeString();
 #endif

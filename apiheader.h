@@ -30,6 +30,8 @@ void Test_sortingList();
 
 //00
 void Test_Amazon();
+//1
+void Test_AM_twoSum();
 //11
 void Test_maxArea();
 //12

@@ -106,6 +106,11 @@ public:
 
 void Test_AM_TEST()
 {
+//    vector< vector<string> > ans;
+//    string arr1[] = {"eat","tea","tan","ate","nat","bat"};
+//    int n1 = sizeof(arr1)/sizeof(arr1[0]);
+//    vector<string> input1(arr1, arr1+n1);
+
     LOGD("[CPP] %s\n", __TIME__);
     Solution *solution = new Solution();
     delete solution;
