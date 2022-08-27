@@ -32,6 +32,8 @@ void Test_sortingList();
 void Test_Amazon();
 //1
 void Test_AM_twoSum();
+//4
+void Test_AM_findMedianSortedArrays();
 //11
 void Test_maxArea();
 //12

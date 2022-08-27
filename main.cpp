@@ -108,9 +108,14 @@ int main()
     Test_Amazon();
 #endif
 
-#if 1
+#if 0
 //#1
     Test_AM_twoSum();
+#endif
+
+#if 1
+//#4
+    Test_AM_findMedianSortedArrays();
 #endif
 
 #if 0
