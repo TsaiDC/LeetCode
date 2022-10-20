@@ -567,9 +567,14 @@ int main()
     Test_NextGreaterElmentII();
 #endif
 
-#if 1
+#if 0
 //#528
     Test_GG_pickIndex();
+#endif
+
+#if 1
+//#539
+    Test_GG_findMinDifference();
 #endif
 
 #if 0

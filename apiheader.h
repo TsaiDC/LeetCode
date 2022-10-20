@@ -200,6 +200,8 @@ void Test_OnesAndZeros();
 void Test_totalHammingDistance();
 //503
 void Test_NextGreaterElmentII();
+//539
+void Test_GG_findMinDifference();
 //545
 void Test_AM_boundaryOfBinaryTree();
 //528
