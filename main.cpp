@@ -113,7 +113,7 @@ int main()
     Test_AM_twoSum();
 #endif
 
-#if 1
+#if 0
 //#4
     Test_AM_findMedianSortedArrays();
 #endif
@@ -565,6 +565,11 @@ int main()
 #if 0
 //#503
     Test_NextGreaterElmentII();
+#endif
+
+#if 1
+//#528
+    Test_GG_pickIndex();
 #endif
 
 #if 0

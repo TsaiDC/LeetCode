@@ -202,6 +202,8 @@ void Test_totalHammingDistance();
 void Test_NextGreaterElmentII();
 //545
 void Test_AM_boundaryOfBinaryTree();
+//528
+void Test_GG_pickIndex();
 //605
 void Test_canPlaceFlowers();
 //621
