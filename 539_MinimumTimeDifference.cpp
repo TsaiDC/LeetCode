@@ -87,7 +87,38 @@ void Test_GG_findMinDifference()
 class Solution {
 public:
     int findMinDifference(vector<string>& timePoints) {
-        return 0;
+        //1. Sorting
+        vector<int> sortedTime;
+        
+        for(string s: timePoints) {
+            int val = toInt(s);
+            sortedTime.push_back(val);
+        }
+//        std::sort (sortedTime.begin(), sortedTime.end(), mycompare);
+        std::sort (sortedTime.begin(), sortedTime.end(), std::less<int>());
+        //2. Difference
+        int lastPos = sortedTime.size()-1;
+        int minDiff = (sortedTime[0] + 24*60) - sortedTime[lastPos];
+
+        for(int i=1; i<sortedTime.size(); ++i) {
+            if((sortedTime[i]) - (sortedTime[i-1]) < minDiff) {
+                minDiff = (sortedTime[i]) - (sortedTime[i-1]);
+            }
+            if(minDiff == 0) {
+                return minDiff;
+            }
+        }
+        
+        return minDiff;
+    }
+    
+    static int toInt(string s) {
+        int pos = s.find_first_of(":");
+        string hour = s.substr(0, pos);
+        string min = s.substr(pos+1);
+//        LOGD("H: %s, M: %s\n", hour.c_str(), min.c_str());
+        LOGD("H: %d, M: %d\n", atoi(hour.c_str()), atoi(min.c_str()));
+        return atoi(hour.c_str())*60 + atoi(min.c_str());
     }
 };
 
