@@ -592,7 +592,7 @@ int main()
     Test_TaskScheduler();
 #endif
 
-#if 1
+#if 0
 //#652
     Test_GG_findDuplicateSubtrees();
 #endif
@@ -680,6 +680,11 @@ int main()
 #if 0
 //#2104
     Test_AM_subArrayRanges();
+#endif
+
+#if 1
+//#2115
+    Test_GG_findAllRecipes();
 #endif
 
 #if 0
