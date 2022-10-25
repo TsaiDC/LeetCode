@@ -210,6 +210,8 @@ void Test_GG_pickIndex();
 void Test_canPlaceFlowers();
 //621
 void Test_TaskScheduler();
+//652
+void Test_GG_findDuplicateSubtrees();
 //695
 void Test_maxAreaOfIsland();
 //708

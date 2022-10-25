@@ -572,7 +572,7 @@ int main()
     Test_GG_pickIndex();
 #endif
 
-#if 1
+#if 0
 //#539
     Test_GG_findMinDifference();
 #endif
@@ -590,6 +590,11 @@ int main()
 #if 0
 //#621
     Test_TaskScheduler();
+#endif
+
+#if 1
+//#652
+    Test_GG_findDuplicateSubtrees();
 #endif
 
 #if 0

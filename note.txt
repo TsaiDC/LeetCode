@@ -1,0 +1,15 @@
+Vector
+
+Sort 用法
+    std::sort (sortedTime.begin(), sortedTime.end(), mycompare);
+    std::sort (sortedTime.begin(), sortedTime.end(), std::less<int>()); 小到大
+    
+    升序：std::sort(begin, end, less<Type>());
+    降序：std::sort(begin, end, greater<Type>());   
+    bool mycompare(int a, int b) {
+        return a > b; // 降序排列
+    }
+
+String:
+    找substr
+    int find_first_of("xx")
