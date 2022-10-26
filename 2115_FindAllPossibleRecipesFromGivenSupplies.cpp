@@ -125,9 +125,61 @@ void Test_GG_findAllRecipes()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Runtime
+899 ms
+Beats
+37.81%
 */
-#if 1 //Ref
+#if 1 //Ref 2
+class Solution {
+    public:
+    vector<string> findAllRecipes(vector<string>& recipes, 
+                                  vector< vector<string> >& ingredients, 
+                                  vector<string>& supplies) {
+
+        //1. construct the graph
+        unordered_map<string, vector<string> > graph;
+        unordered_map<string, int> inDegree;
+        vector<string>result;
+        for(int i=0; i<recipes.size(); ++i) {
+            string re = recipes[i];
+            for(string s : ingredients[i]) {
+                graph[s].push_back(re);
+                inDegree[re] +=1;
+            }
+        }
+        
+        //2 BFS
+        queue<string>Q;
+        for(string s: supplies) {
+            Q.push(s);
+        }
+        
+        unordered_set<string> rec (recipes.begin(), recipes.end());
+        
+        while(!Q.empty()) {
+            string s = Q.front();
+            Q.pop();
+            if(rec.count(s) != 0) {
+                result.push_back(s);
+            }
+            
+            if(graph.find(s) != graph.end()) {
+                for(string ne : graph[s]) {
+                    inDegree[ne] -= 1;
+                    if(inDegree[ne] == 0) {
+                        Q.push(ne);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+};
+#endif
+
+
+#if 0 //Ref 1
 class Solution {
     public:
     vector<string> findAllRecipes(vector<string>& recipes, 
