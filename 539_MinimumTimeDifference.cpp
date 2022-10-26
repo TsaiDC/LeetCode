@@ -95,7 +95,7 @@ public:
             sortedTime.push_back(val);
         }
 //        std::sort (sortedTime.begin(), sortedTime.end(), mycompare);
-        std::sort (sortedTime.begin(), sortedTime.end(), std::less<int>());
+//        std::sort (sortedTime.begin(), sortedTime.end(), std::less<int>());
         //2. Difference
         int lastPos = sortedTime.size()-1;
         int minDiff = (sortedTime[0] + 24*60) - sortedTime[lastPos];

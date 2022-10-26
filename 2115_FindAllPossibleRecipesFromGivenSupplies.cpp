@@ -7,7 +7,9 @@
 #include <vector>
 #include <stack>
 #include <map>
+#include <queue>
 #include <unordered_set>
+#include <unordered_map>
 
 
 #include "apiheader.h"
@@ -108,7 +110,8 @@ Each ingredients[i] does not contain any duplicate values.
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-char ** findAllRecipes(char ** recipes, int recipesSize, char *** ingredients, int ingredientsSize, int* ingredientsColSize, char ** supplies, int suppliesSize, int* returnSize){
+char ** findAllRecipes(char ** recipes, int recipesSize, char *** ingredients, int ingredientsSize, 
+                       int* ingredientsColSize, char ** supplies, int suppliesSize, int* returnSize){
 
 }
 
@@ -124,7 +127,47 @@ void Test_GG_findAllRecipes()
 /*
 
 */
+#if 1 //Ref
+class Solution {
+    public:
+    vector<string> findAllRecipes(vector<string>& recipes, 
+                                  vector< vector<string> >& ingredients, 
+                                  vector<string>& supplies) {
+        unordered_map<string, vector<string> > next;
+        unordered_map<string, int> indegree;
+        
+        for(int i=0; i<recipes.size(); ++i) {
+            for(int j=0; j<ingredients.size(); ++j) {
+                next[ingredients[i][j]].push_back(recipes[i]);
+                indegree[recipes[i]] +=1;
+            }
+        }
+        
+        unordered_set<string> wanted(recipes.begin(), recipes.end());        
+        queue<string> q;
+        for(string s:supplies)
+            q.push(s);
+        
+        vector<string>rets;
+        while(!q.empty()) {
+            string cur = q.front();
+            q.pop();
+            if(wanted.find(cur) != wanted.end()) {
+                rets.push_back(cur);
+            }
+            
+            for(auto x : next[cur]) {
+                indegree[x] -=1;
+                if(indegree[x] == 0)
+                    q.push(x);
+            }
+        }
+    }
 
+};
+#endif
+
+#if 0 //Self
 class Solution {
 public:
     vector<string> findAllRecipes(vector<string>& recipes, 
@@ -168,6 +211,7 @@ public:
         return ans;
     }
 };
+#endif
 
 void Test_GG_findAllRecipes()
 {
