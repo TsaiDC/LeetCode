@@ -683,6 +683,11 @@ int main()
 #endif
 
 #if 1
+//#2007
+    Test_GG_findOriginalArray();
+#endif
+
+#if 0
 //#2115
     Test_GG_findAllRecipes();
 #endif
