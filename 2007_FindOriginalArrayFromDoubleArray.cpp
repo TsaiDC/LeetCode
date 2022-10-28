@@ -10,6 +10,7 @@
 #include <queue>
 #include <unordered_set>
 #include <unordered_map>
+#include <algorithm>
 
 
 #include "apiheader.h"
@@ -100,7 +101,10 @@ void Test_GG_findOriginalArray()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Runtime
+948 ms
+Beats
+32.14%
 */
 
 //1 3 5 7, 2 6 10 14
@@ -119,14 +123,23 @@ public:
         for(int i : changed) {
             map[i] += 1;
         }
+        std::sort(changed.begin(), changed.end(), std::less<int>());
         for(int i : changed) {
-            if(map[i*2] > 0) {
+            if(i == 0) {                
+                if(map[i] >= 2) {
+                    map[i] -= 2;
+                    ans.push_back(i);
+                }
+                continue;                
+            }
+                            
+            if(map[i] > 0 && map[i*2] > 0) {
                 ans.push_back(i);
-                LOGD("Push: %d\n", i);
                 map[i*2] -= 1;
+                map[i] -= 1;
             }
         }
-        LOGD("S: %d, %d\n", ans.size(), changed.size());
+        
         if(ans.size() != changed.size()/2) {
             ans.clear();
         }
@@ -139,8 +152,11 @@ void Test_GG_findOriginalArray()
 {
     LOGD("[CPP] %s\n", __TIME__);    
     Solution *solution = new Solution();
-    int input1[] = {1,3,4,2,6,8 };
-    vector<int> v1(input1, input1+6);
+//    int input1[] = {1,3,4,2,6,8 };
+//    vector<int> v1(input1, input1+6);
+//    int input1[] = {6,3,0,1};
+    int input1[] = {0,0,2,4};
+    vector<int> v1(input1, input1+4);
     vector<int> ans = solution->findOriginalArray(v1);
     delete solution;
     
