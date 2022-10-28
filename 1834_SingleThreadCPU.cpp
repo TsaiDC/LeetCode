@@ -39,6 +39,9 @@ using namespace std;
 // Set Ref:
 // https://shengyu7697.github.io/std-unordered_set/
 //
+// Priority Queue:
+// https://yuihuang.com/cpp-stl-priority-queue/
+//
 
 /*
 https://leetcode.com/problems/single-threaded-cpu/
@@ -116,12 +119,41 @@ void Test_GG_getOrder()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Runtime
+1602 ms
+Beats
+17.63%
 */
+//[processing time, idx]
+typedef pair<long, long> PII;
 class Solution {
 public:
     vector<int> getOrder(vector<vector<int>>& tasks) {
         
+        for(int i=0; i<tasks.size(); i++) {
+            tasks[i].push_back(i);
+        }
+        
+        std:sort(tasks.begin(), tasks.end());
+        priority_queue<PII, vector<PII>, greater<> > pq;
+        
+        long curTime = 0;
+        vector<int>rets;
+        for(auto task:tasks) {
+            while(curTime < task[0] && !pq.empty()) {
+                rets.push_back(pq.top().second);
+                curTime += pq.top().first;
+                pq.pop();
+            }
+            curTime = max(curTime, (long)task[0]);
+            pq.push({task[1], task[2]});
+        }
+        
+        while(!pq.empty()) {
+            rets.push_back(pq.top().second);
+            pq.pop();
+        }
+        return rets;
     }
 };
 
