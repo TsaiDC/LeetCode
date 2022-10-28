@@ -672,6 +672,11 @@ int main()
     Test_FB_findBuildings();
 #endif
 
+#if 1
+//#1834
+    Test_GG_getOrder();
+#endif
+
 #if 0
 //#1891
     Test_FB_maxLength();
@@ -682,7 +687,7 @@ int main()
     Test_AM_subArrayRanges();
 #endif
 
-#if 1
+#if 0
 //#2007
     Test_GG_findOriginalArray();
 #endif

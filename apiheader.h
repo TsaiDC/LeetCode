@@ -242,6 +242,8 @@ void Test_FB_dotProduct();
 void Test_FB_lowestCommonAncestor();
 //1762
 void Test_FB_findBuildings();
+//1834
+void Test_GG_getOrder();
 //1891
 void Test_FB_maxLength();
 //2007
