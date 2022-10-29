@@ -1,5 +1,12 @@
 Vector
 
+    lower_bound：找出vector中「大於或等於」val的「最小值」的位置：
+        auto it = lower_bound(v.begin(), v.end(), val);
+    upper_bound：找出vector中「大於」val的「最小值」的位置：
+        auto it = upper_bound(v.begin(), v.end(), val);
+
+    [*]MAP 也可以用這二個api
+
 Sort 用法
     std::sort (sortedTime.begin(), sortedTime.end(), mycompare);
     std::sort (sortedTime.begin(), sortedTime.end(), std::less<int>()); 小到大
