@@ -637,6 +637,11 @@ int main()
     Test_shortestPathBinaryMatrix();
 #endif
 
+#if 1
+//#1146
+    Test_GG_SnapshotArray();
+#endif
+
 #if 0
 //#1152
     Test_AM_mostVisitedPattern();
@@ -672,7 +677,7 @@ int main()
     Test_FB_findBuildings();
 #endif
 
-#if 1
+#if 0
 //#1834
     Test_GG_getOrder();
 #endif
