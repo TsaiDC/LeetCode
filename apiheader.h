@@ -256,4 +256,6 @@ void Test_AM_subArrayRanges();
 void Test_GG_findAllRecipes();
 //2128
 void Test_GG_removeOnes();
+//2135
+void Test_GG_wordCount();
 #endif

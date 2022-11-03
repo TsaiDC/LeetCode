@@ -637,7 +637,7 @@ int main()
     Test_shortestPathBinaryMatrix();
 #endif
 
-#if 1
+#if 0
 //#1146
     Test_GG_SnapshotArray();
 #endif
@@ -705,6 +705,11 @@ int main()
 #if 0
 //#2128
     Test_GG_removeOnes();
+#endif
+
+#if 1
+//#2135
+    Test_GG_wordCount();
 #endif
 
     END = clock();

@@ -71,9 +71,11 @@ Explanation: The events go as follows:
 - Also at time = 1, the idle CPU starts processing task 0. Available tasks = {}.
 - At time = 2, task 1 is available to process. Available tasks = {1}.
 - At time = 3, task 2 is available to process. Available tasks = {1, 2}.
-- Also at time = 3, the CPU finishes task 0 and starts processing task 2 as it is the shortest. Available tasks = {1}.
+- Also at time = 3, the CPU finishes task 0 and starts processing task 2 as it is the 
+  shortest. Available tasks = {1}.
 - At time = 4, task 3 is available to process. Available tasks = {1, 3}.
-- At time = 5, the CPU finishes task 2 and starts processing task 3 as it is the shortest. Available tasks = {1}.
+- At time = 5, the CPU finishes task 2 and starts processing task 3 as it is the shortest.
+  Available tasks = {1}.
 - At time = 6, the CPU finishes task 3 and starts processing task 1. Available tasks = {}.
 - At time = 10, the CPU finishes task 1 and becomes idle.
 
@@ -135,7 +137,7 @@ public:
         }
         
         std:sort(tasks.begin(), tasks.end());
-        priority_queue<PII, vector<PII>, greater<> > pq;
+        priority_queue<PII, vector<PII>, greater<PII>> pq;
         
         long curTime = 0;
         vector<int>rets;
