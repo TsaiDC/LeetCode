@@ -120,20 +120,71 @@ void Test_GG_wordCount()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Time Limit Exceeded
 */
 class Solution {
 public:
     int wordCount(vector<string>& startWords, vector<string>& targetWords) {
+        int retVal = 0;
+#if 0        
+        for(string s : startWords) {
+            LOGD("Start: %s\n", s.c_str());
+        }
+        for(string s : targetWords) {
+            LOGD("Target: %s\n", s.c_str());
+        }
+#endif
+        //1. Add to map
+        unordered_set<string>uset;
+        for(string s : startWords) {
+            uset.insert(reArrange(s));
+        }
+        
+        //2. Check each string in targetWords
+        for(string s : targetWords) {
+            string tmpStr;
+            for(int i=0; i<s.length(); ++i) {
+                tmpStr = s;
+                tmpStr.erase(i, 1);                
+                if(uset.count(reArrange(tmpStr)) != 0) {
+                    retVal++;
+                    break;
+                }
+            }            
+        }
+        return retVal;
         
     }
+    
+    string reArrange(string str) {
+        string retStr;
+        int letters[26] = {0};
+        for(int i=0; i<str.length(); ++i) {
+            int askii = str.at(i) - 'a';
+            letters[askii]++;
+        }
+        for(int i=0; i<26; ++i) {
+            if(letters[i] == 0) continue;
+            string val = std::to_string(letters[i]);
+            char c = (char)(i+(int)'a');
+            retStr = retStr + val + c;
+        }
+        return retStr;
+    }
+        
 };
  
 void Test_GG_wordCount()
 {
-    LOGD("[CPP] %s\n", __TIME__);    
+    LOGD("[CPP] %s\n", __TIME__);
+    string start[] = {"ant","act","tack"};
+    string target[] = {"tack","act","acti"};
+    vector<string> startWords(start, start+3);
+    vector<string> targetWords(target, target+3);
     Solution *solution = new Solution();
-    delete solution;    
+    int ans = solution->wordCount(startWords, targetWords);
+    delete solution;
+    LOGD("Ans: %d\n", ans); //expect 3
 }
 
 #endif //_CPPVERSION_
