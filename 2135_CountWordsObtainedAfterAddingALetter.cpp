@@ -126,34 +126,30 @@ class Solution {
 public:
     int wordCount(vector<string>& startWords, vector<string>& targetWords) {
         int retVal = 0;
-#if 0        
-        for(string s : startWords) {
-            LOGD("Start: %s\n", s.c_str());
-        }
-        for(string s : targetWords) {
-            LOGD("Target: %s\n", s.c_str());
-        }
-#endif
+
         //1. Add to map
-        unordered_set<string>uset;
+        unordered_map<int, unordered_set<string>> umap;
         for(string s : startWords) {
-            uset.insert(reArrange(s));
+            umap[s.length()].insert(reArrange(s));
         }
-        
+
         //2. Check each string in targetWords
         for(string s : targetWords) {
+            auto it = umap.find(s.length()-1);
+            if(it == umap.end()){
+                continue;
+            }
             string tmpStr;
             for(int i=0; i<s.length(); ++i) {
                 tmpStr = s;
-                tmpStr.erase(i, 1);                
-                if(uset.count(reArrange(tmpStr)) != 0) {
+                tmpStr.erase(i, 1);
+                if((it->second).count(reArrange(tmpStr)) != 0) {
                     retVal++;
                     break;
                 }
             }            
         }
         return retVal;
-        
     }
     
     string reArrange(string str) {
@@ -171,9 +167,8 @@ public:
         }
         return retStr;
     }
-        
 };
- 
+
 void Test_GG_wordCount()
 {
     LOGD("[CPP] %s\n", __TIME__);
