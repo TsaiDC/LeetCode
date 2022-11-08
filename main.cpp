@@ -442,6 +442,11 @@ int main()
     Test_numSquares();
 #endif
 
+#if 1
+//#282
+    Test_GG_addOperators();
+#endif
+
 #if 0
 //#287
     Test_findDuplicate();
@@ -707,7 +712,7 @@ int main()
     Test_GG_removeOnes();
 #endif
 
-#if 1
+#if 0
 //#2135
     Test_GG_wordCount();
 #endif

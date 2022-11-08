@@ -150,6 +150,8 @@ void Test_FB_groupStrings();
 void Test_AM_minMeetingRooms();
 //279
 void Test_numSquares();
+//282
+void Test_GG_addOperators();
 //287
 void Test_findDuplicate();
 //299
