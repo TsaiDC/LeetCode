@@ -106,10 +106,45 @@ public:
     }
 };
 
+//typedef struct __attribute__((__packed__)) Test {
+typedef struct __attribute__((packed)) Test {
+//    uint16_t count;
+    uint32_t count;
+    uint32_t ID;
+}Test_t;
+
+//1. 4 Alignment
+//2. swap order for little-endian
+
 void Test_Amazon()
 {
     LOGD("%s\n", __TIME__);    
-    Solution *solution = new Solution();
-    solution->test();
-    delete solution;
+//    Solution *solution = new Solution();
+//    solution->test();
+//    delete solution;
+    unsigned char* pVal = (unsigned char*) malloc(sizeof(unsigned char)*20);
+    for(int i=0; i<20; ++i) {
+        pVal[i] = 0x0;
+    }
+    LOGD("%d, %d\n", sizeof(uint16_t), sizeof(Test_t));
+//    0x1, 0x0, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7
+    pVal[0] = 0x1;
+    
+    pVal[2] = 0x2;
+    pVal[3] = 0x3;
+    pVal[4] = 0x4;
+    pVal[5] = 0x5;
+    pVal[6] = 0x6;
+    pVal[7] = 0x7;
+    
+    for(int i=0; i<6; ++i) {
+        LOGD("%d \n", pVal[i]);
+    }
+    Test_t *pT = (Test_t*)pVal;
+    LOGD("Count: 0x%x, ID: 0x%x\n", pT->count, __builtin_bswap32(pT->ID));
+    LOGD("Count: 0x%x, ID: 0x%x\n", pT->count, pT->ID);
+    uint16_t *pCount = (uint16_t*) pVal;
+    uint32_t *pID = (uint32_t*)(pVal+sizeof(uint16_t));
+    LOGD("Count: 0x%x, ID: 0x%x\n", *pCount, *pID);
+    free(pVal);
 }

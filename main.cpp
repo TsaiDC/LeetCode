@@ -103,7 +103,7 @@ int main()
     Test_addTwoNumbers();
 #endif
 
-#if 0
+#if 1
 //#0
     Test_Amazon();
 #endif
@@ -442,7 +442,7 @@ int main()
     Test_numSquares();
 #endif
 
-#if 1
+#if 0
 //#282
     Test_GG_addOperators();
 #endif
