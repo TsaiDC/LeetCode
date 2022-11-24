@@ -103,7 +103,7 @@ int main()
     Test_addTwoNumbers();
 #endif
 
-#if 1
+#if 0
 //#0
     Test_Amazon();
 #endif
@@ -510,6 +510,11 @@ int main()
 #if 0
 //#366
     Test_GG_findLeaves();
+#endif
+
+#if 1
+//#370
+    Test_AM_getModifiedArray();
 #endif
 
 #if 0

@@ -178,6 +178,8 @@ void Test_IntersectionOfTwoArrays();
 void Test_GG_shouldPrintMessage();
 //366
 void Test_GG_findLeaves();
+//370
+void Test_AM_getModifiedArray();
 //378
 void Test_kthSmallest();
 //380
