@@ -622,7 +622,7 @@ int main()
     Test_AM_asteroidCollision();
 #endif
 
-#if 0
+#if 1
 //#767
     Test_AM_reorganizeString();
 #endif
