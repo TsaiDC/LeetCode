@@ -622,7 +622,7 @@ int main()
     Test_AM_asteroidCollision();
 #endif
 
-#if 1
+#if 0
 //#767
     Test_AM_reorganizeString();
 #endif
@@ -630,6 +630,11 @@ int main()
 #if 0
 //#863
     Test_AM_distanceK();
+#endif
+
+#if 1
+//#907
+    Test_AM_sumSubarrayMins();
 #endif
 
 #if 0

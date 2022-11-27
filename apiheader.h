@@ -226,6 +226,8 @@ void Test_AM_asteroidCollision();
 void Test_AM_reorganizeString();
 //863
 void Test_AM_distanceK();
+//907
+void Test_AM_sumSubarrayMins();
 //934
 void Test_shortestBridge();
 //973
