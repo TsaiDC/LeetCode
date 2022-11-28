@@ -632,9 +632,14 @@ int main()
     Test_AM_distanceK();
 #endif
 
-#if 1
+#if 0
 //#907
     Test_AM_sumSubarrayMins();
+#endif
+
+#if 1
+//#926
+    Test_AM_minFlipsMonoIncr();
 #endif
 
 #if 0

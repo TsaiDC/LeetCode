@@ -228,6 +228,8 @@ void Test_AM_reorganizeString();
 void Test_AM_distanceK();
 //907
 void Test_AM_sumSubarrayMins();
+//926
+void Test_AM_minFlipsMonoIncr();
 //934
 void Test_shortestBridge();
 //973
