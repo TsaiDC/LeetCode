@@ -101,13 +101,83 @@ void Test_AM_orangesRotting()
 #ifdef _CPPVERSION_
 //C++
 /*
+Self,
+Runtime
+25 ms
+Beats
+10.41%
 
+BFS
 */
 
 class Solution {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
-        return 0;
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<int>>record;
+        for(int i=0; i<m ; ++i) {
+            record.push_back(vector<int>(n, 0));
+        }
+        queue<pair<int,int>>Q1;
+        queue<pair<int,int>>Q2;
+        int min = 0;
+        int OneCount = 0;
+        int OneGet = 0;
+        
+        for(int i=0; i<m; ++i) {
+            for(int j=0; j<n; ++j) {
+                if(grid[i][j] == 2) {
+                    Q1.push({i,j});
+                }
+                else if(grid[i][j] == 1) {
+                    OneCount++;
+                }
+            }
+        }
+        
+        do {
+            while(!Q1.empty()) {
+                int i = Q1.front().first;
+                int j = Q1.front().second;
+                LOGD("%d, %d\n", i, j);
+                Q1.pop();
+                //Up
+                if(i-1 >= 0 && grid[i-1][j] == 1 && record[i-1][j] != 1) {
+                    Q2.push(std::make_pair(i-1, j));
+                    OneGet++;
+                    record[i-1][j] = 1;
+                }
+
+                //Down
+                if(i+1 < m && grid[i+1][j] == 1 && record[i+1][j] != 1) {
+                    Q2.push(std::make_pair(i+1, j));
+                    OneGet++;
+                    record[i+1][j] = 1;
+                }
+
+                //Left
+                if(j-1 >= 0 && grid[i][j-1] == 1 && record[i][j-1] != 1) {
+                    Q2.push(std::make_pair(i, j-1));
+                    OneGet++;
+                    record[i][j-1] = 1;
+                }
+                //Right
+                if(j+1 < n && grid[i][j+1] == 1 && record[i][j+1] != 1) {
+                    Q2.push(std::make_pair(i, j+1));
+                    OneGet++;
+                    record[i][j+1] = 1;
+                }
+            }
+            LOGD("------ Q2: %d\n", Q2.size());
+            if(!Q2.empty()) min++;
+            while(!Q2.empty()) {
+                Q1.push(Q2.front());
+                Q2.pop();
+            }
+        }while(!Q1.empty());
+        
+        return OneGet == OneCount ? min : -1;
     }
 };
 
@@ -117,10 +187,21 @@ void Test_AM_orangesRotting()
 //    string arr1[] = {"eat","tea","tan","ate","nat","bat"};
 //    int n1 = sizeof(arr1)/sizeof(arr1[0]);
 //    vector<string> input1(arr1, arr1+n1);
+    int length = 3;
+    int arr1[] = {2, 1, 1};
+    int arr2[] = {1, 1, 0};
+    int arr3[] = {0, 1, 1};
+
+    vector<vector<int>> input;
+    input.push_back(vector<int>(arr1, arr1+length));
+    input.push_back(vector<int>(arr2, arr2+length));
+    input.push_back(vector<int>(arr3, arr3+length));    
 
     LOGD("[CPP] %s\n", __TIME__);
     Solution *solution = new Solution();
+    int ans = solution->orangesRotting(input);
     delete solution;
+    LOGD("Ans: %d\n", ans);
 }
 
 #endif// _CPPVERSION_
