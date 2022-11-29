@@ -637,7 +637,7 @@ int main()
     Test_AM_sumSubarrayMins();
 #endif
 
-#if 1
+#if 0
 //#926
     Test_AM_minFlipsMonoIncr();
 #endif
@@ -650,6 +650,11 @@ int main()
 #if 0
 //#973
     Test_AM_kClosest();
+#endif
+
+#if 1
+//#994
+    Test_AM_orangesRotting();
 #endif
 
 #if 0

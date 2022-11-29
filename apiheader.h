@@ -234,6 +234,8 @@ void Test_AM_minFlipsMonoIncr();
 void Test_shortestBridge();
 //973
 void Test_AM_kClosest();
+//994
+void Test_AM_orangesRotting();
 //1091
 void Test_shortestPathBinaryMatrix();
 //1146
