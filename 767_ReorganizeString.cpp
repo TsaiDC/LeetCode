@@ -10,6 +10,7 @@
 #include <stack>
 #include <cstdlib> 
 #include <unordered_map>
+#include <algorithm>
 
 #include "apiheader.h"
 
@@ -92,6 +93,7 @@ Take 2 top freq char
 class Solution {
 public:
     string reorganizeString(string s) {
+#if 0
         unordered_map<char, int>count;
         for(auto ch : s)
             count[ch]++;
@@ -118,6 +120,7 @@ public:
                 pq.push(s);
         }
         return ret;
+#endif
     }
 };
 

@@ -95,25 +95,31 @@ void Test_AM_minFlipsMonoIncr()
 #ifdef _CPPVERSION_
 //C++
 /*
+Self.
+Dynamic Programming.
+Runtime
+112 ms
+Beats
+16.83%
 
+Thought:
+End with 0, End with 1
+DP: 00110
+End with 0: Change s[i] 1->0 ?  1 + Previous Ans dp[i-1][0] : Previous Ans dp[i-1][0]
+End with 1: Change s[i] 0->1 ?  1 + Min(dp[i-1][0], dp[i-1][1]) : Previous Ans, Min(dp[i-1][0], dp[i-1][1])
 */
 class Solution {
 public:
-    int minFlipsMonoIncr(string s) {
-        int OneCount = 0;
-        int ZeroCount = 0;
-        
-        for(char c : s) {
-            if(c == '1') {
-                OneCount++;
-            }
-            else {
-                if(OneCount > 0) {
-                    ZeroCount++;
-                }
-            }
+    int minFlipsMonoIncr(string s) {        
+        int dp[s.size()][2];
+        dp[0][0] = s.at(0) == '0' ? 0 : 1;
+        dp[0][1] = s.at(0) == '1' ? 0 : 1;
+
+        for(int i=1; i < s.size(); ++i) {
+            dp[i][0] = s.at(i) == '0' ? dp[i-1][0] : 1 + dp[i-1][0];
+            dp[i][1] = s.at(i) == '1' ? min(dp[i-1][0], dp[i-1][1]) : min(dp[i-1][0], dp[i-1][1]) + 1;
         }
-        return min(OneCount, ZeroCount);
+        return min(dp[s.size()-1][0], dp[s.size()-1][1]);
     }
 };
 

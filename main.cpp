@@ -512,7 +512,7 @@ int main()
     Test_GG_findLeaves();
 #endif
 
-#if 1
+#if 0
 //#370
     Test_AM_getModifiedArray();
 #endif

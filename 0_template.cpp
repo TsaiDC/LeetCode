@@ -9,6 +9,7 @@
 #include <map>
 #include <stack>
 #include <unordered_map>
+#include <algorithm>
 
 #include "apiheader.h"
 
