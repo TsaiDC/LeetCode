@@ -682,7 +682,7 @@ int main()
     Test_AM_sequentialDigits();
 #endif
 
-#if 1
+#if 0
 //#1492
     Test_AM_kthFactor();
 #endif
@@ -690,6 +690,11 @@ int main()
 #if 0
 //#1554
     Test_GG_differByOne();
+#endif
+
+#if 1
+//#1567
+    Test_AM_getMaxLen();
 #endif
 
 #if 0

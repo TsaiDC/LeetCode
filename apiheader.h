@@ -250,6 +250,8 @@ void Test_AM_sequentialDigits();
 void Test_AM_kthFactor();
 //1554
 void Test_GG_differByOne();
+//1567
+void Test_AM_getMaxLen();
 //1570
 void Test_FB_dotProduct();
 //1650
