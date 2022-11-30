@@ -246,6 +246,8 @@ void Test_AM_mostVisitedPattern();
 void Test_AM_suggestedProducts();
 //1291
 void Test_AM_sequentialDigits();
+//1492
+void Test_AM_kthFactor();
 //1554
 void Test_GG_differByOne();
 //1570

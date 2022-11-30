@@ -652,7 +652,7 @@ int main()
     Test_AM_kClosest();
 #endif
 
-#if 1
+#if 0
 //#994
     Test_AM_orangesRotting();
 #endif
@@ -680,6 +680,11 @@ int main()
 #if 0
 //#1291
     Test_AM_sequentialDigits();
+#endif
+
+#if 1
+//#1492
+    Test_AM_kthFactor();
 #endif
 
 #if 0
