@@ -101,6 +101,41 @@ void Test_AM_maxProfit()
 #endif// _CVERSION_
 
 #ifdef _CPPVERSION_
+
+// OJ: https://leetcode.com/contest/weekly-contest-214/problems/sell-diminishing-valued-colored-balls/
+// Author: github.com/lzl124631x
+// Time: O(Nlog(max(A)))
+// Space: O(N)
+class Solution {
+    map<int, int, greater<int>> m;
+    bool valid(int M, int T) {
+        for (auto &[n , cnt] : m) {
+            if (n <= M) break;
+            T -= (long)cnt * (n - M);
+            if (T <= 0) return true;
+        }
+        return T <= 0;
+    }
+public:
+    int maxProfit(vector<int>& A, int T) {
+        long ans = 0, mod = 1e9+7, L = 0, R = *max_element(begin(A), end(A));
+        for (int n : A) m[n]++;
+        while (L <= R) {
+            long M = (L + R) / 2;
+            if (valid(M, T)) L = M + 1;
+            else R = M - 1;
+        }
+        for (auto &[n , cnt] : m) {
+            if (n <= L) break;
+            T -= cnt * (n - L);
+            ans = (ans + (n + L + 1) * (n - L) / 2 % mod * cnt % mod) % mod;
+        }
+        if (T) ans = (ans + L * T % mod) % mod;
+        return ans;
+    }
+};
+
+#if 0
 //C++
 /*
 Self,
@@ -116,9 +151,8 @@ public:
         int count = orders;
         priority_queue<int> pq;
         for(int i : inventory)
-            pq.push(i);
-        
-
+            pq.push(i);        
+    
         int tmp;
         while(!pq.empty() && count > 0) {
             tmp = pq.top();
@@ -126,17 +160,15 @@ public:
             //1, 2, 3, 4, 5
             //1, 2  3, 4, 5
             //((5+1)*5)/2 - ((5-3) + 1)*2/2 = 15 - 3 = 12
+            // (5+3)*3/2 = 12
             if(pq.empty()) {
                 if(count>0) {
-//                    LOGD("Count: %d, %d\n", count, tmp);
-                    long valAll = ((tmp+1)*tmp)/2;
-                    long valFront = (((tmp-count) + 1) * (tmp-count))/2;
-                    ans = ans + (valAll - valFront);                    
+                    long valAll = count%2 == 0 ? (count/2) * (tmp + (tmp - count + 1 )) :
+                                                 ((tmp + (tmp - count + 1 ))/2)*count;
+                    ans = ans + valAll;                    
                     ans %= mod;
-//                    LOGD("all: %d, front: %d\n", valAll, valFront);
-//                    LOGD("Count: %ld, %d\n", ans);
+                    tmp-=count; 
                     count = 0;
-                    tmp-=count;
                 }
             }
             else {
@@ -153,6 +185,7 @@ public:
         return (int)ans;
     }
 };
+#endif
 
 void Test_AM_maxProfit()
 {
@@ -167,6 +200,7 @@ void Test_AM_maxProfit()
 //    int arr1[] = {3,5};
 //    int order = 6;
 //    vector<int> input(arr1, arr1+2);
+
     int arr1[] = {1000000000};
     int order = 1000000000;
     vector<int> input(arr1, arr1+1);
