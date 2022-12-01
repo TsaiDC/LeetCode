@@ -713,6 +713,11 @@ int main()
 #endif
 
 #if 0
+//#1730
+    Test_AM_getFood();
+#endif
+
+#if 0
 //#1762
     Test_FB_findBuildings();
 #endif

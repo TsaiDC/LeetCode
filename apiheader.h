@@ -258,6 +258,8 @@ void Test_FB_dotProduct();
 void Test_AM_maxProfit();
 //1650
 void Test_FB_lowestCommonAncestor();
+//1730
+void Test_AM_getFood();
 //1762
 void Test_FB_findBuildings();
 //1834
