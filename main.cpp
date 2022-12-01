@@ -692,7 +692,7 @@ int main()
     Test_GG_differByOne();
 #endif
 
-#if 1
+#if 0
 //#1567
     Test_AM_getMaxLen();
 #endif
@@ -700,6 +700,11 @@ int main()
 #if 0
 //#1570
     Test_FB_dotProduct();
+#endif
+
+#if 1
+//#1648
+    Test_AM_maxProfit();
 #endif
 
 #if 0

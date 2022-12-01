@@ -254,6 +254,8 @@ void Test_GG_differByOne();
 void Test_AM_getMaxLen();
 //1570
 void Test_FB_dotProduct();
+//1648
+void Test_AM_maxProfit();
 //1650
 void Test_FB_lowestCommonAncestor();
 //1762
