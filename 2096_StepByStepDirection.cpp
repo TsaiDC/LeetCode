@@ -97,7 +97,8 @@ void Test_GG_getDirections()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Runtime: 373 ms Beats 10.31%
+Memory: 152 MB Beats 13.26%
 */
 
 /**
@@ -115,20 +116,129 @@ struct TreeNode {
 class Solution {
 public:
     string getDirections(TreeNode* root, int startValue, int destValue) {
+        //1 find the parent
+        if (root == NULL) {
+            return "";
+        }
+
+        unordered_map<TreeNode*, TreeNode*> NodeParentMap;
+        stack<TreeNode*> startStk;
+        stack<TreeNode*> destStk;
+        queue<TreeNode*> nodeQ;
+        TreeNode* pStart = NULL;
+        TreeNode* pDest = NULL;
+        nodeQ.push(root);
+        NodeParentMap[root] = NULL;
+
+        while (!nodeQ.empty()) {
+            TreeNode* pNode = nodeQ.front();
+            nodeQ.pop();
+
+            if(pNode == NULL) {
+                continue;
+            }
+            if (pNode->val == startValue) {
+                pStart = pNode;
+            }
+            if (pNode->val == destValue) {
+                pDest = pNode;
+            }
+
+            if(pNode->left != NULL) {
+                nodeQ.push(pNode->left);
+                NodeParentMap[pNode->left] = pNode;
+            }
+            if(pNode->right != NULL) {
+                nodeQ.push(pNode->right);
+                NodeParentMap[pNode->right] = pNode;
+            }
+            if (pStart != NULL && pDest != NULL) {
+                break;
+            }
+        }
+
+//        LOGD("Start Node: %d, Dest Node: %d\n", pStart->val, pDest->val);
+
+        //2 Trace back
+        TreeNode* pParent = NULL;
+        pParent = pStart;
+        while(pParent != NULL) {
+//            LOGD("S: %d\n", pParent->val);
+            startStk.push(pParent);
+            pParent = NodeParentMap[pParent];
+        }
+
+        pParent = pDest;
+        while(pParent != NULL) {
+//            LOGD("D: %d\n", pParent->val);
+            destStk.push(pParent);
+            pParent = NodeParentMap[pParent];
+        }
+
+        //3 Find the common root
+        while(startStk.top()->val == destStk.top()->val) {            
+            startStk.pop();
+            destStk.pop();
+            if (startStk.empty() || destStk.empty()) {
+                break;
+            }
+        }
+        if (startStk.empty()) {
+            pParent = NodeParentMap[destStk.top()];
+        }
+        else {
+            pParent = NodeParentMap[startStk.top()];
+        }
         
+//        LOGD("Common Root: %d\n", pParent->val);
+
+        string strResult;
+        //4 Path of Dest to common root
+        TreeNode* pTmpNode = pDest;
+        int tmpVal = pDest->val;
+        while(pTmpNode != NULL &&
+              pTmpNode->val != pParent->val) {
+            pTmpNode = NodeParentMap[pTmpNode];
+            if(pTmpNode->left && pTmpNode->left->val == tmpVal) {
+                strResult+="L";
+            }
+            if(pTmpNode->right && pTmpNode->right->val == tmpVal) {
+                strResult+="R";
+            }
+            tmpVal = pTmpNode->val;
+        }
+//        LOGD("L: %s\n", strResult.c_str());
+
+        //5 Path of Start to common root       
+        pTmpNode = pStart;
+        while(pTmpNode != NULL && 
+              pTmpNode->val != pParent->val) {
+            pTmpNode = NodeParentMap[pTmpNode];
+            strResult+="U";
+        }
+//        LOGD("R: %s\n", strResult.c_str());
+        reverse(strResult.begin(), strResult.end());
+        return strResult;        
     }
 };
 
 void Test_GG_getDirections()
 {
-//    vector< vector<string> > ans;
-//    string arr1[] = {"eat","tea","tan","ate","nat","bat"};
-//    int n1 = sizeof(arr1)/sizeof(arr1[0]);
-//    vector<string> input1(arr1, arr1+n1);
+    //3, 6
+//    TreeNode* pRoot = new TreeNode(5, 
+//                                   new TreeNode(1, new TreeNode(3), NULL),
+//                                   new TreeNode(2, new TreeNode(6), new TreeNode(4)));
+
+    //1, 2
+    TreeNode* pRoot = new TreeNode(2, 
+                                   new TreeNode(1), NULL);
 
     LOGD("[CPP] %s\n", __TIME__);
     Solution *solution = new Solution();
+//    string str = solution->getDirections(pRoot, 3, 6);
+    string str = solution->getDirections(pRoot, 1, 2);
     delete solution;
+    LOGD("Ans: %s\n", str.c_str());
 }
 
 #endif// _CPPVERSION_
