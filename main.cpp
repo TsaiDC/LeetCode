@@ -741,7 +741,13 @@ int main()
     Test_GG_findOriginalArray();
 #endif
 
-#ifdef _2096_
+#if 1
+//#2034
+    Test_GG_StockPrice();
+#endif
+
+#if 0
+//#2096
     Test_GG_getDirections();
 #endif
 

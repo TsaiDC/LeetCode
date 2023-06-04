@@ -269,8 +269,11 @@ void Test_GG_getOrder();
 void Test_FB_maxLength();
 //2007
 void Test_GG_findOriginalArray();
+//2034
+#define _2034_
+void Test_GG_StockPrice();
 //2096
-#define _2096_
+//#define _2096_
 void Test_GG_getDirections();
 //2104, monotoic stack, ref 907, 1856, 2104
 void Test_AM_subArrayRanges();
