@@ -1,5 +1,5 @@
 //g++ *.cpp -o tool
-
+#ifdef _1648_
 #include <iostream>
 #include <stdlib.h>
 #include <stdio.h>
@@ -211,3 +211,4 @@ void Test_AM_maxProfit()
 }
 
 #endif// _CPPVERSION_
+#endif// _1648_

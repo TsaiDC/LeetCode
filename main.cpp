@@ -702,8 +702,7 @@ int main()
     Test_FB_dotProduct();
 #endif
 
-#if 1
-//#1648
+#ifdef _1648_
     Test_AM_maxProfit();
 #endif
 
@@ -740,6 +739,10 @@ int main()
 #if 0
 //#2007
     Test_GG_findOriginalArray();
+#endif
+
+#ifdef _2096_
+    Test_GG_getDirections();
 #endif
 
 #if 0

@@ -255,6 +255,7 @@ void Test_AM_getMaxLen();
 //1570
 void Test_FB_dotProduct();
 //1648
+//#define _1648_
 void Test_AM_maxProfit();
 //1650
 void Test_FB_lowestCommonAncestor();
@@ -268,6 +269,9 @@ void Test_GG_getOrder();
 void Test_FB_maxLength();
 //2007
 void Test_GG_findOriginalArray();
+//2096
+#define _2096_
+void Test_GG_getDirections();
 //2104, monotoic stack, ref 907, 1856, 2104
 void Test_AM_subArrayRanges();
 //2115,

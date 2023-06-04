@@ -13,6 +13,7 @@
 
 #include "apiheader.h"
 
+#ifdef _0000_
 using namespace std;
 
 #define NONE "\033[m"
@@ -85,7 +86,7 @@ asteroids[i] != 0
 
 */
 
-void Test_AM_TEST()
+void Test_GG_TEST()
 {
     LOGD("[C] %s\n", __TIME__);
 }
@@ -105,7 +106,7 @@ public:
     }
 };
 
-void Test_AM_TEST()
+void Test_GG_TEST()
 {
 //    vector< vector<string> > ans;
 //    string arr1[] = {"eat","tea","tan","ate","nat","bat"};
@@ -118,3 +119,4 @@ void Test_AM_TEST()
 }
 
 #endif// _CPPVERSION_
+#endif//_0000_
