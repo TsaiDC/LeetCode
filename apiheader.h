@@ -267,10 +267,13 @@ void Test_FB_findBuildings();
 void Test_GG_getOrder();
 //1891
 void Test_FB_maxLength();
+//1937
+#define _1937_
+void Test_GG_maxPoints();
 //2007
 void Test_GG_findOriginalArray();
 //2034
-#define _2034_
+//#define _2034_
 void Test_GG_StockPrice();
 //2096
 //#define _2096_

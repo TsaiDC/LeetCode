@@ -731,9 +731,9 @@ int main()
     Test_FB_maxLength();
 #endif
 
-#if 0
-//#2104
-    Test_AM_subArrayRanges();
+#if 1
+//#1937
+    Test_GG_maxPoints();
 #endif
 
 #if 0
@@ -741,7 +741,7 @@ int main()
     Test_GG_findOriginalArray();
 #endif
 
-#if 1
+#if 0
 //#2034
     Test_GG_StockPrice();
 #endif
@@ -749,6 +749,11 @@ int main()
 #if 0
 //#2096
     Test_GG_getDirections();
+#endif
+
+#if 0
+//#2104
+    Test_AM_subArrayRanges();
 #endif
 
 #if 0
