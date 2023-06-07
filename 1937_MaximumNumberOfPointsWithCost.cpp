@@ -130,19 +130,69 @@ void Test_GG_maxPoints()
 class Solution {
 public:
     long long maxPoints(vector<vector<int>>& points) {
-        
+        vector<long long> vals;
+        for(int i: points[0]) {
+            vals.push_back(0);
+        }
+
+        vector<int>tmpMax;
+        for(int i=1; i<points.size(); ++i) {
+            for(int j=0; j<points[i].size(); ++j) {
+                for(int k=0; k<points[i].size(); ++k) {
+                    int tmp = points[i][j] + points[i-1][k] - std::abs(j-k);
+                    tmpMax.push_back(tmp);
+                }
+                int max = *max_element(tmpMax.begin(), tmpMax.end());
+                tmpMax.clear();
+                points[i][j] = max;
+                LOGD("Update %d,%d = %d\n", i, j, max);
+            }
+        }
+            
+
+        long long result = *max_element(vals.begin(), vals.end());
+        return result;
+    }
+    
+    void dump(vector<long long>& vals) {
+        cout<<"Dump: ";
+        for(long long i : vals) {
+            cout<<i<<" ";
+        }
+        cout<<endl;
+    }
+    
+    void dump(vector<int>& vals) {
+        cout<<"Dump: ";
+        for(int i : vals) {
+            cout<<i<<" ";
+        }
+        cout<<endl;
     }
 };
 
 void Test_GG_maxPoints()
 {
-//    vector< vector<string> > ans;
-//    string arr1[] = {"eat","tea","tan","ate","nat","bat"};
-//    int n1 = sizeof(arr1)/sizeof(arr1[0]);
-//    vector<string> input1(arr1, arr1+n1);
+    vector< vector<int> > input;
+    int arr1[] = {1,2,3};
+    int n1 = sizeof(arr1)/sizeof(arr1[0]);
+    vector<int> input1(arr1, arr1+n1);
+    input.push_back(input1);
+
+    int arr2[] = {1,5,1};
+    int n2 = sizeof(arr2)/sizeof(arr2[0]);
+    vector<int> input2(arr2, arr2+n2);
+    input.push_back(input2);
+    
+    int arr3[] = {3,1,1};
+    int n3 = sizeof(arr3)/sizeof(arr3[0]);
+    vector<int> input3(arr3, arr3+n3);
+    input.push_back(input3);
 
     LOGD("[CPP] %s\n", __TIME__);
     Solution *solution = new Solution();
+    long long ans = solution->maxPoints(input);
+    cout<<"Ans: "<< ans<<endl;
     delete solution;
 }
 
