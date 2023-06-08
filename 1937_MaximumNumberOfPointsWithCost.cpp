@@ -124,7 +124,8 @@ void Test_GG_maxPoints()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+2023/6/7
+Time Limit Exceeded
 */
 
 class Solution {
@@ -132,47 +133,48 @@ public:
     long long maxPoints(vector<vector<int>>& points) {
         vector<long long> vals;
         for(int i: points[0]) {
-            vals.push_back(0);
+            vals.push_back(i);
         }
-
-        vector<int>tmpMax;
+               
         for(int i=1; i<points.size(); ++i) {
-            for(int j=0; j<points[i].size(); ++j) {
-                for(int k=0; k<points[i].size(); ++k) {
-                    int tmp = points[i][j] + points[i-1][k] - std::abs(j-k);
-                    tmpMax.push_back(tmp);
-                }
-                int max = *max_element(tmpMax.begin(), tmpMax.end());
-                tmpMax.clear();
-                points[i][j] = max;
-                LOGD("Update %d,%d = %d\n", i, j, max);
-            }
-        }
-            
-
+            countMax(points[i], vals);
+        }         
         long long result = *max_element(vals.begin(), vals.end());
         return result;
     }
     
-    void dump(vector<long long>& vals) {
-        cout<<"Dump: ";
-        for(long long i : vals) {
-            cout<<i<<" ";
+    
+    void countMax(vector<int>& row, vector<long long>& vals) {
+        vector<long long>tmpMax;
+        vector<long long>tmpVals(vals);
+        for(int i=0; i<row.size(); ++i) {
+            for(int j=0; j<vals.size(); ++j) {
+               long long val = vals[j] + row[i] - std::abs(i-j);
+               tmpMax.push_back(val);
+            }
+            long long max = *max_element(tmpMax.begin(), tmpMax.end());
+            tmpVals[i] = max;
+            tmpMax.clear();
         }
-        cout<<endl;
+        vals.clear();
+        vals=tmpVals;
     }
     
-    void dump(vector<int>& vals) {
-        cout<<"Dump: ";
-        for(int i : vals) {
+    void dump(vector<int> v) {
+        for(int i: v)
             cout<<i<<" ";
-        }
+        cout<<endl;
+    }
+    void dump(vector<long long> v) {
+        for(long long i: v)
+            cout<<i<<" ";
         cout<<endl;
     }
 };
 
 void Test_GG_maxPoints()
 {
+#if 1 //Test 1, Ans: 9
     vector< vector<int> > input;
     int arr1[] = {1,2,3};
     int n1 = sizeof(arr1)/sizeof(arr1[0]);
@@ -188,6 +190,44 @@ void Test_GG_maxPoints()
     int n3 = sizeof(arr3)/sizeof(arr3[0]);
     vector<int> input3(arr3, arr3+n3);
     input.push_back(input3);
+#endif //Test 1
+
+#if 0 //Test 2, Ans: 11
+    vector< vector<int> > input;
+    int arr1[] = {1,5};
+    int n1 = sizeof(arr1)/sizeof(arr1[0]);
+    vector<int> input1(arr1, arr1+n1);
+    input.push_back(input1);
+
+    int arr2[] = {2,3};
+    int n2 = sizeof(arr2)/sizeof(arr2[0]);
+    vector<int> input2(arr2, arr2+n2);
+    input.push_back(input2);
+    
+    int arr3[] = {4, 2};
+    int n3 = sizeof(arr3)/sizeof(arr3[0]);
+    vector<int> input3(arr3, arr3+n3);
+    input.push_back(input3);
+#endif //Test 2
+
+
+#if 0 //Test 3, Ans: 11
+    vector< vector<int> > input;
+    int arr1[] = {1, 5};
+    int n1 = sizeof(arr1)/sizeof(arr1[0]);
+    vector<int> input1(arr1, arr1+n1);
+    input.push_back(input1);
+
+    int arr2[] = {3, 2};
+    int n2 = sizeof(arr2)/sizeof(arr2[0]);
+    vector<int> input2(arr2, arr2+n2);
+    input.push_back(input2);
+    
+    int arr3[] = {4, 2};
+    int n3 = sizeof(arr3)/sizeof(arr3[0]);
+    vector<int> input3(arr3, arr3+n3);
+    input.push_back(input3);
+#endif //Test 2
 
     LOGD("[CPP] %s\n", __TIME__);
     Solution *solution = new Solution();
