@@ -672,6 +672,11 @@ int main()
     Test_AM_mostVisitedPattern();
 #endif
 
+#if 1
+//#1218
+    Test_GG_longestSubsequence();
+#endif
+
 #if 0
 //#1268
     Test_AM_suggestedProducts();
@@ -682,7 +687,7 @@ int main()
     Test_AM_sequentialDigits();
 #endif
 
-#if 1
+#if 0
 //#1423
     Test_GG_maxScore();
 #endif

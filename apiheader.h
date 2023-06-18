@@ -242,12 +242,15 @@ void Test_shortestPathBinaryMatrix();
 void Test_GG_SnapshotArray();
 //1152
 void Test_AM_mostVisitedPattern();
+//1218
+#define _1218_
+void Test_GG_longestSubsequence();
 //1268
 void Test_AM_suggestedProducts();
 //1291
 void Test_AM_sequentialDigits();
 //1423
-#define _1423_
+//#define _1423_
 void Test_GG_maxScore();
 //1492
 void Test_AM_kthFactor();
