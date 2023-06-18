@@ -93,25 +93,71 @@ void Test_GG_TEST()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Time Limit Exceeded
 */
 
 class Solution {
 public:
     int longestSubsequence(vector<int>& arr, int difference) {
-        
+        vector<int>idx(arr.size());
+        int target = 0;
+        int i,j;
+        bool isFound;
+        for(i=0; i<arr.size(); ++i){            
+            target = arr[i] + difference;
+            isFound = false;
+            
+            for(j=i+1; j<arr.size(); ++j) {
+                if(arr[j] == target) {
+                    isFound = true;
+                    break;
+                }
+            }
+            
+            if(isFound) {
+                idx[i] = j;
+            }
+            else {
+                idx[i] = -1;
+            }            
+        }
+
+        int maxCount = 1;
+        int count = 0;
+        for(i=0;i<idx.size(); ++i) {            
+            if(idx[i]==-1) continue;
+            count = 1;            
+            for(j=idx[i]; j<idx.size();) {
+                count++;
+                if(idx[j] == -1) {                    
+                    break;
+                }
+                j=idx[j];
+            }
+
+            maxCount = maxCount < count ? count : maxCount;
+        }
+        return maxCount;
     }
 };
 
 void Test_GG_longestSubsequence()
 {
-//    vector< vector<string> > ans;
-//    string arr1[] = {"eat","tea","tan","ate","nat","bat"};
-//    int n1 = sizeof(arr1)/sizeof(arr1[0]);
-//    vector<string> input1(arr1, arr1+n1);
+//    int arr1[] = {1, 2, 3, 4};
+//    int diff = 1;
+
+//    int arr1[] = {1, 3, 5, 7};
+//    int diff = 1;
+    
+    int arr1[] = {1,5,7,8,5,3,4,2,1};
+    int diff = -2;
+    int n1 = sizeof(arr1)/sizeof(arr1[0]);
+    vector<int> input1(arr1, arr1+n1);
 
     LOGD("[CPP] %s\n", __TIME__);
     Solution *solution = new Solution();
+    int ans = solution->longestSubsequence(input1, diff);
+    LOGD("Ans: %d\n", ans);
     delete solution;
 }
 
