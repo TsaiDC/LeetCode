@@ -682,6 +682,11 @@ int main()
     Test_AM_sequentialDigits();
 #endif
 
+#if 1
+//#1423
+    Test_GG_maxScore();
+#endif
+
 #if 0
 //#1492
     Test_AM_kthFactor();
@@ -731,7 +736,7 @@ int main()
     Test_FB_maxLength();
 #endif
 
-#if 1
+#if 0
 //#1937
     Test_GG_maxPoints();
 #endif

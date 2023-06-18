@@ -246,6 +246,9 @@ void Test_AM_mostVisitedPattern();
 void Test_AM_suggestedProducts();
 //1291
 void Test_AM_sequentialDigits();
+//1423
+#define _1423_
+void Test_GG_maxScore();
 //1492
 void Test_AM_kthFactor();
 //1554
@@ -268,7 +271,7 @@ void Test_GG_getOrder();
 //1891
 void Test_FB_maxLength();
 //1937
-#define _1937_
+//#define _1937_
 void Test_GG_maxPoints();
 //2007
 void Test_GG_findOriginalArray();
