@@ -103,13 +103,56 @@ void Test_GG_longestStrChain()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Ref
+Runtime: 57 ms Beats 94.46%
+Memory: 23.3 MB Beats 35.86%
 */
 
 class Solution {
 public:
     int longestStrChain(vector<string>& words) {
+        unordered_map<int, vector<string>>lengthMap;
+        int maxlength = 0;
         
+        for(auto str : words) {
+            int length = str.length();
+            maxlength = std::max(maxlength, length);
+            if( lengthMap.find(length) == lengthMap.end() ) {
+                vector<string> vec;
+                vec.push_back(str);
+                lengthMap[length] = vec;
+            }
+            else {
+                lengthMap[length].push_back(str);
+            }
+        }
+        
+        unordered_map<string, int> uMap;
+        int res = 1;
+        for(int i=1; i<=maxlength; i++) {
+            if(lengthMap.find(i) == lengthMap.end()) {
+                continue;
+            }
+            vector<string>vec = lengthMap[i];
+            
+            for(string s : vec) {
+                if(lengthMap.find(i-1) == lengthMap.end()) {
+                    uMap[s] = 1;
+                }
+                else {
+                    int count = 1;
+                    for(int j=0; j<i; j++) {
+                        string pre = s.substr(0, j) + s.substr(j+1);
+                        if(uMap.find(pre) != uMap.end()) {
+                            count = std::max(count, uMap[pre] + 1);
+                        }
+                    }
+                    uMap[s] = count;
+                    res = std::max(count, res);
+                }
+            }
+        }
+        return res;
     }
 };
 
