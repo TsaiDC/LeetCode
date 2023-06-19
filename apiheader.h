@@ -236,6 +236,9 @@ void Test_shortestBridge();
 void Test_AM_kClosest();
 //994
 void Test_AM_orangesRotting();
+//1048
+#define _1048_
+void Test_GG_longestStrChain();
 //1091
 void Test_shortestPathBinaryMatrix();
 //1146
@@ -243,7 +246,7 @@ void Test_GG_SnapshotArray();
 //1152
 void Test_AM_mostVisitedPattern();
 //1218
-#define _1218_
+//#define _1218_
 void Test_GG_longestSubsequence();
 //1268
 void Test_AM_suggestedProducts();

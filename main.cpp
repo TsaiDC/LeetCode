@@ -657,6 +657,11 @@ int main()
     Test_AM_orangesRotting();
 #endif
 
+#if 1
+//#1048
+    Test_GG_longestStrChain();
+#endif
+
 #if 0
 //#1091
     Test_shortestPathBinaryMatrix();
@@ -672,7 +677,7 @@ int main()
     Test_AM_mostVisitedPattern();
 #endif
 
-#if 1
+#if 0
 //#1218
     Test_GG_longestSubsequence();
 #endif
