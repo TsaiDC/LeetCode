@@ -647,6 +647,11 @@ int main()
     Test_shortestBridge();
 #endif
 
+#if 1
+//#939
+    Test_GG_minAreaRect();
+#endif
+
 #if 0
 //#973
     Test_AM_kClosest();
@@ -657,7 +662,7 @@ int main()
     Test_AM_orangesRotting();
 #endif
 
-#if 1
+#if 0
 //#1048
     Test_GG_longestStrChain();
 #endif

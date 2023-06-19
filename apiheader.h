@@ -232,12 +232,15 @@ void Test_AM_sumSubarrayMins();
 void Test_AM_minFlipsMonoIncr();
 //934
 void Test_shortestBridge();
+//939
+#define _0939_
+void Test_GG_minAreaRect();
 //973
 void Test_AM_kClosest();
 //994
 void Test_AM_orangesRotting();
 //1048
-#define _1048_
+//#define _1048_
 void Test_GG_longestStrChain();
 //1091
 void Test_shortestPathBinaryMatrix();
