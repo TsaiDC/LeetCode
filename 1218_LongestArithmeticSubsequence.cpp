@@ -93,9 +93,36 @@ void Test_GG_TEST()
 #ifdef _CPPVERSION_
 //C++
 /*
+Runtime: 162 ms Beats 63.27%
+Memory: 54.7 MB Beats 93.58%
+*/
+class Solution {
+public:
+    int longestSubsequence(vector<int>& arr, int difference) {
+        unordered_map<int, int>mMap;
+        
+        int target;
+        int count = 1;
+        
+        for(int i: arr) {
+            target = i - difference;
+            if(mMap.find(target) == mMap.end()) {
+                mMap[i] = 1;
+                continue;
+            }
+            else {
+                mMap[i] = mMap[target] + 1;
+                count = count < mMap[i] ? mMap[i] : count;
+            }
+        }
+        return count;
+    }
+};
+
+#if 0
+/*
 Time Limit Exceeded
 */
-
 class Solution {
 public:
     int longestSubsequence(vector<int>& arr, int difference) {
@@ -140,6 +167,7 @@ public:
         return maxCount;
     }
 };
+#endif
 
 void Test_GG_longestSubsequence()
 {
