@@ -224,6 +224,9 @@ void Test_FB_insert();
 void Test_AM_asteroidCollision();
 //767
 void Test_AM_reorganizeString();
+//833
+#define _0833_
+void Test_GG_findReplaceString();
 //863
 void Test_AM_distanceK();
 //907
@@ -233,7 +236,7 @@ void Test_AM_minFlipsMonoIncr();
 //934
 void Test_shortestBridge();
 //939
-#define _0939_
+//#define _0939_
 void Test_GG_minAreaRect();
 //973
 void Test_AM_kClosest();

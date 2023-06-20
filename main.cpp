@@ -627,6 +627,11 @@ int main()
     Test_AM_reorganizeString();
 #endif
 
+#if 1
+//#833
+    Test_GG_findReplaceString();
+#endif
+
 #if 0
 //#863
     Test_AM_distanceK();
@@ -647,7 +652,7 @@ int main()
     Test_shortestBridge();
 #endif
 
-#if 1
+#if 0
 //#939
     Test_GG_minAreaRect();
 #endif
