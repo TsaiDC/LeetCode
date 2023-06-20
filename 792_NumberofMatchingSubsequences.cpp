@@ -90,13 +90,38 @@ void Test_GG_numMatchingSubseq()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Runtime: 226 ms Beats 77.81%
+Memory: 38.8 MB Beats 91.3%
 */
 
 class Solution {
 public:
     int numMatchingSubseq(string s, vector<string>& words) {
+        unordered_set<string> pass, out;
+        int res = 0;
+        int i=0, j=0;
         
+        for(string str : words) {
+            if(pass.count(str) || out.count(str)) {
+                if(pass.count(str)) ++res;
+                continue;
+            }
+            i=0; j=0;
+            while(i<s.length() && j<str.length()) {
+                if(str.at(j) == s.at(i)){
+                    ++j;
+                }
+                ++i;
+            }
+            if(j==str.length()) {
+                ++res;
+                pass.insert(str);
+            }
+            else {
+                out.insert(str);
+            }
+        }
+        return res;
     }
 };
 
