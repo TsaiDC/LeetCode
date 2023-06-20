@@ -628,6 +628,11 @@ int main()
 #endif
 
 #if 1
+//#777
+    Test_GG_canTransform();
+#endif
+
+#if 0
 //#792
     Test_GG_numMatchingSubseq();
 #endif

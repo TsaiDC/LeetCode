@@ -224,8 +224,11 @@ void Test_FB_insert();
 void Test_AM_asteroidCollision();
 //767
 void Test_AM_reorganizeString();
+//777
+#define _0777_
+void Test_GG_canTransform();
 //792
-#define _0792_
+//#define _0792_
 void Test_GG_numMatchingSubseq();
 //833
 //#define _0833_
