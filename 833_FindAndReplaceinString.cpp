@@ -99,7 +99,7 @@ sources[i] and targets[i] consist of only lowercase English letters.
 #ifdef _CVERSION_
 //C
 /*
-
+Runtime Error
 */
 
 void Test_GG_findReplaceString()
@@ -118,20 +118,68 @@ void Test_GG_findReplaceString()
 class Solution {
 public:
     string findReplaceString(string s, vector<int>& indices, vector<string>& sources, vector<string>& targets) {
+        qsort(indices, sources, targets, 0, indices.size()-1);
+        string str = s;
+        for(int i=indices.size()-1; i>=0; --i) {
+            string sub = str.substr(indices[i], sources[i].size());            
+            if(sub == sources[i]) {
+                str = str.substr(0, indices[i]) + targets[i] + str.substr(indices[i]+sources[i].size());             
+            }
+        }
+        return str;
+    }
+    
+    void qsort(vector<int>& indices, vector<string>& sources, vector<string>& targets, int i, int j) 
+    {
+        if(i>=j) return;
+        int l = i;
+        int r = j-1;
         
+        while(1) {
+            while(indices[l]<indices[j]) ++l;
+            while(indices[r]>indices[j]) --r;
+            
+            if(l<r) {
+                std::swap(indices[l], indices[r]);
+                std::swap(sources[l], sources[r]);
+                std::swap(targets[l], targets[r]);
+            }
+            else {
+                std::swap(indices[l], indices[j]);
+                std::swap(sources[l], sources[j]);
+                std::swap(targets[l], targets[j]);
+                break;
+            }
+        }
+        qsort(indices, sources, targets, i, l-1);
+        qsort(indices, sources, targets, l+1, j);
     }
 };
 
 void Test_GG_findReplaceString()
 {
-//    vector< vector<string> > ans;
-//    string arr1[] = {"eat","tea","tan","ate","nat","bat"};
-//    int n1 = sizeof(arr1)/sizeof(arr1[0]);
-//    vector<string> input1(arr1, arr1+n1);
+#if 0
+    string s = "abcd";
+    vector<int>indices{0, 2};
+    vector<string>sources{"a", "cd"};
+    vector<string>targets{"eee", "ffff"};
 
+    string s = "abcd";
+    vector<int>indices{0, 2};
+    vector<string>sources{"ab", "ec"};
+    vector<string>targets{"eee", "ffff"};
+#endif
+
+    string s = "vmokgggqzp"    
+    vector<int>indices{3,5,1};
+    vector<string>sources{"kg","ggq","mo"};
+    vector<string>targets{"s","so","bfr"};
+    
     LOGD("[CPP] %s\n", __TIME__);
     Solution *solution = new Solution();
+    string ans = solution->findReplaceString(s, indices, sources, targets);
     delete solution;
+    LOGD("Ans: %s\n", ans.c_str());
 }
 
 #endif// _CPPVERSION_
