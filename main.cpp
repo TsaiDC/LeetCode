@@ -628,6 +628,11 @@ int main()
 #endif
 
 #if 1
+//#792
+    Test_GG_numMatchingSubseq();
+#endif
+
+#if 0
 //#833
     Test_GG_findReplaceString();
 #endif
