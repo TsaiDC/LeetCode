@@ -90,26 +90,46 @@ void Test_GG_canTransform()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Referred.
+Runtime: 0 ms Beats 100%
+Memory: 7.5 MB Beats 37.7%
 */
 
 class Solution {
 public:
     bool canTransform(string start, string end) {
-        
+        int n = start.size(), i = 0, j = 0;
+        while (i < n && j < n) {
+            while (i < n && start[i] == 'X') ++i;
+            while (j < n && end[j] == 'X') ++j;
+            if (start[i] != end[j]) return false;
+            if ((start[i] == 'L' && i < j) || (start[i] == 'R' && i > j)) return false;
+            ++i; ++j;
+        }
+        while (i < n) {
+            if (start[i] != 'X') return false;
+            ++i;
+        }
+        while (j < n) {
+            if (end[j] != 'X') return false;
+            ++j;
+        }
+        return true;
     }
 };
 
 void Test_GG_canTransform()
 {
-//    vector< vector<string> > ans;
-//    string arr1[] = {"eat","tea","tan","ate","nat","bat"};
-//    int n1 = sizeof(arr1)/sizeof(arr1[0]);
-//    vector<string> input1(arr1, arr1+n1);
+//    string start = "RXXLRXRXL";
+//      string end = "XRLXXRRLX";
 
-    LOGD("[CPP] %s\n", __TIME__);
+    string start = "XXXXXLXXXX";
+      string end = "LXXXXXXXXX";
+    LOGD("[CPP] %s\n", __TIME__);    
     Solution *solution = new Solution();
+    bool ans = solution->canTransform(start, end);
     delete solution;
+    LOGD("Ans %d\n", ans);
 }
 
 #endif// _CPPVERSION_
