@@ -194,6 +194,9 @@ void Test_GG_wordsTyping();
 void Test_FB_treeToDoublyList();
 //435
 void Test_eraseOverlapIntervals();
+//447
+#define _0447_
+void Test_GG_numberOfBoomerangs();
 //451
 void Test_SortCharactersByFrequency();
 //454
@@ -225,7 +228,7 @@ void Test_AM_asteroidCollision();
 //767
 void Test_AM_reorganizeString();
 //777
-#define _0777_
+//#define _0777_
 void Test_GG_canTransform();
 //792
 //#define _0792_

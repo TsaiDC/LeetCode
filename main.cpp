@@ -552,6 +552,11 @@ int main()
     Test_eraseOverlapIntervals();
 #endif
 
+#if 1
+//#447
+    Test_GG_numberOfBoomerangs();
+#endif
+
 #if 0
 //#451
     Test_SortCharactersByFrequency();
@@ -627,7 +632,7 @@ int main()
     Test_AM_reorganizeString();
 #endif
 
-#if 1
+#if 0
 //#777
     Test_GG_canTransform();
 #endif
