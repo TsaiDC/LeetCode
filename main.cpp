@@ -527,7 +527,7 @@ int main()
     Test_InsertDeleteGetRandom();
 #endif
 
-#if 0
+#if 1
 //#394
     Test_GG_decodeString();
 #endif
@@ -552,7 +552,7 @@ int main()
     Test_eraseOverlapIntervals();
 #endif
 
-#if 1
+#if 0
 //#447
     Test_GG_numberOfBoomerangs();
 #endif

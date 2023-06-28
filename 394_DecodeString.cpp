@@ -13,6 +13,7 @@
 
 #include "apiheader.h"
 
+#ifdef _0394_
 using namespace std;
 
 #define NONE "\033[m"
@@ -354,3 +355,4 @@ void Test_GG_decodeString()
 }
 
 #endif //_CPPVERSION_
+#endif//_0394_

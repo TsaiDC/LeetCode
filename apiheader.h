@@ -185,6 +185,7 @@ void Test_kthSmallest();
 //380
 void Test_InsertDeleteGetRandom();
 //394
+#define _0394_
 void Test_GG_decodeString();
 //402
 void Test_removeKdigits();
@@ -195,7 +196,7 @@ void Test_FB_treeToDoublyList();
 //435
 void Test_eraseOverlapIntervals();
 //447
-#define _0447_
+//#define _0447_
 void Test_GG_numberOfBoomerangs();
 //451
 void Test_SortCharactersByFrequency();
