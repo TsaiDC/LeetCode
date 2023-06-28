@@ -92,22 +92,57 @@ void Test_GG_numberOfBoomerangs()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Runtime: 601 ms Beats 62.42%
+Memory: 85 MB Beats 89.17%
 */
 
 class Solution {
 public:
-    int numberOfBoomerangs(vector<vector<int>>& points) {
-        return 0;
+    int numberOfBoomerangs(vector<vector<int>>& points) {    
+        int dist;
+        int count = 0;
+        int retVal = 0;
+        unordered_map<int,int> distMap;
+        unordered_map<int,int>::iterator distIter;
+        for(int i=0; i<points.size(); ++i) {
+            distMap.clear();
+            for(int j=0; j<points.size(); ++j) {
+                if(i==j) continue;
+                dist = getDist(points[i], points[j]);
+                if(distMap.find(dist) == distMap.end()) {
+                    distMap[dist] = 1;
+                }
+                else {
+                    distMap[dist] += 1;
+                }
+            }
+            count = 0;
+            for(distIter = distMap.begin(); distIter != distMap.end(); ++distIter) {
+                if(distIter->second < 2) continue;
+                count += (distIter->second) * (distIter->second -1); 
+            }
+            retVal += count;
+        }
+        return retVal;
+    }
+    
+    int getDist(vector<int>&a, vector<int>&b) {
+        return ((a[0]-b[0])*(a[0]-b[0]) + (a[1]-b[1])*(a[1]-b[1]));
     }
 };
 
 void Test_GG_numberOfBoomerangs()
 {
+#if 0
     //points = [[0,0],[1,0],[2,0]]
-    vector<int> p1{0,0};
+    vector<int> p1{1,0};
     vector<int> p2{1,0};
     vector<int> p3{2,0};
+#endif
+    //[[1,1],[2,2],[3,3]]
+    vector<int> p1{1,1};
+    vector<int> p2{2,2};
+    vector<int> p3{3,3};
     vector<vector<int>> input {p1, p2, p3};
 
     LOGD("[CPP] %s\n", __TIME__);
