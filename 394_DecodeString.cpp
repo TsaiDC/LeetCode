@@ -98,7 +98,7 @@ void Test_GG_decodeString()
 
 */
 
-#if 1
+#if 0
 /*
 Approach 1
 
@@ -344,10 +344,73 @@ public:
 };
 #endif
 
+#if 1
+/*
+//Self, 20230701
+Runtime: 4 ms Beats 36.86%
+Memory: 6.4 MB Beats 72.10%
+*/
+class Solution {
+public:
+    string decodeString(string s) {
+        stack<int> valStack;
+        stack<char> charStack;
+        string strVal = "";
+        for(int i=0; i<s.length(); ++i) {
+            int v = (int) s.at(i) - '0';
+            if(v<=9 && v>=0) {
+                strVal+=s.at(i);
+                continue;
+            }
+            else if(s.at(i) == '[') {
+                int val = atoi(strVal.c_str());
+                valStack.push(val);
+                charStack.push(s.at(i));
+                strVal = "";
+                continue;
+            }
+            else if(s.at(i) == ']') {
+                string str = "";                
+                while(charStack.top() != '[') {
+                    str = charStack.top() + str;
+                    charStack.pop();
+                }
+                charStack.pop(); //Removew '['
+                
+                if(str.empty()) {
+                    continue;
+                }
+
+                int val = valStack.top();
+                valStack.pop();                
+                for(int idx = 0; idx < val ; ++idx) {
+                    for(char c : str) {
+                        charStack.push(c);
+                    }
+                }
+            }
+            else {
+                charStack.push(s.at(i));
+            }        
+        }
+        strVal = "";
+        while(!charStack.empty()) {
+            strVal += charStack.top();
+            charStack.pop();
+        }
+        std::reverse(strVal.begin(), strVal.end());
+        
+        return strVal;
+    }
+};
+#endif //Self, 20230701
+
 void Test_GG_decodeString()
 {
     LOGD("[CPP] %s\n", __TIME__);
-    string s = "3[a]2[bc]";
+//    string s = "3[a]2[bc]";
+    string s = "3[a2[c]]";
+    
     Solution *solution = new Solution();
     string ans = solution->decodeString(s);
     LOGD("Ans: %s\n", ans.c_str());
