@@ -477,6 +477,11 @@ int main()
     Test_maxNumber();
 #endif
 
+#if 1
+//#329
+    Test_GG_longestIncreasingPath();
+#endif
+
 #if 0
 //#338
     Test_countBits();
@@ -527,7 +532,7 @@ int main()
     Test_InsertDeleteGetRandom();
 #endif
 
-#if 1
+#if 0
 //#394
     Test_GG_decodeString();
 #endif

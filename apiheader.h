@@ -164,6 +164,9 @@ void Test_GG_minArea();
 void Test_FB_verticalOrder();
 //321
 void Test_maxNumber();
+//329
+#define _0329_
+void Test_GG_longestIncreasingPath();
 //338
 void Test_countBits();
 //339
@@ -185,7 +188,7 @@ void Test_kthSmallest();
 //380
 void Test_InsertDeleteGetRandom();
 //394
-#define _0394_
+//#define _0394_
 void Test_GG_decodeString();
 //402
 void Test_removeKdigits();
