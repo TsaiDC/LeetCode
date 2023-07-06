@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <vector>
 #include <time.h>
+#include <fstream>
 #include "apiheader.h"
 
 using namespace std;
@@ -48,11 +49,23 @@ void localTest()
     revertStr((char*)str);
 }
 
+void testCopyFile()
+{
+    printf("[DBG] %s(%d) %s \n", __FUNCTION__, __LINE__, __TIME__);
+    char *from = "E:\\test\\aaa.txt";
+    char *to = "E:\\test\\bbb.txt";
+    std::ifstream src(from, std::ios::binary);
+    std::ofstream dst(to, std::ios::binary);
+    dst<<src.rdbuf();
+    printf("Done\n");
+}
+
 int main()
 {
     double START,END;
     START = clock();
 
+//    testCopyFile();
 #if 0
     localTest();
 #endif
