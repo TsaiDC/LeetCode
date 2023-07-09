@@ -80,6 +80,9 @@ void Test_rotateRight();
 void Test_uniquePaths();
 //64
 void Test_minPathSum();
+//68
+#define _0068_
+void Test_GG_fullJustify();
 //69
 void Test_mySqrt();
 //72
@@ -165,7 +168,7 @@ void Test_FB_verticalOrder();
 //321
 void Test_maxNumber();
 //329
-#define _0329_
+//#define _0329_
 void Test_GG_longestIncreasingPath();
 //338
 void Test_countBits();

@@ -280,6 +280,11 @@ int main()
     Test_minPathSum();
 #endif
 
+#if 1
+//#68
+    Test_GG_fullJustify();
+#endif
+
 #if 0
 //#69
     Test_mySqrt();
@@ -490,7 +495,7 @@ int main()
     Test_maxNumber();
 #endif
 
-#if 1
+#if 0
 //#329
     Test_GG_longestIncreasingPath();
 #endif
