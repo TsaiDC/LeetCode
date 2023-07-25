@@ -280,7 +280,7 @@ int main()
     Test_minPathSum();
 #endif
 
-#if 1
+#if 0
 //#68
     Test_GG_fullJustify();
 #endif
@@ -765,7 +765,13 @@ int main()
     Test_FB_dotProduct();
 #endif
 
-#ifdef _1648_
+#if 1
+//#1592
+    Test_reorderSpaces();
+#endif
+
+#if 0
+//#1648
     Test_AM_maxProfit();
 #endif
 

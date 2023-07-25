@@ -81,7 +81,7 @@ void Test_uniquePaths();
 //64
 void Test_minPathSum();
 //68
-#define _0068_
+//#define _0068_
 void Test_GG_fullJustify();
 //69
 void Test_mySqrt();
@@ -285,6 +285,9 @@ void Test_GG_differByOne();
 void Test_AM_getMaxLen();
 //1570
 void Test_FB_dotProduct();
+//1592
+#define _1592_
+void Test_reorderSpaces();
 //1648
 //#define _1648_
 void Test_AM_maxProfit();
