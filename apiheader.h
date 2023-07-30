@@ -286,7 +286,7 @@ void Test_AM_getMaxLen();
 //1570
 void Test_FB_dotProduct();
 //1592
-#define _1592_
+//#define _1592_
 void Test_reorderSpaces();
 //1648
 //#define _1648_
@@ -320,4 +320,7 @@ void Test_GG_findAllRecipes();
 void Test_GG_removeOnes();
 //2135
 void Test_GG_wordCount();
+//2138
+#define _2138_
+void Test_divideString();
 #endif

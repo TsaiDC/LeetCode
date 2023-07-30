@@ -765,7 +765,7 @@ int main()
     Test_FB_dotProduct();
 #endif
 
-#if 1
+#if 0
 //#1592
     Test_reorderSpaces();
 #endif
@@ -838,6 +838,11 @@ int main()
 #if 0
 //#2135
     Test_GG_wordCount();
+#endif
+
+#if 1
+//#2138
+    Test_divideString();
 #endif
 
     END = clock();
