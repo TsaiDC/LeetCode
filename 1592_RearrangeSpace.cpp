@@ -94,13 +94,64 @@ void Test_reorderSpaces()
 #ifdef _CPPVERSION_
 //C++
 /*
-
+Runtime: 0 ms Beats 100%
+Memory: 6.2 MB Beats 39.2%
 */
 
 class Solution {
 public:
     string reorderSpaces(string text) {
+        int length = text.size();
+        int spaceNum = 0;
+        queue<string> strQ;
+        int charIdx=-1, spaceIdx=-1;
         
+        for(int i=0;i<length; ++i) {
+            if(text.at(i) == ' ') {
+                spaceNum++;
+                if(charIdx<0) {
+                    continue;
+                }
+                else {
+                    string str = text.substr(charIdx, i - charIdx);
+                    strQ.push(str);
+                    charIdx=-1;
+                }
+            }
+            else {
+                if(charIdx<0) {
+                    charIdx = i;
+                }
+            }
+        }
+
+        if(charIdx >= 0) {
+            string str = text.substr(charIdx);
+            strQ.push(str);
+        }
+
+        int spaceIntval = 0;
+        if(strQ.size()-1 > 0) {
+            spaceIntval = spaceNum/(strQ.size()-1);
+        }
+        
+        string ans = "";
+        string space = " ";        
+        while(strQ.size()>1) {            
+            ans += strQ.front();
+            strQ.pop();
+            for(int i=0; i<spaceIntval; ++i)
+                ans += space;
+            spaceNum -= spaceIntval;            
+        }
+        while(!strQ.empty()) {
+            ans += strQ.front();
+            strQ.pop();
+        }        
+        for(int i=0; i<spaceNum; ++i)
+            ans += space;;
+
+        return ans;
     }
 };
 
@@ -111,9 +162,14 @@ void Test_reorderSpaces()
 //    int n1 = sizeof(arr1)/sizeof(arr1[0]);
 //    vector<string> input1(arr1, arr1+n1);
 
+//    string text = "  this   is  a sentence ";
+//    string text = " practice   makes   perfect";
+    string text = "a";
     LOGD("[CPP] %s\n", __TIME__);
     Solution *solution = new Solution();
+    string ans = solution->reorderSpaces(text);
     delete solution;
+    LOGD("Ans: %s\n", ans.c_str());
 }
 
 #endif// _CPPVERSION_
