@@ -321,6 +321,10 @@ void Test_GG_removeOnes();
 //2135
 void Test_GG_wordCount();
 //2138
-#define _2138_
+//#define _2138_
 void Test_divideString();
+//2328
+#define _2328_
+void Test_countPaths();
+
 #endif

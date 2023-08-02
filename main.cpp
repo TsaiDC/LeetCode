@@ -840,9 +840,14 @@ int main()
     Test_GG_wordCount();
 #endif
 
-#if 1
+#if 0
 //#2138
     Test_divideString();
+#endif
+
+#if 1
+//#2328
+    Test_countPaths();
 #endif
 
     END = clock();
