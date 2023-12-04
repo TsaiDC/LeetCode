@@ -324,7 +324,9 @@ void Test_GG_wordCount();
 //#define _2138_
 void Test_divideString();
 //2328
-#define _2328_
+//#define _2328_
 void Test_countPaths();
-
+//2468
+#define _2468_
+void Test_GG_splitMessage();
 #endif

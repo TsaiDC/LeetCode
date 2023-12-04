@@ -845,9 +845,14 @@ int main()
     Test_divideString();
 #endif
 
-#if 1
+#if 0
 //#2328
     Test_countPaths();
+#endif
+
+#if 1
+//#2468
+    Test_GG_splitMessage();
 #endif
 
     END = clock();
