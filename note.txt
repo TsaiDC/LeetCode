@@ -1,5 +1,12 @@
-Vector
+#### pair
+    pair<int, int>a
+    a.first, a.second
 
+#### String:
+    找substr
+    int find_first_of("xx")
+
+#### Vector:
     lower_bound：找出vector中「大於或等於」val的「最小值」的位置：
         auto it = lower_bound(v.begin(), v.end(), val);
     upper_bound：找出vector中「大於」val的「最小值」的位置：
@@ -7,7 +14,7 @@ Vector
 
     [*]MAP 也可以用這二個api
 
-Sort 用法
+#### Sort 用法
     std::sort (sortedTime.begin(), sortedTime.end(), mycompare);
     std::sort (sortedTime.begin(), sortedTime.end(), std::less<int>()); 小到大
     
@@ -16,17 +23,24 @@ Sort 用法
     bool mycompare(int a, int b) {
         return a > b; // 降序排列
     }
-
-String:
-    找substr
-    int find_first_of("xx")
     
-priority_queue:
+#### priority_queue:
     priority_queue<T> pq; 預設由大排到小
     priority_queue<T, vector<T>, greater<T> > pq;  改成由小排到大
     priority_queue<T, vector<T>, cmp> pq; 自行定義 cmp 排序
+e.g.:
+    struct cmd {
+      bool operator()(pair<int, int> a, pair<int, int> b) {
+          return a.second > b.second;   //由小到大排
+          return a.second < b.second;   //由大到小排
+      }
+    };
+    std::priority_queue<pair<int, int>, vector<pair<int,int>>, cmd> mQueue;
 
-unorder map:
+[心得]: 取前k 個
+    https://leetcode.com/explore/interview/card/top-interview-questions-medium/110/sorting-and-searching/799/
+
+#### unorder map:
     #include <unordered_map>
     std::unordered_map<int, int> counts;
     for (int num : nums) {
